@@ -3,7 +3,7 @@ import { IonFooter, IonButton, IonIcon, IonGrid, IonRow, IonCol, IonFab, IonFabB
 import { homeOutline, documentTextOutline, cashOutline, cartOutline, receiptOutline, chevronForwardCircle, chevronBackCircle, apps, menu } from 'ionicons/icons';
 import INavbarModule from '../interfaces/INavbarModule';
 import { logInOutline } from 'ionicons/icons';
-
+import '../../theme/Footer.css';
 interface FooterProps {
   navbarModules: INavbarModule[];
 }
@@ -63,7 +63,6 @@ const Footer: React.FC<FooterProps> = ({ navbarModules }) => {
               <IonCol className="ion-text-center">
                 <IonButton fill="solid" color="danger" className="footer-button" href="/cortes-caja">
                 <IonIcon icon={logInOutline} slot="start" />
-
                   Cerrar sesion
                 </IonButton>
               </IonCol>

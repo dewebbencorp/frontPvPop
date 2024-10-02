@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer'; 
 import INavbarModule from '../interfaces/INavbarModule';
 import { IonPage, IonContent } from '@ionic/react';
-
+import '../../theme/Global.css'
 interface MainLayoutProps {
   children: React.ReactNode;
   navbarModules: INavbarModule[];

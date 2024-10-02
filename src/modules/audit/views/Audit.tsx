@@ -3,7 +3,6 @@ import { IonInput, IonButton, IonIcon } from '@ionic/react';
 import { searchOutline, trashOutline, checkmarkCircleOutline, closeCircleOutline, documentOutline } from 'ionicons/icons';
 import INavbarModule from '../../../common/interfaces/INavbarModule';
 import MainLayout from '../../../common/layouts/MainLayout';
-import '../../../theme/Audit.css';
 const Audit: React.FC = () => {
   const [tickets, setTickets] = useState([
     { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00 }
@@ -26,6 +25,10 @@ const Audit: React.FC = () => {
             <IonInput className="border p-2 rounded w-full" placeholder="Ingresa movimiento" />
           </div>
           <div>
+            <label className="block mb-2 text-sm font-bold">Tipo:</label>
+            <IonInput className="border p-2 rounded w-full" placeholder="Ingresa movimiento" />
+          </div>
+          <div>
             <label className="block mb-2 text-sm font-bold">Cliente:</label>
             <IonInput className="border p-2 rounded w-full" placeholder="Ingresa cliente" />
           </div>
@@ -40,10 +43,10 @@ const Audit: React.FC = () => {
         </div>
 
         <div className="flex space-x-4 mb-6">
-          <IonButton className="bg-primary px-6 py-2 rounded-md text-white shadow-lg">
-            <IonIcon icon={searchOutline} /> Buscar
+          <IonButton fill="solid" className="footer-button">
+            Buscar
           </IonButton>
-          <IonButton className="bg-secondary px-6 py-2 rounded-md text-white shadow-lg">
+          <IonButton fill="solid" className="footer-button">
             Limpiar
           </IonButton>
         </div>
