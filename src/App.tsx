@@ -18,6 +18,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 import './theme/variables.css';
 import './theme/App.css'
+import Audit from '../src/modules/audit/views/Audit.js';
 
 setupIonicReact();
 
@@ -28,11 +29,11 @@ const App: React.FC = () => (
         <Route exact path="/home">
           <Home />
         </Route>
+        <Route exact path="/audit">
+          <Audit /> {/* Agrega la ruta para Audit */}
+        </Route>
         <Route exact path="/">
           <Redirect to="/home" />
-        </Route>
-        <Route exact path="/returns">
-          <Returns />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

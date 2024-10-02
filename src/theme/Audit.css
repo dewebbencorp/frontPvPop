@@ -1,0 +1,15 @@
+.footer-grid {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .footer-button {
+    width: 100%;
+    border-radius: 0;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+  .ion-align-items-center {
+    align-items: center !important;
+    display: inline-flex;
+}

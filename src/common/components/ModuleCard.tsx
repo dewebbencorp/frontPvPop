@@ -2,11 +2,12 @@ import { useHistory } from 'react-router-dom';
 import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonButton } from '@ionic/react';
 import IModuleCard from '../interfaces/IModuleCard';
 
-const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description }) => {
+const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description, path }) => {
     const history = useHistory();
 
-    const handleHome = () => {
-        history.push('/returns');
+    // Usar el path dinámico que recibimos de los props
+    const handleNavigation = () => {
+        history.push(path); // Ahora usamos el path dinámico
     };
 
     return (
@@ -18,7 +19,7 @@ const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description }) => 
 
             <IonCardContent>{description}</IonCardContent>
 
-            <IonButton onClick={handleHome} expand="block">
+            <IonButton onClick={handleNavigation} expand="block">
                 Go to { title }
             </IonButton>
         </IonCard>

@@ -8,7 +8,6 @@ import {
 import ModuleCard from "../../common/components/ModuleCard";
 import Header from "../../common/layouts/Header";
 import IModuleCard from "../../common/interfaces/IModuleCard";
-import INavbarModule from "../../common/interfaces/INavbarModule";
 import useNavigationData from "../../common/hooks/useNavigationData";
 import React, { useEffect } from "react";
 
@@ -24,21 +23,22 @@ const cardData: IModuleCard[] = [
     subtitle: "Módulo de retiro de efectivo y doctos",
     description:
       "El módulo que se encarga de permitir la extracción de efectivo o doctos, generando un folio",
-    path: "/returns",
+    path: "/withdrawals",
   },
   {
     title: "Cortes",
     subtitle: "Módulo para la realización de cortes, y la impresión final",
     description:
       "Carga de denominación nacional, generación del corte e impresión del ticket final",
-    path: "/returns",
+    path: "/cuts",
   },
-];
-
-const navbarModules: INavbarModule[] = [
-  { title: "Ventas", path: "/" },
-  { title: "Retiros", path: "/Withdrawal" },
-  { title: "Devoluciones", path: "/Returns" },
+  // Tarjeta de Auditoría
+  {
+    title: "Auditoría",
+    subtitle: "Módulo de Auditoría de Ventas",
+    description: "Consulta de ventas y reportes de auditoría",
+    path: "/audit",
+  },
 ];
 
 const Home: React.FC = () => {
@@ -57,13 +57,14 @@ const Home: React.FC = () => {
             <IonTitle size="large">Dashboard</IonTitle>
           </IonToolbar>
         </IonHeader>
+        {/* Renderiza las tarjetas con las rutas dinámicas */}
         {cardData.map((card, index) => (
           <ModuleCard
             key={index}
             title={card.title}
             subtitle={card.subtitle}
             description={card.description}
-            path={card.path}
+            path={card.path} // Pasamos el path aquí
           />
         ))}
       </IonContent>

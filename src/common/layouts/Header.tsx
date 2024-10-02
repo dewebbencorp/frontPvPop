@@ -47,7 +47,7 @@ const Header: React.FC = () => {
           <div className="flex w-full flex-row items-center justify-between gap-4">
             <div className="flex flex-row items-center min-w-80">
               <IonButtons slot="start">
-                <IonBackButton defaultHref="#"></IonBackButton>
+                <IonBackButton defaultHref="/home"></IonBackButton>
               </IonButtons>
 
               <span className="font-bold text-[1.125rem]"> { title } </span>
