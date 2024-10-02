@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { IonContent, IonPage } from '@ionic/react';
-import useNavigationData from '../hooks/useNavigationData';
-import Header from '../layouts/Header';
+import useNavigationData from '../../../common/hooks/useNavigationData';
+import Header from '../../../common/layouts/Header';
 
 const Home: React.FC = () => {
   const { changeTitle } = useNavigationData();

@@ -1,8 +1,8 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
-import Returns from './pages/Returns';
+import Home from './modules/home/Home';
+import Returns from './modules/returns/views/Returns';
 
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';

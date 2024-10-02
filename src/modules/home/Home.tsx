@@ -5,16 +5,16 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import ModuleCard from "../components/ModuleCard";
-import Header from '../layouts/Header'
-import IModuleCard from "../interfaces/IModuleCard";
-import INavbarModule from "../interfaces/INavbarModule";
-import useNavigationData from '../hooks/useNavigationData';
+import ModuleCard from "../../common/components/ModuleCard";
+import Header from "../../common/layouts/Header";
+import IModuleCard from "../../common/interfaces/IModuleCard";
+import INavbarModule from "../../common/interfaces/INavbarModule";
+import useNavigationData from "../../common/hooks/useNavigationData";
 import React, { useEffect } from "react";
 
 const cardData: IModuleCard[] = [
   {
-title: "Devoluciones",
+    title: "Devoluciones",
     subtitle: "Módulo de devoluciónes de productos",
     description: "Devolución de productos por medio de ticket y consulta de NC",
     path: "/returns",
@@ -45,12 +45,12 @@ const Home: React.FC = () => {
   const { changeTitle } = useNavigationData();
 
   useEffect(() => {
-    changeTitle('Home');
+    changeTitle("Home");
   }, []);
 
   return (
     <IonPage>
-      <Header/>
+      <Header />
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
@@ -67,7 +67,6 @@ const Home: React.FC = () => {
           />
         ))}
       </IonContent>
-
     </IonPage>
   );
 };
