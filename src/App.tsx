@@ -2,7 +2,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
-import PuntoVenta from './pages/PuntoVenta';
+import PuntoVenta from './modules/salesPoint/PuntoVenta';
 import Returns from './modules/returns/views/Returns';
 
 import '@ionic/react/css/core.css';
@@ -29,7 +29,7 @@ const App: React.FC = () => (
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/home">
+        <Route exact path="/salespoint">
           <PuntoVenta />
         </Route>
         <Route exact path="/">
