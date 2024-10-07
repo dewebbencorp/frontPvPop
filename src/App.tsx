@@ -1,10 +1,16 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Login from './pages/Login';
-import PuntoVenta from './modules/salesPoint/PuntoVenta';
-import Returns from './modules/returns/views/Returns';
+import React, { Suspense } from 'react';
 
+const Login = React.lazy(() => import('./modules/login/views/Login'))
+const Home = React.lazy(() => import('./modules/home/Home'));
+const Returns = React.lazy(() => import('./modules/returns/views/Returns'));
+const Returns2 = React.lazy(() => import('./modules/returns/views/Returns2'));
+const Audit = React.lazy(() => import('../src/modules/audit/views/Audit.js'));
+const Ticket = React.lazy(() => import('./common/hooks/Ticket'));
+const PuntoVenta = React.lazy(() => import('./modules/salesPoint/views/SalesPoint'))
+// Ionic styles
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
 import '@ionic/react/css/structure.css';
@@ -17,8 +23,10 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
+// App and custom theme
 import './theme/variables.css';
 import './theme/App.css'
+import './theme/App.css';
 
 setupIonicReact();
 
@@ -26,18 +34,30 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/salespoint">
-          <PuntoVenta />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route exact path="/returns">
-          <Returns />
-        </Route>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route exact path="/returns">
+            <Returns />
+          </Route>
+          <Route exact path="/returns2">
+            <Returns2 />
+          </Route>
+          <Route exact path="/salespoint">
+            <PuntoVenta />
+          </Route>
+          <Switch>
+            <Route path="/audit" component={Audit} />
+            <Route path="/ticket/:remision" component={Ticket} />
+          </Switch>
+        </Suspense>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

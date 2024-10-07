@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { PaymentMethod } from "../../../common/interfaces/IPaymentMethod";
+import { IPaymentMethod } from "../../../common/interfaces/IPaymentMethod";
 
 interface ModalPagoProps {
   isOpen: boolean;
   onClose: () => void;
-  method: PaymentMethod;
-  onPay: (method: PaymentMethod) => void;
+  method: IPaymentMethod;
+  onPay: (method: IPaymentMethod) => void;
   updateMethod: (field: string, value: string | number) => void;
 }
 
@@ -117,6 +117,7 @@ const ModalPago: React.FC<ModalPagoProps> = ({
     return null;
   };
 
+
   const renderSelectedMethodFields = () => {
     switch (selectedMethod) {
       case "Mixto":
@@ -148,6 +149,7 @@ const ModalPago: React.FC<ModalPagoProps> = ({
                 />
               </div>
             </div>
+
             <div>
               <label className="block text-gray-700">Tarjeta Referencia:</label>
               <div className="flex items-center border border-gray-300 rounded-md p-2">
@@ -303,6 +305,8 @@ const ModalPago: React.FC<ModalPagoProps> = ({
             <i className="fas fa-times"></i>
           </button>
         </div>
+        <hr className="my-4 border-t border-gray-300" />
+
 
         {selectedMethod === "Mixto" && (
           <div className="grid grid-cols-3 gap-4 mb-4">

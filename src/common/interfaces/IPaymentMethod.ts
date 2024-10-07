@@ -1,4 +1,4 @@
-export interface PaymentMethod {
+export interface IPaymentMethod {
   total: number;
   currency: string;
   amount?: number;

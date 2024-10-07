@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton } from "@ionic/react";
 import useNavigationData from '../hooks/useNavigationData';
 import useSesionData from "../hooks/useSesionData";
-import '../components/Navbar.css';
 
 const Header: React.FC = () => {
   const { title} = useNavigationData();
@@ -48,29 +47,29 @@ const Header: React.FC = () => {
           <div className="flex w-full flex-row items-center justify-between gap-4">
             <div className="flex flex-row items-center min-w-80">
               <IonButtons slot="start">
-                <IonBackButton defaultHref="#"></IonBackButton>
+                <IonBackButton defaultHref="/Home"></IonBackButton>
               </IonButtons>
 
-              <span className="font-bold text-[1.125rem]"> { title } </span>
+              <span className="font-bold text-[1.125rem] uppercase"> { title } </span>
             </div>
 
             <div className="w-full px-4 flex flex-row justify-between items-center">
               <div>
-                <span className="text-[1rem] font-bold"> { store } </span>
+                <span className="text-[1rem] font-bold uppercase"> { store } </span>
               </div>
 
               <div>
-                <span className="text-[1rem] font-bold"> { currentTime } </span>
+                <span className="text-[1rem] font-bold uppercase"> { currentTime } </span>
               </div>
 
               <div>
-                <span className="text-[1rem] font-bold">Turno:</span>
-                <span className="text-[0.75rem] italic ml-1"> { turn } </span>
+                <span className="text-[1rem] font-bold uppercase">Turno: Lalo </span>
+                <span className="ml-1"> { turn } </span>
               </div>
 
               <div>
-                <span className="text-[1rem] font-bold">Usuario:</span>
-                <span className="text-[0.75rem] italic ml-1"> { user } </span>
+                <span className="text-[1rem] font-bold uppercase">Usuario:</span>
+                <span className="ml-1"> { user } </span>
               </div>
             </div>
           </div>
