@@ -1,0 +1,138 @@
+.container {
+  background: #F0F8FF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  padding: 20px;
+  max-width: calc(126vw - 258px) !important;
+}
+
+.receipt {
+  width: 297mm;
+  height: auto;
+  background: #fff;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 5px 5px 19px #ccc;
+  transform: scale(0.5);
+  transform-origin: top center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+  font-size: 22px;
+}
+
+.table-header,
+.table-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-descripcion {
+  margin-top: 15px;
+  border-top: 1px dashed #000;
+  border-bottom: 1px dashed #000;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.table-header span,
+.table-row span {
+  width: 20%;
+  font-family: Open Sans;
+  text-align: center !important;
+  font-size: 20px;
+}
+
+.paymentDetails,
+.creditDetails {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.total {
+  text-align: center;
+  margin: 10px 0;
+  font-family: Open Sans;
+  margin-top: 22px;
+}
+
+.detail {
+  text-align: left;
+  font-size: 27px;
+  font-family: Open Sans;
+}
+
+.address,
+.transactionDetails {
+  font-size: 10px;
+  margin-bottom: 10px;
+  font-family: Open Sans;
+}
+
+.centerItem,
+.tripSummary {
+  font-size: 1rem;
+  margin-top: 15px;
+  font-family: Open Sans;
+}
+
+.content-total {
+    font-size: 19px;
+    margin-block-end: 194px;
+    font-family: Open Sans;
+    padding: 18px;
+}
+
+.receipt .address {
+  font-size: 18px;
+  font-family: Open Sans;
+}
+
+.receipt .transactionDetails {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-family: Open Sans;
+}
+
+.receipt .total,
+.paymentDetails {
+  font-size: 14px;
+  font-family: Open Sans;
+}
+
+.receipt .centerItem {
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-family: Open Sans;
+}
+
+.feedback {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 15px;
+  font-family: Open Sans;
+}
+
+span {
+  padding: 5px;
+}
+strong {
+  font-size: 30px;
+}
+
+.transactio {
+  font-size: 19px;
+  font-family: Open Sans;
+}
+
+.logo {
+  text-align: center;
+}

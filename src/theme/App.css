@@ -8,10 +8,7 @@
     @apply w-full h-full p-4 bg-background;
 }
 
-input[type="text"], input[type="number"], select {
-    @apply bg-white 
-}
-.label-text{
+/* .label-text{
     font-size: 1rem;
     font-weight: 600;
 }
@@ -30,43 +27,9 @@ input[type="text"], input[type="number"], select {
 .sc-ion-input-md-h{
     @apply min-h-10;
 }
+ */
 
-ion-toolbar {
+ ion-toolbar {
     --background: #1C878F;
     --color: white;
 }
-
-
-/* Formato 2 */
-input, select{
-    @apply shadow-[0.15rem_0.25rem_0.5rem_rgba(0,0,0,0.35)] bg-white h-10 p-2
-}
-
-
-    input[type="checkbox"], input[type="radio"] {
-        appearance: none;
-        outline: none;
-        cursor: pointer;
-        border-radius: 0.5rem;
-        background-color: white;
-        height: 2.5rem;
-        width: 2.5rem;
-        padding: 0rem;
-    }
-    
-    input[type="checkbox"]::before, input[type="radio"]::before {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 0.5rem;
-    }
-
-    input[type="checkbox"]:checked::before, input[type="radio"]:checked::before {
-    content: '✓';
-    font-size: 2rem;
-    line-height: 2rem;
-    font-weight: bold;
-    }
-
-/* Formato 2 */

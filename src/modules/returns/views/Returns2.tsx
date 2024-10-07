@@ -5,6 +5,7 @@ import Navbar from '../../../common/components/Navbar';
 import TableReturns from '../components/TableReturns';
 import useNavigationData from '../../../common/hooks/useNavigationData';
 import Header from '../../../common/layouts/Header';
+import '../../../theme/Returns.css'
 
 const Returns2: React.FC = () => {
   const { changeTitle } = useNavigationData();
