@@ -1,0 +1,35 @@
+*{
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal; 
+}
+
+.mainContent{
+    @apply w-full h-full p-4 bg-background;
+}
+
+/* .label-text{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.input-wrapper{
+    @apply min-h-10 h-10
+}
+.native-input{
+    @apply ml-2
+}
+.label-text-wrapper {
+    @apply min-w-min !mr-2;
+}
+.native-wrapper, .label-text-wrapper{
+    @apply h-10;
+}
+.sc-ion-input-md-h{
+    @apply min-h-10;
+}
+ */
+
+ ion-toolbar {
+    --background: #1C878F;
+    --color: white;
+}
