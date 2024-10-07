@@ -15,7 +15,7 @@
   margin: 0 auto;
   padding: 20px;
   box-shadow: 5px 5px 19px #ccc;
-  transform: scale(0.5);
+  transform: scale(1.0);
   transform-origin: top center;
 }
 
@@ -25,7 +25,7 @@
 
 .center {
   text-align: center;
-  font-size: 22px;
+  font-size: 10px;
 }
 
 .table-header,
@@ -44,10 +44,10 @@
 
 .table-header span,
 .table-row span {
-  width: 20%;
+  width: 100%;
   font-family: Open Sans;
   text-align: center !important;
-  font-size: 20px;
+  font-size: 11px;
 }
 
 .paymentDetails,
@@ -66,7 +66,7 @@
 
 .detail {
   text-align: left;
-  font-size: 27px;
+  font-size: 12px;
   font-family: Open Sans;
 }
 
@@ -85,19 +85,20 @@
 }
 
 .content-total {
-    font-size: 19px;
-    margin-block-end: 194px;
+  margin-block-start: -17px;
+    font-size: 13px;
+    margin-block-end: 9px;
     font-family: Open Sans;
-    padding: 18px;
+    padding: 13px;
 }
 
 .receipt .address {
-  font-size: 18px;
+  font-size: 10px;
   font-family: Open Sans;
 }
 
 .receipt .transactionDetails {
-  font-size: 18px;
+  font-size: 13px;
   margin-bottom: 10px;
   font-family: Open Sans;
 }
@@ -125,11 +126,11 @@ span {
   padding: 5px;
 }
 strong {
-  font-size: 30px;
+  font-size: 16px;
 }
 
 .transactio {
-  font-size: 19px;
+  font-size: 10px;
   font-family: Open Sans;
 }
 

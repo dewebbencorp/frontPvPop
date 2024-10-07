@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol } from '@ionic/react';
 import { documentOutline, checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import INavbarModule from '../../../common/interfaces/INavbarModule';
 import MainLayout from '../../../common/layouts/MainLayout';
 import '../../../theme/Audit.css';
+import useNavigationData from '../../../common/hooks/useNavigationData';
 
 const Audit: React.FC = () => {
   const [tickets, setTickets] = useState([
@@ -20,6 +21,7 @@ const Audit: React.FC = () => {
     { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
 
   ]);
+  const { changeTitle } = useNavigationData();
 
   const history = useHistory();
 
@@ -33,6 +35,10 @@ const Audit: React.FC = () => {
     { title: 'Retiro', path: '/retiro' },
     { title: 'Cortes de Caja', path: '/cortes-caja' },
   ];
+
+  useEffect(() => {
+    changeTitle("Auditorias");
+  }, []);
 
   return (
     <MainLayout>
@@ -75,7 +81,7 @@ const Audit: React.FC = () => {
             </div>
           </IonCol>
         </IonRow>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto table_complete">
           <table className="min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
             <thead className="bg-tableHeader text-white">
               <tr>
