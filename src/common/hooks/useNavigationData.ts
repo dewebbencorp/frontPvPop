@@ -3,11 +3,11 @@ import INavbarModule from '../interfaces/INavbarModule';
 
 const useNavigationData = () => {
   const [modules, setModules] = useState<INavbarModule[]>([
-    { id: '1', title: 'Ventas', path: "/" },
+    { id: '1', title: 'Ventas', path: "/salespoint" },
     { id: '2', title: 'Devolución', path: "/returns" },
-    { id: '3', title: 'Retiros', path: "/returns" },
-    { id: '4', title: 'Auditorias', path: "/returns" },
-    { id: '5', title: 'Cortes', path: "/returns" },
+    { id: '3', title: 'Retiros', path: "/" },
+    { id: '4', title: 'Auditorias', path: "/audit" },
+    { id: '5', title: 'Cortes', path: "/" },
   ]);
 
   const [module, setModule] = useState<string>(() => {
