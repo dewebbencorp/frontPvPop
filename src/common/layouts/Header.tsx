@@ -63,7 +63,7 @@ const Header: React.FC = () => {
               </div>
 
               <div>
-                <span className="text-[1rem] font-bold uppercase">Turno:</span>
+                <span className="text-[1rem] font-bold uppercase">Turno: Lalo </span>
                 <span className="ml-1"> { turn } </span>
               </div>
 
