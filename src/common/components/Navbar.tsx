@@ -1,5 +1,4 @@
 import React from 'react';
-import './Navbar.css';
 import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/react';
 import INavbarModule from '../interfaces/INavbarModule';
 

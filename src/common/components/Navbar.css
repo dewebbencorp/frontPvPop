@@ -1,0 +1,6 @@
+/* Estilos para la cabecera del toolbar */
+ion-toolbar {
+    --background: #1C878F;
+    --color: white;
+    --min-height: 60px;
+}

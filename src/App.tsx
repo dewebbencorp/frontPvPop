@@ -1,7 +1,8 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './modules/home/Home';
+import Login from './pages/Login';
+import PuntoVenta from './pages/PuntoVenta';
 import Returns from './modules/returns/views/Returns';
 
 import '@ionic/react/css/core.css';
@@ -27,8 +28,11 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
+        <Route exact path="/login">
+          <Login />
+        </Route>
         <Route exact path="/home">
-          <Home />
+          <PuntoVenta />
         </Route>
         <Route>
       <Switch>

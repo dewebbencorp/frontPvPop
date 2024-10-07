@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@media (prefers-color-scheme: dark) {
+    :root {
+      --ion-color-primary: #4d8dff;
+      /* Asegúrate de definir cualquier otra variable adicional que uses en el modo oscuro */
+      --ion-color-secondary: #ff8c4d; /* ejemplo de otra variable */
+    }
+  }
+  

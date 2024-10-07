@@ -19,6 +19,8 @@ export default {
           green: '#28A745',
           yellow: '#FFC107',
         },
+      fontFamily: {
+        segoe: ['"Segoe UI"', 'sans-serif'],
       },
     },
   },
