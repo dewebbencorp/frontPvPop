@@ -34,7 +34,6 @@ const App: React.FC = () => (
       <Switch>
         <Route path="/audit" component={Audit} />
         <Route path="/ticket/:remision" component={Ticket} />
-        {/* Otras rutas */}
       </Switch>
     </Route>
         <Route exact path="/">
