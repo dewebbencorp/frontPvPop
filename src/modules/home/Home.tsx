@@ -8,7 +8,6 @@ import {
 import ModuleCard from "../../common/components/ModuleCard";
 import Header from "../../common/layouts/Header";
 import IModuleCard from "../../common/interfaces/IModuleCard";
-import INavbarModule from "../../common/interfaces/INavbarModule";
 import useNavigationData from "../../common/hooks/useNavigationData";
 import React, { useEffect } from "react";
 
@@ -18,6 +17,12 @@ const cardData: IModuleCard[] = [
     subtitle: "Módulo de devoluciónes de productos",
     description: "Devolución de productos por medio de ticket y consulta de NC",
     path: "/returns",
+  },
+  {
+    title: "Devoluciones 2",
+    subtitle: "aaaaaaaaaaaa",
+    description: "alkjsdlkajdksljaskldjaskld",
+    path: "/returns2",
   },
   {
     title: "Retiros",
@@ -31,14 +36,14 @@ const cardData: IModuleCard[] = [
     subtitle: "Módulo para la realización de cortes, y la impresión final",
     description:
       "Carga de denominación nacional, generación del corte e impresión del ticket final",
-    path: "/returns",
+    path: "/audit",
   },
-];
-
-const navbarModules: INavbarModule[] = [
-  { title: "Ventas", path: "/" },
-  { title: "Retiros", path: "/Withdrawal" },
-  { title: "Devoluciones", path: "/Returns" },
+  {
+    title: "Punto de venta",
+    subtitle: "...",
+    description: "...",
+    path: "/salespoint"
+  }
 ];
 
 const Home: React.FC = () => {
