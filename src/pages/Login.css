@@ -1,12 +1,12 @@
-.custom-modal {
-  --width: 50%;
+IonModal {
+  --width: 60%;
   --height: 50%;
   --border-radius: 8px;
 
   text-align: center
 }
 
-.custom-content {
+IonContent {
   text-align: center;
   --width: 50%;
   --height: 50%;

@@ -1,24 +1,17 @@
-import React, { useState } from "react";
-import {
-  IonPage,
-  IonContent,
-  IonButton,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonInput,
-  IonRow,
-  IonCol,
-  IonGrid,
-  IonList,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
-} from "@ionic/react";
-import { searchOutline, addCircleOutline, trashOutline } from "ionicons/icons";
-import Navbar from '../components/Navbar';
+import React, { useEffect, useState } from 'react';
+import useNavigationData from '../common/hooks/useNavigationData';
+import Header from '../common/layouts/Header';
+import ModalPago from '../common/components/ModalPayment'; 
+import { PaymentMethod } from '../common/interfaces/IPaymentMethod'; 
 
 const PuntoVenta: React.FC = () => {
+  const { changeTitle } = useNavigationData();
+
+  useEffect(() => {
+    changeTitle('Ventas');
+  }, []);
+
+
   const [clave, setClave] = useState<string>("");
   const [cantidad, setCantidad] = useState<number>(1);
   const [descuento, setDescuento] = useState<number>(0);
@@ -26,9 +19,19 @@ const PuntoVenta: React.FC = () => {
     { articulo: "SOL CERVEZA ENVASE 12/4", cantidad: 1, precio: 16.5, descuento: 0, total: 16.5 },
     { articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML", cantidad: 1, precio: 140, descuento: 5, total: 133 },
     { articulo: "KISSES CON ALMENDRA", cantidad: 2, precio: 18, descuento: 0, total: 36 },
+    { articulo: "SOL CERVEZA ENVASE 12/4", cantidad: 1, precio: 16.5, descuento: 0, total: 16.5 },
+    { articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML", cantidad: 1, precio: 140, descuento: 5, total: 133 },
+    { articulo: "KISSES CON ALMENDRA", cantidad: 2, precio: 18, descuento: 0, total: 36 },
+
   ]);
   const [total, setTotal] = useState<number>(185.5);
-
+  const [showModalPago, setShowModalPago] = useState(false); 
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>({
+    total: total,
+    currency: 'MXN',
+    amount: total,
+  });
+  
   const handleAgregarArticulo = () => {
     const nuevoArticulo = {
       articulo: "COCA COLA 600ML",
@@ -37,7 +40,24 @@ const PuntoVenta: React.FC = () => {
       descuento: descuento,
       total: cantidad * 20 - (cantidad * 20 * descuento) / 100,
     };
-    setArticulos([...articulos, nuevoArticulo]);
+
+    const articuloExistente = articulos.find((item) => item.articulo === nuevoArticulo.articulo);
+
+    if (articuloExistente) {
+      const articulosActualizados = articulos.map((item) =>
+        item.articulo === nuevoArticulo.articulo
+          ? {
+              ...item,
+              cantidad: item.cantidad + nuevoArticulo.cantidad,
+              total: (item.cantidad + nuevoArticulo.cantidad) * nuevoArticulo.precio - ((item.cantidad + nuevoArticulo.cantidad) * nuevoArticulo.precio * nuevoArticulo.descuento) / 100,
+            }
+          : item
+      );
+      setArticulos(articulosActualizados);
+    } else {
+      setArticulos([...articulos, nuevoArticulo]);
+    }
+
     setTotal(total + nuevoArticulo.total);
   };
 
@@ -48,106 +68,155 @@ const PuntoVenta: React.FC = () => {
     setTotal(updatedTotal);
   };
 
+  const handleCantidadChange = (index: number, nuevaCantidad: number) => {
+    const updatedArticulos = articulos.map((item, i) =>
+      i === index
+        ? {
+            ...item,
+            cantidad: nuevaCantidad,
+            total: nuevaCantidad * item.precio - (nuevaCantidad * item.precio * item.descuento) / 100,
+          }
+        : item
+    );
+    setArticulos(updatedArticulos);
+
+    const nuevoTotal = updatedArticulos.reduce((acc, item) => acc + item.total, 0);
+    setTotal(nuevoTotal);
+  };
+
+  const handlePay = (method: PaymentMethod) => {
+    console.log('Pago realizado con el método:', method);
+    setShowModalPago(false);
+  };
+
+  const updateMethod = (field: string, value: string | number) => {
+    setPaymentMethod((prevState: any) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
   return (
-    <IonPage>
-      <Navbar /> {/* Llama al Navbar aquí */}
+<div className="bg-gray-50 min-h-screen font-segoe">
+  <Header />
+  <div className="p-6">
+    <div className="grid grid-cols-12 gap-6">
+      {/* Columna de inputs y tabla de artículos */}
+      <div className="col-span-8">
+        <div className="grid grid-cols-12 gap-4 mb-6">
+          <div className="col-span-4">
+            <label className="block text-gray-700 mb-1">Clave</label>
+            <input 
+              type="text"
+              value={clave} 
+              placeholder="Clave"
+              onChange={(e) => setClave(e.target.value)} 
+              className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
+            />
+          </div>
 
-      <IonContent className="ion-padding">
-        <IonGrid>
-          <IonRow className="ion-align-items-center">
-            <IonCol size="3">
-              <IonItem>
-                <IonLabel position="stacked">CLAVE:</IonLabel>
-                <IonInput value={clave} placeholder="Clave123" onIonChange={(e) => setClave(e.detail.value!)} />
-              </IonItem>
-            </IonCol>
+          <div className="col-span-2">
+            <label className="block text-gray-700 mb-1">Cantidad</label>
+            <input
+              type="number"
+              value={cantidad}
+              onChange={(e) => setCantidad(parseInt(e.target.value, 10))}
+              className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
+            />
+          </div>
 
-            <IonCol size="3">
-              <IonItem>
-                <IonLabel position="stacked">CANTIDAD:</IonLabel>
-                <IonInput
+          <div className="col-span-2">
+            <label className="block text-gray-700 mb-1">Desc (%)</label>
+            <input
+              type="number"
+              value={descuento}
+              onChange={(e) => setDescuento(parseInt(e.target.value, 10))}
+              className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
+            />
+          </div>
+
+          <div className="col-span-2 flex justify-center items-end">
+            <button 
+              onClick={handleAgregarArticulo} 
+              className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition"
+            >
+              +
+            </button>
+          </div>
+        </div>
+
+        {/* Tabla de artículos */}
+        <div className="shadow-md border border-gray-200 rounded-lg bg-white">
+          <div className="bg-teal-500 text-white py-2 px-4 rounded-t-lg font-semibold text-center">
+            <div className="grid grid-cols-12">
+              <div className="col-span-4">ARTÍCULO</div>
+              <div className="col-span-1 text-center">CANT</div>
+              <div className="col-span-2 text-center">PRECIO</div>
+              <div className="col-span-2 text-center">% DESC</div>
+              <div className="col-span-2 text-center">TOTAL</div>
+              <div className="col-span-1"></div>
+            </div>
+          </div>
+
+          {articulos.map((item, index) => (
+            <div key={index} className="border-b border-gray-200 p-3 grid grid-cols-12 items-center">
+              <div className="col-span-4 text-gray-700 text-[10pt]">{item.articulo}</div>
+              <div className="col-span-1 text-right">
+                <input
                   type="number"
-                  value={cantidad}
-                  placeholder="1"
-                  onIonChange={(e) => setCantidad(parseInt(e.detail.value!, 10))}
+                  value={item.cantidad}
+                  onChange={(e) => handleCantidadChange(index, parseInt(e.target.value, 10))}
+                  className="text-right border border-gray-300 rounded-md p-1 w-full shadow-sm focus:ring-2 focus:ring-teal-500 transition"
                 />
-              </IonItem>
-            </IonCol>
+              </div>
+              <div className="col-span-2 text-center text-gray-700 text-[12pt]">{item.precio.toFixed(2)}</div>
+              <div className="col-span-2 text-center text-gray-700 text-[12pt]">{item.descuento}%</div>
+              <div className="col-span-2 text-center text-gray-700 text-[12pt]">{item.total.toFixed(2)}</div>
+              <div className="col-span-1 text-center">
+                <button 
+                  onClick={() => handleEliminarArticulo(index)} 
+                  className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md transition"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-            <IonCol size="3">
-              <IonItem>
-                <IonLabel position="stacked">DESC (%):</IonLabel>
-                <IonInput
-                  type="number"
-                  value={descuento}
-                  placeholder="0"
-                  onIonChange={(e) => setDescuento(parseInt(e.detail.value!, 10))}
-                />
-              </IonItem>
-            </IonCol>
+      {/* Columna de imagen y total */}
+      <div className="col-span-4 flex flex-col items-center justify-start">
+        <img
+          src="https://www.coca-cola.com/content/dam/onexp/co/es/brands/coca-cola/coca-cola-original/ccso_600ml_750x750.png"
+          alt="Producto"
+          className="w-4/5 h-64 object-contain rounded-md shadow-md"
+        />
 
-            <IonCol size="2">
-              <IonButton expand="block" onClick={handleAgregarArticulo}>
-                <IonIcon icon={addCircleOutline} />
-              </IonButton>
-            </IonCol>
-          </IonRow>
+        <div className="flex justify-between items-center w-full mt-4 text-2xl text-gray-800 text-[18pt]">
+          <span className="text-2xl text-gray-800 text-[14pt]">TOTAL:</span>
+          <span className="text-2xl text-gray-800 font-semibold text-[18pt]">${total.toFixed(2)}</span>
+        </div>
 
-          <IonRow>
-            <IonCol>
-              <IonList>
-                <IonItem>
-                  <IonLabel>ARTÍCULO</IonLabel>
-                  <IonLabel className="ion-text-center">CANT</IonLabel>
-                  <IonLabel className="ion-text-center">PRECIO</IonLabel>
-                  <IonLabel className="ion-text-center">% DESC</IonLabel>
-                  <IonLabel className="ion-text-end">TOTAL</IonLabel>
-                </IonItem>
-                {articulos.map((item, index) => (
-                  <IonItemSliding key={index}>
-                    <IonItem>
-                      <IonLabel>{item.articulo}</IonLabel>
-                      <IonLabel className="ion-text-center">{item.cantidad}</IonLabel>
-                      <IonLabel className="ion-text-center">${item.precio}</IonLabel>
-                      <IonLabel className="ion-text-center">{item.descuento}</IonLabel>
-                      <IonLabel className="ion-text-end">${item.total.toFixed(2)}</IonLabel>
-                    </IonItem>
 
-                    <IonItemOptions side="end">
-                      <IonItemOption color="danger" onClick={() => handleEliminarArticulo(index)}>
-                        <IonIcon icon={trashOutline} />
-                      </IonItemOption>
-                    </IonItemOptions>
-                  </IonItemSliding>
-                ))}
-              </IonList>
-            </IonCol>
+        <button 
+          className="w-full mt-4 bg-teal-500 hover:bg-teal-600 text-white py-2 rounded-md shadow-md transition"
+          onClick={() => setShowModalPago(true)}
+        >
+          PAGAR
+        </button>
+      </div>
+    </div>
 
-            <IonCol size="4">
-              {/* Simula la imagen de un producto */}
-              <img
-                src="https://www.coca-cola.com/content/dam/journey/us/en/private/2017/04/coca-cola-600ml-02.jpg"
-                alt="Producto"
-                style={{ width: "100%" }}
-              />
-            </IonCol>
-          </IonRow>
-
-          <IonRow>
-            <IonCol size="8" />
-            <IonCol size="4">
-              <IonItem lines="none">
-                <IonLabel>TOTAL:</IonLabel>
-                <IonLabel className="ion-text-end">${total.toFixed(2)}</IonLabel>
-              </IonItem>
-              <IonButton expand="block" color="success">
-                PAGAR
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonPage>
+    <ModalPago
+      isOpen={showModalPago}
+      onClose={() => setShowModalPago(false)}
+      method={paymentMethod}
+      onPay={handlePay}
+      updateMethod={updateMethod}
+    />
+  </div>
+</div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   IonButton,
   IonModal,
@@ -19,7 +19,7 @@ import { OverlayEventDetail } from "@ionic/core/components";
 
 import "./Login.css";
 
-function Example() {
+function Login() {
   const modal = useRef<HTMLIonModalElement>(null);
   const input = useRef<HTMLIonInputElement>(null);
 
@@ -49,7 +49,6 @@ function Example() {
           ref={modal}
           trigger="open-modal"
           onWillDismiss={onWillDismiss}
-          className="custom-modal"
         >
           <IonHeader>
             <IonToolbar>
@@ -61,14 +60,26 @@ function Example() {
               </IonButtons>
             </IonToolbar>
           </IonHeader>
-          <IonContent>
-            <IonList inset={true} lines="inset">
+          <IonContent className="custom-content">
+            <IonList inset={true} lines="full">
               <IonItem>
-                <IonInput ref={input} label="Usuario" placeholder="Ingresa tu usuario"></IonInput>
+                <IonInput
+                  ref={input}
+                  label="Usuario"
+                  placeholder="Ingresa tu usuario"
+                  labelPlacement="floating"
+                  clearInput
+                />
               </IonItem>
               <IonItem>
-                <IonInput type="password" label="Clave" placeholder="Ingresa tu clave">
-                  <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
+                <IonInput
+                  type="password"
+                  label="Clave"
+                  placeholder="Ingresa tu clave"
+                  labelPlacement="floating"
+                  clearInput
+                >
+                  <IonInputPasswordToggle slot="end" />
                 </IonInput>
               </IonItem>
             </IonList>
@@ -91,4 +102,4 @@ function Example() {
   );
 }
 
-export default Example;
+export default Login;
