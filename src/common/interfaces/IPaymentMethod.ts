@@ -1,11 +1,12 @@
-export interface PaymentMethod {
+export interface IPaymentMethod {
   total: number;
-  currency: string; // 'MXN', 'USD', 'MIXTO'
+  currency: string;
+  amount?: number;
+  change?: number;
+  cardNumber?: string;
+  roomNumber?: string;
   mxnAmount?: number;
   usdAmount?: number;
   cardAmount?: number;
   roomAmount?: number;
-  change?: number;
-  cardNumber?: string;
-  roomNumber?: string;
 }

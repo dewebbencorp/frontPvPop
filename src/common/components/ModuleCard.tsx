@@ -5,9 +5,8 @@ import IModuleCard from '../interfaces/IModuleCard';
 const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description, path }) => {
     const history = useHistory();
 
-    // Usar el path dinámico que recibimos de los props
-    const handleNavigation = () => {
-        history.push(path); // Ahora usamos el path dinámico
+    const handleHome = () => {
+        history.push(path);
     };
 
     return (
@@ -19,7 +18,7 @@ const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description, path 
 
             <IonCardContent>{description}</IonCardContent>
 
-            <IonButton onClick={handleNavigation} expand="block">
+            <IonButton onClick={handleHome} expand="block">
                 Go to { title }
             </IonButton>
         </IonCard>

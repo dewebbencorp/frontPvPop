@@ -35,7 +35,7 @@ const Audit: React.FC = () => {
   ];
 
   return (
-    <MainLayout navbarModules={navbarModules}>
+    <MainLayout>
       <div className="audit-container">
         <IonRow>
 

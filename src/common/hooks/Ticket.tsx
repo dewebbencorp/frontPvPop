@@ -46,7 +46,7 @@ const Ticket: React.FC = () => {
   ];
 
   return (
-    <MainLayout navbarModules={navbarModules}>
+    <MainLayout>
     <div className="container">
       
       <div className="receipt">
