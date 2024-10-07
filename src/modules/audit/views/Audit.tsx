@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
-import { IonInput, IonButton, IonIcon } from '@ionic/react';
-import { searchOutline, trashOutline, checkmarkCircleOutline, closeCircleOutline, documentOutline } from 'ionicons/icons';
+import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol } from '@ionic/react';
+import { documentOutline, checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
 import INavbarModule from '../../../common/interfaces/INavbarModule';
 import MainLayout from '../../../common/layouts/MainLayout';
+import '../../../theme/Audit.css';
+
 const Audit: React.FC = () => {
   const [tickets, setTickets] = useState([
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00 }
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
+
   ]);
+
+  const history = useHistory();
+
+  const handleViewTicket = (remision: string) => {
+    history.push(`/ticket/${remision}`);
+  };
 
   const navbarModules: INavbarModule[] = [
     { title: 'Ventas', path: '/ventas' },
@@ -17,73 +36,80 @@ const Audit: React.FC = () => {
 
   return (
     <MainLayout navbarModules={navbarModules}>
-      <div className="p-6 bg-gray-50">
-        {/* Formulario de búsqueda */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block mb-2 text-sm font-bold">Movimiento:</label>
-            <IonInput className="border p-2 rounded w-full" placeholder="Ingresa movimiento" />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-bold">Tipo:</label>
-            <IonInput className="border p-2 rounded w-full" placeholder="Ingresa movimiento" />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-bold">Cliente:</label>
-            <IonInput className="border p-2 rounded w-full" placeholder="Ingresa cliente" />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-bold">Desde:</label>
-            <IonInput className="border p-2 rounded w-full" type="date" />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-bold">Hasta:</label>
-            <IonInput className="border p-2 rounded w-full" type="date" />
-          </div>
-        </div>
+      <div className="audit-container">
+        <IonRow>
 
-        <div className="flex space-x-4 mb-6">
-          <IonButton fill="solid" className="footer-button">
-            Buscar
-          </IonButton>
-          <IonButton fill="solid" className="footer-button">
-            Limpiar
-          </IonButton>
-        </div>
 
-        {/* Tabla de auditoría de ventas */}
+          <IonCol size="9" className="px-4 py-2">
+            <div className="inputs-container">
+              <div className="input-group">
+                <label className="label">MOVIMIENTO:</label>
+                <IonInput className="input" />
+              </div>
+              <div className="input-group">
+                <label className="label">DESDE:</label>
+                <IonInput className="input" type="date" />
+              </div>
+              <div className="input-group">
+                <label className="label">HASTA:</label>
+                <IonInput className="input" type="date" />
+              </div>
+
+              <div className="input-group">
+                <label className="label">TIPO:</label>
+                <IonInput className="input" />
+              </div>
+              <div className="input-group">
+                <label className="label">CLIENTE:</label>
+                <IonInput className="input" />
+              </div>
+
+            </div>
+          </IonCol>
+          <IonCol size="2" className="px-4 py-2">
+            <div className="inputs-container">
+              <div className="buttons-container">
+                <IonButton className="buscar-button">Buscar</IonButton>
+                <IonButton className="limpiar-button">Limpiar</IonButton>
+              </div>
+            </div>
+          </IonCol>
+        </IonRow>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
             <thead className="bg-tableHeader text-white">
               <tr>
-                <th className="px-4 py-2 border border-tableBorder">Remisión</th>
-                <th className="px-4 py-2 border border-tableBorder">Fecha</th>
-                <th className="px-4 py-2 border border-tableBorder">Cliente</th>
-                <th className="px-4 py-2 border border-tableBorder">Tipo</th>
-                <th className="px-4 py-2 border border-tableBorder">Total</th>
-                <th className="px-4 py-2 border border-tableBorder">Acciones</th>
+                <th>REMISIÓN</th>
+                <th>FECHA</th>
+                <th>CLIENTE</th>
+                <th>TIPO</th>
+                <th>TOTAL</th>
+                <th>CX</th>
+                <th>CORT</th>
+                <th>COM</th>
+                <th>ACCIONES</th>
               </tr>
             </thead>
-            <tbody className="bg-tableBackground text-gray-700">
+            <tbody>
               {tickets.map((ticket, index) => (
-                <tr key={index} className="text-center border border-tableBorder">
-                  <td className="px-4 py-2">{ticket.remision}</td>
-                  <td className="px-4 py-2">{ticket.fecha}</td>
-                  <td className="px-4 py-2">{ticket.cliente}</td>
-                  <td className="px-4 py-2">{ticket.tipo}</td>
-                  <td className="px-4 py-2">${ticket.total}</td>
-                  <td className="px-4 py-2 flex justify-center space-x-2">
-                    <IonButton className="bg-actionIconBg.blue p-2 shadow-md">
+                <tr key={index} className="text-center">
+                  <td>{ticket.remision}</td>
+                  <td>{ticket.fecha}</td>
+                  <td>{ticket.cliente}</td>
+                  <td>{ticket.tipo}</td>
+                  <td>${ticket.total}</td>
+                  <td><IonCheckbox checked={ticket.cx} /></td>
+                  <td><IonCheckbox checked={ticket.cort} /></td>
+                  <td><IonCheckbox checked={ticket.com} /></td>
+                  <td>
+                    <IonButton className='ticket-button' onClick={() => handleViewTicket(ticket.remision)}>
                       <IonIcon icon={documentOutline} />
                     </IonButton>
-                    <IonButton className="bg-actionIconBg.red p-2 shadow-md">
-                      <IonIcon icon={trashOutline} />
-                    </IonButton>
-                    <IonButton className="bg-actionIconBg.green p-2 shadow-md">
-                      <IonIcon icon={checkmarkCircleOutline} />
-                    </IonButton>
-                    <IonButton className="bg-actionIconBg.yellow p-2 shadow-md">
+                    <IonButton className="close-button">
                       <IonIcon icon={closeCircleOutline} />
+                    </IonButton>
+                    <IonButton className="check-button">
+                      <IonIcon icon={checkmarkCircleOutline} />
                     </IonButton>
                   </td>
                 </tr>

@@ -11,7 +11,7 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children, navbarModules }) => {
   return (
-    <IonPage>
+    <IonPage style={{ backgroundColor: '#F0F8FF' }}>
         
       <Header />
 

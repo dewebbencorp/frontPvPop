@@ -2,3 +2,7 @@
     overflow-x: auto;
     border-radius: 16px;
 }
+
+.imputForm {
+    background: #000000;
+}

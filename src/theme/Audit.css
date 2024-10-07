@@ -1,0 +1,103 @@
+.audit-container {
+    background-color: #F0F8FF;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%; 
+}
+
+.label {
+    font-weight: bold;
+    margin-right: 10px;
+    flex-basis: 42px;
+    font-family: Segoe UI-MONOSPACE !important;
+    font-size: 13px;
+}
+
+.input {
+    padding: 0 0 0 8px !important;
+    border-radius: 16px;
+    background-color: #ffffffbf;
+    flex-grow: 1;
+    box-shadow: 0px 4px 4px -2px rgb(0 0 0 / 54%);
+
+}
+
+.inputs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 100%;
+}
+
+.buscar-button, .limpiar-button {
+    --border-radius: 8px !important;
+    --padding: 8px 16px !important;
+    flex-shrink: 0;
+}
+
+.buscar-button {
+    --background: #4699dd !important;
+    --color: white !important;
+}
+
+.limpiar-button {
+    --background: #a91d3a !important;
+    --color: white !important;
+}
+
+.ticket-button, .close-button, .check-button {
+    --border-radius: 20px !important;
+    --padding: 8px 16px !important;
+    flex-shrink: 0;
+}
+
+.ticket-button {
+    --background: #4699dd  !important;
+    --color: white !important;
+}
+.close-button {
+    --background: #c04541 !important;
+    --color: white !important;
+}
+.check-button {
+    --background: #63a03b !important;
+    --color: white !important;
+}
+
+table {
+    width: 100%;
+}
+
+.bg-tableHeader {
+    background-color: #008080;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+thead th {
+    background-color: #008080;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

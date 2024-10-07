@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './modules/home/Home';
@@ -19,6 +19,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 import './theme/variables.css';
 import './theme/App.css'
 import Audit from '../src/modules/audit/views/Audit.js';
+import Ticket from './common/hooks/Ticket';
 
 setupIonicReact();
 
@@ -29,9 +30,13 @@ const App: React.FC = () => (
         <Route exact path="/home">
           <Home />
         </Route>
-        <Route exact path="/audit">
-          <Audit /> {/* Agrega la ruta para Audit */}
-        </Route>
+        <Route>
+      <Switch>
+        <Route path="/audit" component={Audit} />
+        <Route path="/ticket/:remision" component={Ticket} />
+        {/* Otras rutas */}
+      </Switch>
+    </Route>
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>
