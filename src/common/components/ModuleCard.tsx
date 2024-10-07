@@ -5,8 +5,8 @@ import IModuleCard from '../interfaces/IModuleCard';
 const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description, path }) => {
     const history = useHistory();
 
-    const handleHome = () => {
-        history.push(path);
+    const handleNavigation = () => {
+        history.push(path); 
     };
 
     return (
@@ -18,7 +18,7 @@ const ModuleCard: React.FC<IModuleCard> = ({ title, subtitle, description, path 
 
             <IonCardContent>{description}</IonCardContent>
 
-            <IonButton onClick={handleHome} expand="block">
+            <IonButton onClick={handleNavigation} expand="block">
                 Go to { title }
             </IonButton>
         </IonCard>
