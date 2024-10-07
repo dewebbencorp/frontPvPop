@@ -20,7 +20,7 @@ const Returns2: React.FC = () => {
       <IonContent fullscreen>
         <div className='mainContent flex justify-between flex-col gap-4'>
 
-          <div className='w-full flex justify-between items-start'>
+          <div className='w-full flex justify-between items-center'>
             <div className='grow max-w-min h-full flex flex-col gap-4'>
 
               <div className='flex flex-row gap-4 items-center h-10'>
@@ -43,16 +43,16 @@ const Returns2: React.FC = () => {
                     <input type="checkbox" className='min-w-10'/>
                     <input type="text" placeholder='29/10/2024' className='p-2 rounded-lg bg-white text-black w-[7.5rem]'/>
                   </div>
-                  <input type="text" placeholder='5:21 P.M.' className='p-2 rounded-lg bg-white text-black w-28 max-w-36'/>
+                  <input type="text" placeholder='10:51 A.M.' className='p-2 rounded-lg bg-white text-black w-28 max-w-36'/>
                 </div>
               </div>
             </div>
 
-            <div className='w-[372px] flex flex-col gap-2 bg-button-danger p-2 rounded-lg'>
+            <div className='w-[372px] h-full flex flex-col gap-2 bg-button-danger p-2 rounded-lg'>
 
               <div className='flex flex-row gap-2 items-center h-10 w-full'>
                 <span className='text-white font-bold uppercase text-[1rem] w-24'> Cargar Ticket: </span>
-                <input type="text" placeholder='486926' className='p-2 rounded-lg bg-white text-black grow'/>
+                <input type="text" placeholder='10:51 A.M.' className='p-2 rounded-lg bg-white text-black grow'/>
                 <button className='flex w-10 h-10 bg-button-primary rounded-lg justify-center items-center'>
                   <SearchIcon/>
                 </button>
@@ -60,22 +60,30 @@ const Returns2: React.FC = () => {
 
               <div className='flex flex-row gap-2 items-center h-10 w-full'>
                 <span className='text-white font-bold uppercase text-[1rem] w-24'> buscar nc: </span>
-                <input type="text" placeholder='53' className='p-2 rounded-lg bg-white text-black grow'/>
+                <input type="text" placeholder='10:51 A.M.' className='p-2 rounded-lg bg-white text-black grow'/>
                 <button className='flex w-10 h-10 bg-button-primary rounded-lg justify-center items-center'>
                   <SearchIcon/>
                 </button>
+              </div>
+
+              <div className='flex flex-row gap-2 items-center h-10 w-full'>
+                <span className='text-white font-bold uppercase text-[1rem] min-w-24'> fecha nc: </span>
+                <div className='flex gap-2 grow max-w-full'>
+                  <input type="text" placeholder='29/10/2024' className='p-2 rounded-lg bg-white text-black w-[122px]'/>
+                  <input type="text" placeholder='10:51 A.M.' className='p-2 rounded-lg bg-white text-black w-[122px]'/>
+                </div>
               </div>
             </div>
           </div>
 
           <div className='flex grow justify-between gap-2'>
             {/* Tabla */}
-            <div className='w-[48rem] max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg'>
+            <div className='w-[768px] max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg'>
               <TableReturns/>
             </div>
             {/* Tabla */}
             {/* Resumen */}
-            <div className='flex flex-col items-center gap-4 max-w-[200px]'>
+            <div className='flex flex-col items-center gap-4 grow'>
               <div className='w-full flex flex-col p-2 rounded-lg gap-1 h-min bg-white items-center shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]'>
                 <div className='flex w-full justify-start gap-4 items-center'>
                   <span className='text-[1rem] uppercase max-w-20 w-20'> Suma: </span>
@@ -98,7 +106,7 @@ const Returns2: React.FC = () => {
                   <span className='grow font-semibold text-[1rem] p-2 bg-button-primary text-white rounded-[0.5rem]'> $ 2000.00 </span>
                 </div>
               </div>
-                <button className='font-bold bg-button-success p-2 text-center rounded-lg w-[156px] text-white uppercase shadow-[0.125rem_0.35rem_0.5rem_rgba(0,0,0,0.35)]' id="alert-nc"> Guardar </button>
+                {/* <button className='font-bold bg-button-success p-2 text-center rounded-lg w-[156px] text-white uppercase shadow-[0.125rem_0.35rem_0.5rem_rgba(0,0,0,0.35)]' id="alert-nc"> Guardar </button> */}
             </div>
             {/* Resumen */}
           </div>

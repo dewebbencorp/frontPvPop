@@ -3,6 +3,7 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './modules/home/Home';
 import Returns from './modules/returns/views/Returns';
+import Returns2 from './modules/returns/views/Returns2';
 
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
@@ -33,6 +34,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/returns">
           <Returns />
+        </Route>
+        <Route exact path="/returns2">
+          <Returns2 />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
