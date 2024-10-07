@@ -9,7 +9,7 @@ const PuntoVenta: React.FC = () => {
   const { changeTitle } = useNavigationData();
 
   useEffect(() => {
-    changeTitle("Ventas");
+    changeTitle("Puntos de Venta");
   }, []);
 
   const [clave, setClave] = useState<string>("");
