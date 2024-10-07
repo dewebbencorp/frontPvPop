@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { IonContent, IonPage, IonInput, IonButton, IonIcon, IonCheckbox, IonAlert } from '@ionic/react';
 import SearchIcon from '../../../common/icons/SearchIcon';
-import Navbar from '../../../common/components/Navbar';
 import TableReturns from '../components/TableReturns';
 import useNavigationData from '../../../common/hooks/useNavigationData';
-import Header from '../../../common/layouts/Header';
 import '../../../theme/Returns.css'
+import MainLayout from '../../../common/layouts/MainLayout';
+import { IonAlert } from '@ionic/react';
 
 const Returns2: React.FC = () => {
   const { changeTitle } = useNavigationData();
@@ -15,10 +14,8 @@ const Returns2: React.FC = () => {
   }, []);
 
   return (
-    <IonPage>
-      <Header/>
-
-      <IonContent fullscreen>
+    <>
+      <MainLayout>
         <div className='mainContent flex justify-between flex-col gap-4'>
 
           <div className='w-full flex justify-between items-start'>
@@ -105,24 +102,22 @@ const Returns2: React.FC = () => {
           </div>
           
         </div>
-      </IonContent>
-
-      <Navbar/>
+      </MainLayout>
       <IonAlert
-        header="¡Nota de crédito generada!"
-        trigger="alert-nc"
-        buttons={[
-          {
-            text: 'OK',
-            role: 'confirm',
-            handler: () => {
-              console.log('Nueva nota de crédito generada');
-            },
+      header="¡Nota de crédito generada!"
+      trigger="alert-nc"
+      buttons={[
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            console.log('Nueva nota de crédito generada');
           },
-        ]}
-        onDidDismiss={({ detail }) => console.log(`Dismissed with role: ${detail.role}`)}
+        },
+      ]}
+      onDidDismiss={({ detail }) => console.log(`Dismissed with role: ${detail.role}`)}
       ></IonAlert>
-    </IonPage>
+      </>
   );
 };
 

@@ -8,7 +8,7 @@ const Returns = React.lazy(() => import('./modules/returns/views/Returns'));
 const Returns2 = React.lazy(() => import('./modules/returns/views/Returns2'));
 const Audit = React.lazy(() => import('../src/modules/audit/views/Audit.js'));
 const Ticket = React.lazy(() => import('./common/hooks/Ticket'));
-
+const PuntoVenta = React.lazy(() => import('./modules/salesPoint/views/PuntoVenta'))
 // Ionic styles
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
@@ -45,7 +45,9 @@ const App: React.FC = () => (
           <Route exact path="/returns2">
             <Returns2 />
           </Route>
-
+          <Route exact path="/salespoint">
+            <PuntoVenta />
+          </Route>
           <Switch>
             <Route path="/audit" component={Audit} />
             <Route path="/ticket/:remision" component={Ticket} />

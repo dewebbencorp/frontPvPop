@@ -36,8 +36,14 @@ const cardData: IModuleCard[] = [
     subtitle: "Módulo para la realización de cortes, y la impresión final",
     description:
       "Carga de denominación nacional, generación del corte e impresión del ticket final",
-    path: "/returns",
+    path: "/audit",
   },
+  {
+    title: "Punto de venta",
+    subtitle: "...",
+    description: "...",
+    path: "/salespoint"
+  }
 ];
 
 const Home: React.FC = () => {
