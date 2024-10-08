@@ -55,7 +55,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
       <div className="col-span-2 flex justify-center items-end">
         <button
           onClick={handleAgregarArticulo}
-          className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition"
+          className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition text-[14pt]"
         >
           +
         </button>

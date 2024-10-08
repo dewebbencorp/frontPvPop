@@ -7,7 +7,7 @@ import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
 import TotalDisplay from "../components/TotalDisplay";
 
-const PuntoVenta: React.FC = () => {
+const SalesPoint: React.FC = () => {
   const { changeTitle } = useNavigationData();
 
   useEffect(() => {
@@ -18,12 +18,41 @@ const PuntoVenta: React.FC = () => {
   const [cantidad, setCantidad] = useState<number>(1);
   const [descuento, setDescuento] = useState<number>(0);
   const [articulos, setArticulos] = useState([
-    { articulo: "SOL CERVEZA ENVASE 12/4", cantidad: 1, precio: 16.5, descuento: 0, total: 16.5 },
-    { articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML", cantidad: 1, precio: 140, descuento: 5, total: 133 },
-    { articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML", cantidad: 1, precio: 140, descuento: 5, total: 133 },
-    { articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML", cantidad: 1, precio: 140, descuento: 5, total: 133 },
-    { articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML", cantidad: 1, precio: 140, descuento: 5, total: 133 },
-
+    {
+      articulo: "SOL CERVEZA ENVASE 12/4",
+      cantidad: 1,
+      precio: 16.5,
+      descuento: 0,
+      total: 16.5,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },
   ]);
   const [total, setTotal] = useState<number>(0);
   const [showModalPago, setShowModalPago] = useState(false);
@@ -142,4 +171,4 @@ const PuntoVenta: React.FC = () => {
   );
 };
 
-export default PuntoVenta;
+export default SalesPoint;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface ProductTableProps {
   articulos: Array<{
@@ -17,9 +17,18 @@ const ProductTable: React.FC<ProductTableProps> = ({
   handleCantidadChange,
   handleEliminarArticulo,
 }) => {
+  const lastItemRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (lastItemRef.current) {
+      lastItemRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+      lastItemRef.current.focus();
+    }
+  }, [articulos]);
+
   return (
     <div className="shadow-md border border-gray-200 rounded-lg bg-white">
-      <div className="bg-teal-500 text-white py-2 px-4 rounded-t-lg font-semibold text-center sticky top-0">
+      <div className="bg-myFriend-700 text-white py-2 px-4 rounded-t-lg font-semibold text-center sticky top-0 z-10">
         <div className="grid grid-cols-12">
           <div className="col-span-4">ARTÍCULO</div>
           <div className="col-span-1 text-center">CANT</div>
@@ -30,16 +39,14 @@ const ProductTable: React.FC<ProductTableProps> = ({
         </div>
       </div>
 
-      {/* Aquí aplicamos el scroll si hay más de 5 artículos */}
       <div
-        className={`${
-          articulos.length > 5 ? "overflow-y-auto h-65" : ""
-        }`} // max-h-60 es un ejemplo de altura máxima
+        className={`${articulos.length > 5 ? "overflow-y-auto max-h-72" : ""}`}
       >
         {articulos.map((item, index) => (
           <div
             key={index}
             className="border-b border-gray-200 p-3 grid grid-cols-12 items-center"
+            ref={index === articulos.length - 1 ? lastItemRef : null}
           >
             <div className="col-span-4 text-gray-700 text-[10pt]">
               {item.articulo}
@@ -51,22 +58,22 @@ const ProductTable: React.FC<ProductTableProps> = ({
                 onChange={(e) =>
                   handleCantidadChange(index, parseInt(e.target.value, 10))
                 }
-                className="text-right border border-gray-300 rounded-md p-1 w-full shadow-sm focus:ring-2 focus:ring-teal-500 transition"
+                className="text-center border border-gray-300 rounded-md p-1 w-full shadow-sm focus:ring-2 focus:ring-teal-500 transition"
               />
             </div>
-            <div className="col-span-2 text-center text-gray-700 text-[12pt]">
+            <div className="col-span-2 text-center text-gray-700 text-[11pt]">
               {item.precio.toFixed(2)}
             </div>
-            <div className="col-span-2 text-center text-gray-700 text-[12pt]">
+            <div className="col-span-2 text-center text-gray-700 text-[11pt]">
               {item.descuento}%
             </div>
-            <div className="col-span-2 text-center text-gray-700 text-[12pt]">
+            <div className="col-span-2 text-center text-gray-700 text-[11pt]">
               {item.total.toFixed(2)}
             </div>
             <div className="col-span-1 text-center">
               <button
                 onClick={() => handleEliminarArticulo(index)}
-                className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md transition"
+                className="bg-red-500 hover:bg-red-600 rounded-md text-white  px-2 transition text-[14pt]"
               >
                 ×
               </button>
