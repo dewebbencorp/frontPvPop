@@ -20,7 +20,7 @@ const Ticket: React.FC = () => {
     cliente: 'PUBLICO EN GENERAL',
     productos: [
       { descripcion: 'AUSTRALIAN LE', cantidad: 1, precio_unitario: 241.38, total: 241.38 },
-      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
       { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
       { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
       { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
@@ -96,6 +96,9 @@ const Ticket: React.FC = () => {
             <span>${producto.total.toFixed(2)}</span>
           </div>
         ))}
+        </div>
+        <div className="center bold">
+          ****************************************************
         </div>
        <div className='content-total'>
        <div className="total">

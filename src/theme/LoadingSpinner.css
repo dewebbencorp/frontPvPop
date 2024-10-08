@@ -1,52 +1,140 @@
-/* src/common/components/LoadingSpinner.css */
-
 .loader-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.7); /* Fondo opaco */
-    z-index: 1000; /* Para asegurarse de que esté al frente */
-  }
-  
-  .loader {
-    position: relative;
-    font-size: 48px;
-    letter-spacing: 6px;
-  }
-  
-  .loader:before {
-    content: "Loading";
-    color: #fff;
-  }
-  
-  .loader:after {
-    content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #F0F8FF;
+  z-index: 1000;
+}
+
+.loader {
+  position: relative;
+  font-size: 58px;
+  letter-spacing: 6px;
+  margin-bottom: 20px;
+  font-family: Segoe UI;
+}
+
+.loader:before {
+  content: "Loading";
+  color: #000000;
+}
+
+.loader:after {
+  content: "";
     width: 20px;
     height: 20px;
     background-color: #3AAAA8;
-    background-image: radial-gradient(circle 2px, #fff4 100%, transparent 0),
-      radial-gradient(circle 1px, #fff3 100%, transparent 0);
+    background-image: radial-gradient(circle 2px, #fff4 100%, transparent 0), radial-gradient(circle 1px, #fff3 100%, transparent 0);
     background-position: 14px -4px, 12px -1px;
     border-radius: 50%;
     position: absolute;
     margin: auto;
-    top: 6px;
-    right: 66px;
+    top: 19px;
+    right: 85px;
     transform-origin: center bottom;
     animation: fillBalloon 1s ease-in-out infinite alternate;
-  }
-  
-  @keyframes fillBalloon {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(3);
-    }
-  }
-  
+}
+
+@keyframes fillBalloon {
+  0% { transform: scale(1); }
+  100% { transform: scale(3); }
+}
+
+/* Estilo del texto "My Friend" */
+.my-friend-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.logo-text {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.main-text {
+  font-size: 36px;
+  color: #ac1f2d; /* Color rojo para "My" */
+  margin-right: 5px;
+}
+
+.sub-text {
+  font-size: 36px;
+  color: #ac1f2d; /* Color verde azulado para "Friend" */
+}
+
+
+/* Contenedor principal */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #2b8f92;
+  height: 300px;
+}
+
+/* Óvalo de fondo */
+.logo-oval {
+  background-color: white;
+  border: 3px solid #2b8f92;
+  border-radius: 50% / 35%;
+  padding: 30px 40px;
+  position: relative;
+  text-align: center;
+  top: -36px;
+}
+
+/* Texto "My" */
+.logo-main {
+  font-size: 36px;
+  font-weight: bold;
+  color: #b72c2e;
+  font-family: Arial, sans-serif;
+  display: block;
+  text-shadow: 2px 2px #fff;
+}
+
+/* Texto "Friend" */
+.logo-friend {
+  font-size: 48px;
+  font-weight: bold;
+  color: #b72c2e;
+  font-family: Arial, sans-serif;
+  display: block;
+  margin-top: -10px;
+  text-shadow: 2px 2px #fff;
+}
+
+/* Texto de subcategoría */
+.logo-subtext {
+  font-size: 14px;
+  color: #2b8f92;
+  font-family: Arial, sans-serif;
+  margin-top: 5px;
+  letter-spacing: 2px;
+}
+
+/* Tag de "MR" en la esquina superior derecha */
+/* .logo-tag {
+  position: absolute;
+  top: -20px;
+  right: -10px;
+  background-color: white;
+  border: 2px solid #2b8f92;
+  border-radius: 0 0 10px 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #2b8f92;
+} */
+
+

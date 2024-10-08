@@ -36,18 +36,34 @@
 
 .table-descripcion {
   margin-top: 15px;
-  border-top: 1px dashed #000;
-  border-bottom: 1px dashed #000;
+  /* border-top: 1px dashed #000;
+  border-bottom: 1px dashed #000; */
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-left: -1.5rem;
 }
 
 .table-header span,
 .table-row span {
-  width: 100%;
   font-family: Open Sans;
   text-align: center !important;
   font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.table-row span:nth-child(1) {
+  width: 20%;
+}
+
+.table-row span:nth-child(2) {
+  width: 55%;
+}
+
+.table-row span:nth-child(3),
+.table-row span:nth-child(4) {
+  width: 17.5%;
 }
 
 .paymentDetails,
