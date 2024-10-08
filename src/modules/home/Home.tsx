@@ -8,8 +8,7 @@ import {
 import ModuleCard from "../../common/components/ModuleCard";
 import Header from "../../common/layouts/Header";
 import IModuleCard from "../../common/interfaces/IModuleCard";
-import useNavigationData from "../../common/hooks/useNavigationData";
-import React, { useEffect } from "react";
+import React from "react";
 
 const cardData: IModuleCard[] = [
   {
@@ -47,12 +46,6 @@ const cardData: IModuleCard[] = [
 ];
 
 const Home: React.FC = () => {
-  const { changeTitle } = useNavigationData();
-
-  useEffect(() => {
-    changeTitle("Home");
-  }, []);
-
   return (
     <IonPage>
       <Header />

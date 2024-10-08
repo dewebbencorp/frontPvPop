@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton } from "@ionic/react";
+import { useLocation } from "react-router-dom";
 import useNavigationData from '../hooks/useNavigationData';
 import useSesionData from "../hooks/useSesionData";
 
 const Header: React.FC = () => {
-  const { title} = useNavigationData();
+  const { title, changeTitle } = useNavigationData();
   const { user, store, turn } = useSesionData();
+  const location = useLocation();
 
   const [currentTime, setCurrentTime] = useState<string>("");
 
@@ -32,50 +34,55 @@ const Header: React.FC = () => {
     };
 
     setCurrentTime(formatDate());
-
-    const intervalId = setInterval(() => {
-      setCurrentTime(formatDate());
-    }, 60000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
-  return (
-    <>
-      <IonHeader>
-        <IonToolbar>
-          <div className="flex w-full flex-row items-center justify-between gap-4">
-            <div className="flex flex-row items-center min-w-80">
-              <IonButtons slot="start">
-                <IonBackButton defaultHref="/Home"></IonBackButton>
-              </IonButtons>
+  useEffect(() => {
+    if (location.pathname.startsWith("/ticket")) {
+      changeTitle("Previsualización");
+    } else if (location.pathname === "/home") {
+      changeTitle("Home");
+    } else if (location.pathname === "/audit") {
+      changeTitle("Auditorías");
+    }
+  }, [location, changeTitle]);
 
-              <span className="font-bold text-[1.125rem] uppercase"> { title } </span>
+  const backButtonHref = location.pathname.startsWith("/ticket") ? "/audit" : "/home";
+
+  return (
+    <IonHeader>
+      <IonToolbar>
+        <div className="flex w-full flex-row items-center justify-between gap-4">
+          <div className="flex flex-row items-center min-w-80">
+            {location.pathname !== "/home" && (
+              <IonButtons slot="start">
+                <IonBackButton defaultHref={backButtonHref}></IonBackButton>
+              </IonButtons>
+            )}
+            <span className="font-bold text-[1.125rem] uppercase"> { title } </span>
+          </div>
+
+          <div className="w-full px-4 flex flex-row justify-between items-center">
+            <div>
+              <span className="text-[1rem] font-bold uppercase"> { store } </span>
             </div>
 
-            <div className="w-full px-4 flex flex-row justify-between items-center">
-              <div>
-                <span className="text-[1rem] font-bold uppercase"> { store } </span>
-              </div>
+            <div>
+              <span className="text-[1rem] font-bold uppercase"> { currentTime } </span>
+            </div>
 
-              <div>
-                <span className="text-[1rem] font-bold uppercase"> { currentTime } </span>
-              </div>
+            <div>
+              <span className="text-[1rem] font-bold uppercase">Turno: Lalo </span>
+              <span className="ml-1"> { turn } </span>
+            </div>
 
-              <div>
-                <span className="text-[1rem] font-bold uppercase">Turno: Lalo </span>
-                <span className="ml-1"> { turn } </span>
-              </div>
-
-              <div>
-                <span className="text-[1rem] font-bold uppercase">Usuario:</span>
-                <span className="ml-1"> { user } </span>
-              </div>
+            <div>
+              <span className="text-[1rem] font-bold uppercase">Usuario:</span>
+              <span className="ml-1"> { user } </span>
             </div>
           </div>
-        </IonToolbar>
-      </IonHeader>
-    </>
+        </div>
+      </IonToolbar>
+    </IonHeader>
   );
 };
 

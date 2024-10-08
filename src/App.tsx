@@ -32,12 +32,11 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Muestra el loading por 3 segundos
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Cambia el tiempo según lo necesites
+    }, 2000); 
 
-    return () => clearTimeout(timer); // Limpia el timer al desmontar
+    return () => clearTimeout(timer);
   }, []);
 
   if (isLoading) {
