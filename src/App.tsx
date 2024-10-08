@@ -25,6 +25,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 // App and custom theme
 import './theme/variables.css';
 import './theme/App.css';
+import LoadingSpinner from './common/components/LoadingSpinner';
 
 setupIonicReact();
 
@@ -32,7 +33,7 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
           <Route exact path="/home">
             <Home />
           </Route>

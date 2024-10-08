@@ -25,7 +25,7 @@
 
 .center {
   text-align: center;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .table-header,
@@ -126,11 +126,11 @@ span {
   padding: 5px;
 }
 strong {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .transactio {
-  font-size: 10px;
+  font-size: 11px;
   font-family: Open Sans;
 }
 

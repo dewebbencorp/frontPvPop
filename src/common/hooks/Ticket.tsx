@@ -27,6 +27,14 @@ const Ticket: React.FC = () => {
       { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
       { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
       { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'AUSTRALIAN LE', cantidad: 1, precio_unitario: 241.38, total: 241.38 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
+      { descripcion: 'KUALI PLUMA M', cantidad: 1, precio_unitario: 86.21, total: 86.21 },
     ],
     importe: 327.59,
     descuento: 0.00,
@@ -69,12 +77,12 @@ const Ticket: React.FC = () => {
           <div className='transactio'>Cajero: {ticket.cajero}</div>
         </div>
         <div className="center bold">
-          ============================
+          ****************************************************
         </div>
         <div className="center bold">CLIENTE: 1</div>
         <div className="center">{ticket.cliente}</div>
         <div className="center bold">
-          ============================
+          ****************************************************
         </div>
         <div className='table-descripcion'>
           <div className="table-row">
@@ -124,7 +132,7 @@ const Ticket: React.FC = () => {
        </div>
         
         <div className="center bold">
-          ============================
+          ****************************************************
         </div>
         <div className="center">GRACIAS POR SU COMPRA</div>
         <div className="center">NO HAY DEVOLUCIONES DE EFECTIVO</div>
