@@ -20,6 +20,9 @@
     font-family: Segoe UI-MONOSPACE !important;
     font-size: 13px;
 }
+.table_complete {
+    border-radius: 19px;
+}
 
 .input {
     padding: 0 0 0 8px !important;

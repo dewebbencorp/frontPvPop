@@ -8,8 +8,8 @@ const Home = React.lazy(() => import('./modules/home/Home'));
 const Returns = React.lazy(() => import('./modules/returns/views/Returns'));
 const Returns2 = React.lazy(() => import('./modules/returns/views/Returns2'));
 const Audit = React.lazy(() => import('../src/modules/audit/views/Audit.js'));
-const Ticket = React.lazy(() => import('./common/hooks/Ticket'));
-const PuntoVenta = React.lazy(() => import('./modules/salesPoint/views/SalesPoint'))
+const Ticket = React.lazy(() => import('./common/hooks/Ticket.js'));
+const SalesPoint = React.lazy(() => import('./modules/salesPoint/views/SalesPoint'))
 // Ionic styles
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
@@ -25,8 +25,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 // App and custom theme
 import './theme/variables.css';
-import './theme/App.css'
 import './theme/App.css';
+import LoadingSpinner from './common/components/LoadingSpinner';
 
 setupIonicReact();
 
@@ -34,7 +34,7 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
           <Route exact path="/home">
             <Home />
           </Route>
@@ -51,7 +51,7 @@ const App: React.FC = () => (
             <Returns2 />
           </Route>
           <Route exact path="/salespoint">
-            <PuntoVenta />
+            <SalesPoint />
           </Route>
           <Switch>
             <Route path="/audit" component={Audit} />

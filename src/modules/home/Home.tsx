@@ -32,7 +32,7 @@ const cardData: IModuleCard[] = [
     path: "/returns",
   },
   {
-    title: "Cortes",
+    title: "Auditoria",
     subtitle: "Módulo para la realización de cortes, y la impresión final",
     description:
       "Carga de denominación nacional, generación del corte e impresión del ticket final",

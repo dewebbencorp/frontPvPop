@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import "./Navbar.css";
-import {  IonLabel, IonFooter, IonButton } from "@ionic/react";
+import {  IonLabel, IonFooter } from "@ionic/react";
 import useNavigationData from "../hooks/useNavigationData";
 import CloseIcon from "../icons/CloseIcon";
 import LogoutIcon from "../icons/LogoutIcon";
+import HamburgerIcon from "../icons/Hamburger"
 
 const Navbar: React.FC = () => {
   const { modules } = useNavigationData();
   const [showNavbar, setShowNavbar] = useState(true);
+  const history = useHistory();
 
   const moduleColors = [
     { color: "#1C878F", hoverColor: "#176d73" },
@@ -37,6 +40,9 @@ const Navbar: React.FC = () => {
               onMouseLeave={(e) =>
                 (e.currentTarget.style.backgroundColor = moduleColors[index].color)
               }
+              onClick={() => {
+                history.push(module.path)
+              }}
             >
               <IonLabel className="font-semibold text-white">{module.title}</IonLabel>
             </button>
@@ -52,6 +58,9 @@ const Navbar: React.FC = () => {
             onMouseLeave={(e) =>
               (e.currentTarget.style.backgroundColor = "#d11439")
             }
+            onClick={() => {
+              history.push('/')
+            }}
           >
             <LogoutIcon/>
           </button>
@@ -73,7 +82,9 @@ const Navbar: React.FC = () => {
         </div>
         ) : (
           <div className="flex w-full items-center justify-end px-4 bg-background">
-            <IonButton className="w-10 rounded-[0.5rem]" onClick={() => setShowNavbar(true)}> X </IonButton>
+            <button className="w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center" onClick={() => setShowNavbar(true)}> 
+              <HamburgerIcon/>
+            </button>
           </div>
         )}
       </IonFooter>
