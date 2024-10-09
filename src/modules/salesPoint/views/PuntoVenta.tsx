@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { IonIcon } from '@ionic/react';
 import useNavigationData from "../../../common/hooks/useNavigationData";
 import ModalPago from "../components/ModalPayment";
 import { IPaymentMethod } from '../../../common/interfaces/IPaymentMethod'
 import MainLayout from "../../../common/layouts/MainLayout";
-
-
+import { close, add } from 'ionicons/icons';
 const PuntoVenta: React.FC = () => {
   const { changeTitle } = useNavigationData();
 
@@ -188,7 +188,7 @@ const PuntoVenta: React.FC = () => {
                       onClick={handleAgregarArticulo}
                       className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition"
                     >
-                      +
+                      <IonIcon aria-hidden="true" icon={add} slot="start" className="h-7 items-center flex w-7"></IonIcon>
                     </button>
                   </div>
                 </div>
@@ -238,7 +238,7 @@ const PuntoVenta: React.FC = () => {
                           onClick={() => handleEliminarArticulo(index)}
                           className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md transition"
                         >
-                          ×
+                          <IonIcon aria-hidden="true" icon={close} slot="start" className="h-7 items-center flex w-7"></IonIcon>
                         </button>
                       </div>
                     </div>

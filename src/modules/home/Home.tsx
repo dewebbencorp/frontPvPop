@@ -1,14 +1,9 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonPage,} from "@ionic/react";
 import ModuleCard from "../../common/components/ModuleCard";
 import Header from "../../common/layouts/Header";
 import IModuleCard from "../../common/interfaces/IModuleCard";
 import React from "react";
+import '../../theme/Global.css'
 
 const cardData: IModuleCard[] = [
   {
@@ -47,23 +42,20 @@ const cardData: IModuleCard[] = [
 
 const Home: React.FC = () => {
   return (
-    <IonPage>
+    <IonPage style={{ backgroundColor: '#F0F8FF !important' }}>
       <Header />
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Dashboard</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        {cardData.map((card, index) => (
-          <ModuleCard
-            key={index}
-            title={card.title}
-            subtitle={card.subtitle}
-            description={card.description}
-            path={card.path}
-          />
-        ))}
+      <IonContent fullscreen style={{ backgroundColor: '#F0F8FF' }}>
+        <div className="card-container">
+          {cardData.map((card, index) => (
+            <ModuleCard
+              key={index}
+              title={card.title}
+              subtitle={card.subtitle}
+              description={card.description}
+              path={card.path}
+            />
+          ))}
+        </div>
       </IonContent>
     </IonPage>
   );

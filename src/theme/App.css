@@ -33,3 +33,12 @@
     --background: #1C878F;
     --color: white;
 }
+
+body {
+    background-color: #F0F8FF;
+  }
+  
+  ion-content {
+    --background: #F0F8FF !important; /* Fuerza el fondo */
+  }
+  

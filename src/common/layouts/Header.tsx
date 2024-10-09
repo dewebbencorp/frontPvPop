@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                 <IonBackButton defaultHref={backButtonHref}></IonBackButton>
               </IonButtons>
             )}
-            <span className="font-bold text-[1.125rem] uppercase"> { title } </span>
+            <span className="font-bold text-[1.125rem] uppercase p-4"> { title } </span>
           </div>
 
           <div className="w-full px-4 flex flex-row justify-between items-center">
