@@ -118,12 +118,12 @@ const Returns2: React.FC = () => {
 
           <div className="flex grow justify-between gap-2">
             {/* Tabla */}
-            <div className="w-[768px] max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg">
+            <div className='w-[48rem] grow max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg'>
               <TableReturns />
             </div>
             {/* Tabla */}
             {/* Resumen */}
-            <div className="flex flex-col items-center gap-4 grow">
+            <div className='flex flex-col items-center gap-4 max-w-[200px]'>
               <div className="w-full flex flex-col p-2 rounded-lg gap-1 h-min bg-white items-center shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]">
                 <div className="flex w-full justify-start gap-4 items-center">
                   <span className="text-[1rem] uppercase max-w-20 w-20">

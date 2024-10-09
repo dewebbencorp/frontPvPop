@@ -68,7 +68,7 @@ const Returns2: React.FC = () => {
 
           <div className='flex grow justify-between gap-2'>
             {/* Tabla */}
-            <div className='w-[48rem] max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg'>
+            <div className='w-[48rem] grow max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg'>
               <TableReturns/>
             </div>
             {/* Tabla */}

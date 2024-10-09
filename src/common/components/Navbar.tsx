@@ -22,9 +22,9 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <IonFooter className="h-10">
+      <IonFooter>
         {showNavbar ? (
-        <div className="flex flex-row w-full h-full">
+        <div className="flex flex-row w-full h-10">
           {modules.map((module, index) => (
             <button
               key={module.id}
@@ -81,8 +81,8 @@ const Navbar: React.FC = () => {
           </button>
         </div>
         ) : (
-          <div className="flex w-full items-center justify-end px-4 bg-background">
-            <button className="w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center" onClick={() => setShowNavbar(true)}> 
+          <div className="flex w-full items-center justify-end p-4 bg-background">
+            <button className="w-10 h-10 rounded-[1rem] bg-button-primary flex items-center justify-center" onClick={() => setShowNavbar(true)}> 
               <HamburgerIcon/>
             </button>
           </div>
