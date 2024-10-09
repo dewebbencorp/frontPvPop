@@ -5,6 +5,10 @@ input, select{
     padding: 0.5rem;
 }
 
+.native-wrapper input {
+    box-shadow: none;
+    background-color: transparent;
+}
 
 input[type="checkbox"], input[type="radio"] {
     appearance: none;
