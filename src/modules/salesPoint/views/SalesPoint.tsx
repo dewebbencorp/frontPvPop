@@ -7,18 +7,13 @@ import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
 import TotalDisplay from "../components/TotalDisplay";
 import Login from "../../login/views/Login";
+import Toast from "../../../common/components/Toast";
+import useToast from "../../../common/hooks/useToast";
 
 const SalesPoint: React.FC = () => {
   const { changeTitle } = useNavigationData();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    changeTitle("Ventas");
-  }, []);
-
-  const [clave, setClave] = useState<string>("");
-  const [cantidad, setCantidad] = useState<number>(1);
-  const [descuento, setDescuento] = useState<number>(0);
+  const { toastMessage, showToast, hideToast } = useToast();
   const [articulos, setArticulos] = useState([
     {
       articulo: "SOL CERVEZA ENVASE 12/4",
@@ -45,6 +40,7 @@ const SalesPoint: React.FC = () => {
   });
 
   useEffect(() => {
+    changeTitle("Ventas");
     const updatedTotal = articulos.reduce((acc, item) => acc + item.total, 0);
     setTotal(updatedTotal);
     setPaymentMethod((prev) => ({ ...prev, total: updatedTotal }));
@@ -55,8 +51,8 @@ const SalesPoint: React.FC = () => {
       articulo: "COCA COLA 600ML",
       cantidad,
       precio: 20,
-      descuento,
-      total: cantidad * 20 - (cantidad * 20 * descuento) / 100,
+      descuento: 0,
+      total: 20,
     };
 
     const articuloExistente = articulos.find(
@@ -64,45 +60,41 @@ const SalesPoint: React.FC = () => {
     );
 
     if (articuloExistente) {
-      const articulosActualizados = articulos.map((item) =>
-        item.articulo === nuevoArticulo.articulo
-          ? {
-              ...item,
-              cantidad: item.cantidad + nuevoArticulo.cantidad,
-              total:
-                (item.cantidad + nuevoArticulo.cantidad) *
-                  nuevoArticulo.precio -
-                ((item.cantidad + nuevoArticulo.cantidad) *
-                  nuevoArticulo.precio *
-                  nuevoArticulo.descuento) /
-                  100,
-            }
-          : item
+      setArticulos((prev) =>
+        prev.map((item) =>
+          item.articulo === nuevoArticulo.articulo
+            ? {
+                ...item,
+                cantidad: item.cantidad + nuevoArticulo.cantidad,
+                total:
+                  (item.cantidad + nuevoArticulo.cantidad) * nuevoArticulo.precio,
+              }
+            : item
+        )
       );
-      setArticulos(articulosActualizados);
     } else {
       setArticulos([...articulos, nuevoArticulo]);
     }
   };
 
   const handleEliminarArticulo = (index: number) => {
-    const updatedArticulos = articulos.filter((_, i) => i !== index);
-    setArticulos(updatedArticulos);
+    setArticulos((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleCantidadChange = (index: number, nuevaCantidad: number) => {
-    const updatedArticulos = articulos.map((item, i) =>
-      i === index
-        ? {
-            ...item,
-            cantidad: nuevaCantidad,
-            total:
-              nuevaCantidad * item.precio -
-              (nuevaCantidad * item.precio * item.descuento) / 100,
-          }
-        : item
+    setArticulos((prev) =>
+      prev.map((item, i) =>
+        i === index
+          ? {
+              ...item,
+              cantidad: nuevaCantidad,
+              total:
+                nuevaCantidad * item.precio -
+                (nuevaCantidad * item.precio * item.descuento) / 100,
+            }
+          : item
+      )
     );
-    setArticulos(updatedArticulos);
   };
 
   const handlePay = (method: IPaymentMethod) => {
@@ -118,6 +110,7 @@ const SalesPoint: React.FC = () => {
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    showToast("success", "Inicio de sesión exitoso");
   };
 
   return (
@@ -125,12 +118,12 @@ const SalesPoint: React.FC = () => {
       <div className="grid grid-cols-12 gap-6 p-4">
         <div className="col-span-8">
           <ProductForm
-            clave={clave}
-            cantidad={cantidad}
-            descuento={descuento}
-            setClave={setClave}
-            setCantidad={setCantidad}
-            setDescuento={setDescuento}
+            clave=""
+            cantidad={1}
+            descuento={0}
+            setClave={() => {}}
+            setCantidad={() => {}}
+            setDescuento={() => {}}
             handleAgregarArticulo={handleAgregarArticulo}
           />
           <ProductTable
@@ -157,6 +150,14 @@ const SalesPoint: React.FC = () => {
       )}
 
       {!isLoggedIn && <Login onLoginSuccess={handleLoginSuccess} />}
+
+      {toastMessage && (
+        <Toast
+          type={toastMessage.type}
+          message={toastMessage.message}
+          onClose={hideToast}
+        />
+      )}
     </MainLayout>
   );
 };
