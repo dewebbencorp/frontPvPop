@@ -6,9 +6,11 @@ import MainLayout from "../../../common/layouts/MainLayout";
 import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
 import TotalDisplay from "../components/TotalDisplay";
+import Login from "../../login/views/Login";
 
 const SalesPoint: React.FC = () => {
   const { changeTitle } = useNavigationData();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     changeTitle("Ventas");
@@ -32,28 +34,8 @@ const SalesPoint: React.FC = () => {
       descuento: 5,
       total: 133,
     },
-    {
-      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
-      cantidad: 1,
-      precio: 140,
-      descuento: 5,
-      total: 133,
-    },
-    {
-      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
-      cantidad: 1,
-      precio: 140,
-      descuento: 5,
-      total: 133,
-    },
-    {
-      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
-      cantidad: 1,
-      precio: 140,
-      descuento: 5,
-      total: 133,
-    },
   ]);
+
   const [total, setTotal] = useState<number>(0);
   const [showModalPago, setShowModalPago] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<IPaymentMethod>({
@@ -124,7 +106,6 @@ const SalesPoint: React.FC = () => {
   };
 
   const handlePay = (method: IPaymentMethod) => {
-    console.log("Pago realizado con el método:", method);
     setShowModalPago(false);
   };
 
@@ -133,6 +114,10 @@ const SalesPoint: React.FC = () => {
       ...prevState,
       [field]: value,
     }));
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
   };
 
   return (
@@ -160,13 +145,18 @@ const SalesPoint: React.FC = () => {
           setShowModalPago={setShowModalPago}
         />
       </div>
-      <ModalPago
-        isOpen={showModalPago}
-        onClose={() => setShowModalPago(false)}
-        method={paymentMethod}
-        onPay={handlePay}
-        updateMethod={updateMethod}
-      />
+
+      {showModalPago && (
+        <ModalPago
+          isOpen={showModalPago}
+          onClose={() => setShowModalPago(false)}
+          method={paymentMethod}
+          onPay={handlePay}
+          updateMethod={updateMethod}
+        />
+      )}
+
+      {!isLoggedIn && <Login onLoginSuccess={handleLoginSuccess} />}
     </MainLayout>
   );
 };
