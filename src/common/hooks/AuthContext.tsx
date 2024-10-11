@@ -1,8 +1,5 @@
-// AuthContext.tsx
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Define la estructura del contexto
 interface AuthContextType {
   user: string;
   store: string;
@@ -12,23 +9,17 @@ interface AuthContextType {
   changeTurn: (newTurn: string) => void;
 }
 
-// Crea el contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<string>(() => {
-    return localStorage.getItem('user') || '';
-  });
-  const [store, setStore] = useState<string>(() => {
-    return localStorage.getItem('store') || 'POP HYATT';
-  });
-  const [turn, setTurn] = useState<string>(() => {
-    return localStorage.getItem('turn') || '1';
-  });
+  const [user, setUser] = useState(() => localStorage.getItem('user') || '');
+  const [store, setStore] = useState(() => localStorage.getItem('store') || 'POP HYATT');
+  const [turn, setTurn] = useState(() => localStorage.getItem('turn') || '1');
 
   const changeUser = (newUser: string) => {
-    setUser(newUser);
-    localStorage.setItem('user', newUser);
+    const userUpperCase = newUser.toUpperCase();
+    setUser(userUpperCase);
+    localStorage.setItem('user', userUpperCase);
   };
 
   const changeStore = (newStore: string) => {
@@ -43,17 +34,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(savedUser);
-    }
-    const savedTurn = localStorage.getItem('turn');
-    if (savedTurn) {
-      setTurn(savedTurn);
-    }
+    if (savedUser) setUser(savedUser);
+
     const savedStore = localStorage.getItem('store');
-    if (savedStore) {
-      setStore(savedStore);
-    }
+    if (savedStore) setStore(savedStore);
+
+    const savedTurn = localStorage.getItem('turn');
+    if (savedTurn) setTurn(savedTurn);
   }, []);
 
   return (
@@ -63,7 +50,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-// Hook para acceder al contexto
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

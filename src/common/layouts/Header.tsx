@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   const backButtonHref = location.pathname.startsWith("/ticket") ? "/audit" : "/home";
 
   return (
-    <IonHeader>
+    <IonHeader className="z-0">
       <IonToolbar>
         <div className="flex w-full flex-row items-center justify-between gap-4">
           <div className="flex flex-row items-center min-w-80">

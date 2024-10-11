@@ -1,0 +1,47 @@
+ion-toast.custom-toast::part(button) {
+  border-left: 1px solid #d2d2d2;
+  color: #030207;
+  font-size: 15px;
+}
+
+ion-toast.custom-toast {
+  --background: #fff;
+  --color: #030207;
+  --box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.custom-toast-box {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: auto;
+  max-width: 400px;
+  padding: 16px;
+  background-color: #fff;
+  color: #030207;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+}
+
+.icon-container {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.close-button {
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  color: #030207;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.close-button:hover {
+  color: #f00;
+}

@@ -30,6 +30,22 @@ const PaymentMethodFields: React.FC<PaymentMethodFieldsProps> = ({
     case "Mixto":
       return (
         <div className="grid grid-cols-2 gap-4 mt-6">
+           <div>
+            <label className="block text-gray-700">Total a Pagar:</label>
+            <input
+              readOnly
+              value={`$${method.total.toFixed(2)}`}
+              className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Cambio:</label>
+            <input
+              readOnly
+              value={`$${change.toFixed(2)}`}
+              className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
+            />
+          </div>
           <div>
             <label className="block text-gray-700">MXN Monto:</label>
             <div className="flex items-center border border-gray-300 rounded-md p-2">
