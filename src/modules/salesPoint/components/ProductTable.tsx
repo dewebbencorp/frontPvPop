@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
-
+import { close } from 'ionicons/icons';
+import { IonIcon } from "@ionic/react";
 interface ProductTableProps {
   articulos: Array<{
     articulo: string;
@@ -75,7 +76,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
                 onClick={() => handleEliminarArticulo(index)}
                 className="bg-red-500 hover:bg-red-600 rounded-md text-white  px-2 transition text-[14pt]"
               >
-                ×
+                <IonIcon aria-hidden="true" icon={close} slot="start" className="h-7 items-center flex w-7"></IonIcon>
               </button>
             </div>
           </div>

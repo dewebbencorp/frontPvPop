@@ -1,86 +1,126 @@
 import React, { useState, useEffect } from 'react';
 import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol } from '@ionic/react';
-import { documentOutline, checkmarkCircleOutline, close, checkmark } from 'ionicons/icons';
+import { documentOutline, close, checkmark } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
-import INavbarModule from '../../../common/interfaces/INavbarModule';
 import MainLayout from '../../../common/layouts/MainLayout';
 import '../../../theme/Audit.css';
 import useNavigationData from '../../../common/hooks/useNavigationData';
+import { obtenerAuditorias } from '../../../services/auditService';
+
+interface Auditoria {
+  remision: string;
+  fecha: string;
+  cliente: string;
+  tipo: string;
+  total: number;
+  cx: boolean;
+  cort: boolean;
+  com: number;
+  vendedor: string;
+}
 
 const Audit: React.FC = () => {
-  const [tickets, setTickets] = useState([
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-    { remision: '137663', fecha: '20/01/2024', cliente: 'Cliente 1', tipo: 'EF', total: 1050.00, cx: false, cort: true, com: false },
-
-  ]);
+  const [tickets, setTickets] = useState<Auditoria[]>([]);
+  const [filteredTickets, setFilteredTickets] = useState<Auditoria[]>([]);
+  const [movimiento, setMovimiento] = useState('');
+  const [desde, setDesde] = useState('');
+  const [hasta, setHasta] = useState('');
+  const [tipo, setTipo] = useState('');
+  const [cliente, setCliente] = useState('');
   const { changeTitle } = useNavigationData();
-
   const history = useHistory();
 
   const handleViewTicket = (remision: string) => {
     history.push(`/ticket/${remision}`);
   };
 
-  const navbarModules: INavbarModule[] = [
-    { title: 'Ventas', path: '/ventas' },
-    { title: 'Devolución', path: '/devolucion' },
-    { title: 'Retiro', path: '/retiro' },
-    { title: 'Cortes de Caja', path: '/cortes-caja' },
-  ];
+  const handleBuscar = () => {
+    let result = tickets;
+
+    if (movimiento) {
+      result = result.filter(ticket => ticket.remision.includes(movimiento));
+    }
+    if (desde) {
+      result = result.filter(ticket => new Date(ticket.fecha) >= new Date(desde));
+    }
+    if (hasta) {
+      result = result.filter(ticket => new Date(ticket.fecha) <= new Date(hasta));
+    }
+    if (tipo) {
+      result = result.filter(ticket => ticket.tipo.includes(tipo));
+    }
+    if (cliente) {
+      result = result.filter(ticket => ticket.cliente.includes(cliente));
+    }
+
+    setFilteredTickets(result);
+  };
+
+  const handleLimpiar = () => {
+    setMovimiento('');
+    setDesde('');
+    setHasta('');
+    setTipo('');
+    setCliente('');
+    setFilteredTickets(tickets); // Restablece la lista original
+  };
 
   useEffect(() => {
-    changeTitle("Auditorias");
+    changeTitle("Auditorías");
+
+    const cargarAuditorias = async () => {
+      try {
+        const data = await obtenerAuditorias();
+        setTickets(data);
+        setFilteredTickets(data);
+      } catch (error) {
+        console.error("Error al cargar las auditorías:", error);
+        setTickets([]);
+        setFilteredTickets([]);
+      }
+    };
+
+    cargarAuditorias();
   }, []);
 
   return (
     <MainLayout>
       <div className="audit-container">
         <IonRow>
-
-
           <IonCol size="9" className="px-4 py-2">
             <div className="inputs-container">
               <div className="input-group">
                 <label className="label">MOVIMIENTO:</label>
-                <IonInput className="input" />
+                <IonInput value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value!)} className="input" />
               </div>
               <div className="input-group">
                 <label className="label">DESDE:</label>
-                <IonInput className="input" type="date" />
+                <IonInput value={desde} onIonChange={(e) => setDesde(e.detail.value!)} className="input" type="date" />
               </div>
               <div className="input-group">
                 <label className="label">HASTA:</label>
-                <IonInput className="input" type="date" />
+                <IonInput value={hasta} onIonChange={(e) => setHasta(e.detail.value!)} className="input" type="date" />
               </div>
-
               <div className="input-group">
                 <label className="label">TIPO:</label>
-                <IonInput className="input" />
+                <IonInput value={tipo} onIonChange={(e) => setTipo(e.detail.value!)} className="input" />
               </div>
               <div className="input-group">
                 <label className="label">CLIENTE:</label>
-                <IonInput className="input" />
+                <IonInput value={cliente} onIonChange={(e) => setCliente(e.detail.value!)} className="input" />
               </div>
-
             </div>
           </IonCol>
           <IonCol size="2" className="px-4 py-2">
             <div className="inputs-container">
               <div className="buttons-container">
-                <IonButton className="buscar-button">Buscar</IonButton>
-                <IonButton className="limpiar-button">Limpiar</IonButton>
+                <IonButton onClick={handleBuscar} className="buscar-button">Buscar</IonButton>
+                <IonButton onClick={handleLimpiar} className="limpiar-button">Limpiar</IonButton>
               </div>
             </div>
           </IonCol>
         </IonRow>
+
         <div className="overflow-x-auto table_complete">
           <table className="capsule min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
             <thead className="bg-tableHeader text-white">
@@ -97,29 +137,35 @@ const Audit: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {tickets.map((ticket, index) => (
-                <tr key={index} className="text-center">
-                  <td>{ticket.remision}</td>
-                  <td>{ticket.fecha}</td>
-                  <td>{ticket.cliente}</td>
-                  <td>{ticket.tipo}</td>
-                  <td>${ticket.total}</td>
-                  <td><IonCheckbox checked={ticket.cx} /></td>
-                  <td><IonCheckbox checked={ticket.cort} /></td>
-                  <td><IonCheckbox checked={ticket.com} /></td>
-                  <td>
-                    <IonButton  className='ticket-button' onClick={() => handleViewTicket(ticket.remision)}>
-                      <IonIcon icon={documentOutline} className="h-6 items-center flex w-6" />
-                    </IonButton>
-                    <IonButton className="close-button">
-                      <IonIcon icon={close} className="h-6 items-center flex w-6" />
-                    </IonButton>
-                    <IonButton className="check-button">
-                      <IonIcon icon={checkmark} className="h-6 items-center flex w-6" />
-                    </IonButton>
-                  </td>
+              {filteredTickets.length > 0 ? (
+                filteredTickets.map((ticket, index) => (
+                  <tr key={index} className="text-center">
+                    <td>{ticket.remision}</td>
+                    <td>{ticket.fecha.split('T')[0]}</td>
+                    <td>{ticket.cliente}</td>
+                    <td>{ticket.tipo}</td>
+                    <td>${ticket.total}</td>
+                    <td><IonCheckbox checked={ticket.cx} disabled /></td>
+                    <td><IonCheckbox checked={ticket.cort} disabled /></td>
+                    <td><IonCheckbox checked={!!ticket.com} disabled /></td>
+                    <td>
+                      <IonButton className='ticket-button' onClick={() => handleViewTicket(ticket.remision)}>
+                        <IonIcon icon={documentOutline} className="h-6 items-center flex w-6" />
+                      </IonButton>
+                      <IonButton className="close-button">
+                        <IonIcon icon={close} className="h-6 items-center flex w-6" />
+                      </IonButton>
+                      <IonButton className="check-button">
+                        <IonIcon icon={checkmark} className="h-6 items-center flex w-6" />
+                      </IonButton>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={9} className="text-center">No se encontraron datos</td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>
