@@ -9,6 +9,9 @@ const Returns2 = React.lazy(() => import('./modules/returns/views/Returns2'));
 const Audit = React.lazy(() => import('../src/modules/audit/views/Audit.js'));
 const Ticket = React.lazy(() => import('./common/hooks/Ticket'));
 const PuntoVenta = React.lazy(() => import('./modules/salesPoint/views/PuntoVenta'))
+const Reconciliation = React.lazy(() => import('./modules/reconciliation/views/Reconciliation'))
+const Reconciliation2 = React.lazy(() => import('./modules/reconciliation/views/Reconciliation2'))
+const Withdrawals = React.lazy(() => import('./modules/withdrawals/views/Withdrawals'))
 // Ionic styles
 import '@ionic/react/css/core.css';
 import '@ionic/react/css/normalize.css';
@@ -20,13 +23,15 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-import '@ionic/react/css/palettes/dark.system.css';
+/* import '@ionic/react/css/palettes/dark.system.css'; */
 
 // App and custom theme
 import './theme/variables.css';
 import './theme/App.css';
 
-setupIonicReact();
+setupIonicReact({
+  mode: 'md',
+});
 
 const App: React.FC = () => (
   <IonApp>
@@ -48,6 +53,16 @@ const App: React.FC = () => (
           <Route exact path="/salespoint">
             <PuntoVenta />
           </Route>
+          <Route exact path="/reconciliations">
+            <Reconciliation />
+          </Route>
+          <Route exact path="/reconciliations2">
+            <Reconciliation2 />
+          </Route>
+          <Route exact path="/withdrawals">
+            <Withdrawals />
+          </Route>
+          
           <Switch>
             <Route path="/audit" component={Audit} />
             <Route path="/ticket/:remision" component={Ticket} />
