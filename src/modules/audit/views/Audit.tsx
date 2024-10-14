@@ -66,13 +66,13 @@ const Audit: React.FC = () => {
 
   const handleBuscar = async () => {
     const filtros = {
-      movimiento,
-      tipo,
-      desde,
-      hasta,
-      cliente,
+      movimiento: movimiento || null,
+      tipo: tipo || null,
+      desde: desde || null,
+      hasta: hasta || null,
+      cliente: cliente || null,
     };
-
+  
     try {
       const data = await obtenerAuditoriasFiltradas(filtros);
       setFilteredTickets(data);
@@ -80,6 +80,7 @@ const Audit: React.FC = () => {
       console.error("Error al buscar auditorías:", error);
     }
   };
+  
 
 
   const handleLimpiar = async () => {
