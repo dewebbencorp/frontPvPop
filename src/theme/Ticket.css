@@ -9,13 +9,13 @@
 }
 
 .receipt {
-  width: 297mm;
+  width: 80mm;
   height: auto;
   background: #fff;
   margin: 0 auto;
   padding: 20px;
   box-shadow: 5px 5px 19px #ccc;
-  transform: scale(0.5);
+  transform: scale(1.0);
   transform-origin: top center;
 }
 
@@ -25,7 +25,7 @@
 
 .center {
   text-align: center;
-  font-size: 22px;
+  font-size: 10px;
 }
 
 .table-header,
@@ -36,18 +36,44 @@
 
 .table-descripcion {
   margin-top: 15px;
-  border-top: 1px dashed #000;
-  border-bottom: 1px dashed #000;
+  /*border-top: 1px dashed #000;*/
+  /*border-bottom: 1px dashed #000;*/
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-left: -1.5rem;
 }
 
-.table-header span,
+.table-row {
+  display: flex !important;
+  justify-content: space-between;
+  margin-bottom: 3px; 
+}
+
 .table-row span {
-  width: 20%;
   font-family: Open Sans;
-  text-align: center !important;
-  font-size: 20px;
+  font-size: 11px;
+  padding: 0 8px; 
+  text-align: left;
+}
+
+.table-row span:nth-child(1) {
+  width: 18%;
+  text-align: center;
+}
+
+.table-row span:nth-child(2) { 
+  width: 45%; 
+  text-align: left;
+}
+
+.table-row span:nth-child(3) { 
+  width: 20%;
+  text-align: right;
+}
+
+.table-row span:nth-child(4) {
+  width: 20%;
+  text-align: right;
 }
 
 .paymentDetails,
@@ -66,7 +92,7 @@
 
 .detail {
   text-align: left;
-  font-size: 27px;
+  font-size: 12px;
   font-family: Open Sans;
 }
 
@@ -85,19 +111,20 @@
 }
 
 .content-total {
-    font-size: 19px;
-    margin-block-end: 194px;
-    font-family: Open Sans;
-    padding: 18px;
+  margin-block-start: -17px;
+  font-size: 13px;
+  margin-block-end: 9px;
+  font-family: Open Sans;
+  padding: 13px;
 }
 
 .receipt .address {
-  font-size: 18px;
+  font-size: 10px;
   font-family: Open Sans;
 }
 
 .receipt .transactionDetails {
-  font-size: 18px;
+  font-size: 13px;
   margin-bottom: 10px;
   font-family: Open Sans;
 }
@@ -124,12 +151,13 @@
 span {
   padding: 5px;
 }
+
 strong {
-  font-size: 30px;
+  font-size: 16px;
 }
 
 .transactio {
-  font-size: 19px;
+  font-size: 10px;
   font-family: Open Sans;
 }
 

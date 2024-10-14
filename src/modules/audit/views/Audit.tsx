@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol } from '@ionic/react';
-import { documentOutline, checkmarkCircleOutline, closeCircleOutline } from 'ionicons/icons';
+import { documentOutline, checkmarkCircleOutline, close, checkmark } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import INavbarModule from '../../../common/interfaces/INavbarModule';
 import MainLayout from '../../../common/layouts/MainLayout';
@@ -81,8 +81,8 @@ const Audit: React.FC = () => {
             </div>
           </IonCol>
         </IonRow>
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
+        <div className="overflow-x-auto table_complete">
+          <table className="capsule min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
             <thead className="bg-tableHeader text-white">
               <tr>
                 <th>REMISIÓN</th>
@@ -108,14 +108,14 @@ const Audit: React.FC = () => {
                   <td><IonCheckbox checked={ticket.cort} /></td>
                   <td><IonCheckbox checked={ticket.com} /></td>
                   <td>
-                    <IonButton className='ticket-button' onClick={() => handleViewTicket(ticket.remision)}>
-                      <IonIcon icon={documentOutline} />
+                    <IonButton  className='ticket-button' onClick={() => handleViewTicket(ticket.remision)}>
+                      <IonIcon icon={documentOutline} className="h-6 items-center flex w-6" />
                     </IonButton>
                     <IonButton className="close-button">
-                      <IonIcon icon={closeCircleOutline} />
+                      <IonIcon icon={close} className="h-6 items-center flex w-6" />
                     </IonButton>
                     <IonButton className="check-button">
-                      <IonIcon icon={checkmarkCircleOutline} />
+                      <IonIcon icon={checkmark} className="h-6 items-center flex w-6" />
                     </IonButton>
                   </td>
                 </tr>

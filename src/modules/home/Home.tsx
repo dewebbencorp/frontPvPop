@@ -1,15 +1,9 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonContent, IonPage,} from "@ionic/react";
 import ModuleCard from "../../common/components/ModuleCard";
 import Header from "../../common/layouts/Header";
 import IModuleCard from "../../common/interfaces/IModuleCard";
-import useNavigationData from "../../common/hooks/useNavigationData";
-import React, { useEffect } from "react";
+import React from "react";
+import '../../theme/Global.css'
 
 const cardData: IModuleCard[] = [
   {
@@ -29,7 +23,14 @@ const cardData: IModuleCard[] = [
     subtitle: "Módulo de retiro de efectivo y doctos",
     description:
       "El módulo que se encarga de permitir la extracción de efectivo o doctos, generando un folio",
-    path: "/withdrawals",
+    path: "/returns",
+  },
+  {
+    title: "Auditoria",
+    subtitle: "Módulo para la realización de cortes, y la impresión final",
+    description:
+      "Carga de denominación nacional, generación del corte e impresión del ticket final",
+    path: "/audit",
   },
   {
     title: "Punto de venta",
@@ -52,30 +53,21 @@ const cardData: IModuleCard[] = [
 ];
 
 const Home: React.FC = () => {
-  const { changeTitle } = useNavigationData();
-
-  useEffect(() => {
-    changeTitle("Home");
-  }, []);
-
   return (
-    <IonPage>
+    <IonPage style={{ backgroundColor: '#F0F8FF !important' }}>
       <Header />
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Dashboard</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        {cardData.map((card, index) => (
-          <ModuleCard
-            key={index}
-            title={card.title}
-            subtitle={card.subtitle}
-            description={card.description}
-            path={card.path}
-          />
-        ))}
+      <IonContent fullscreen style={{ backgroundColor: '#F0F8FF' }}>
+        <div className="card-container">
+          {cardData.map((card, index) => (
+            <ModuleCard
+              key={index}
+              title={card.title}
+              subtitle={card.subtitle}
+              description={card.description}
+              path={card.path}
+            />
+          ))}
+        </div>
       </IonContent>
     </IonPage>
   );

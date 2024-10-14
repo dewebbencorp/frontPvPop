@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import "./Navbar.css";
-import { IonLabel, IonFooter } from "@ionic/react";
+import {  IonLabel, IonFooter } from "@ionic/react";
 import useNavigationData from "../hooks/useNavigationData";
 import CloseIcon from "../icons/CloseIcon";
 import LogoutIcon from "../icons/LogoutIcon";
-import HamburgerIcon from "../icons/Hamburger";
+import HamburgerIcon from "../icons/Hamburger"
 
 const Navbar: React.FC = () => {
   const { modules } = useNavigationData();
@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
                   moduleColors[index].color)
               }
               onClick={() => {
-                history.push(module.path);
+                history.push(module.path)
               }}
             >
               <IonLabel className="font-semibold text-white">
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
               (e.currentTarget.style.backgroundColor = "#d11439")
             }
             onClick={() => {
-              history.push("/");
+              history.push('/')
             }}
           >
             <LogoutIcon />

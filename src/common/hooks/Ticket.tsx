@@ -69,12 +69,12 @@ const Ticket: React.FC = () => {
           <div className='transactio'>Cajero: {ticket.cajero}</div>
         </div>
         <div className="center bold">
-          ===========================================
+          *******************************************************
         </div>
         <div className="center bold">CLIENTE: 1</div>
         <div className="center">{ticket.cliente}</div>
         <div className="center bold">
-          ============================================
+          *******************************************************
         </div>
         <div className='table-descripcion'>
           <div className="table-row">
@@ -123,8 +123,8 @@ const Ticket: React.FC = () => {
         </div>
        </div>
         
-        <div className="center bold">
-          ===========================================
+       <div className="center bold">
+          *******************************************************
         </div>
         <div className="center">GRACIAS POR SU COMPRA</div>
         <div className="center">NO HAY DEVOLUCIONES DE EFECTIVO</div>
