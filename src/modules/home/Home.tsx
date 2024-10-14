@@ -29,20 +29,25 @@ const cardData: IModuleCard[] = [
     subtitle: "Módulo de retiro de efectivo y doctos",
     description:
       "El módulo que se encarga de permitir la extracción de efectivo o doctos, generando un folio",
-    path: "/returns",
-  },
-  {
-    title: "Cortes",
-    subtitle: "Módulo para la realización de cortes, y la impresión final",
-    description:
-      "Carga de denominación nacional, generación del corte e impresión del ticket final",
-    path: "/audit",
+    path: "/withdrawals",
   },
   {
     title: "Punto de venta",
     subtitle: "...",
     description: "...",
     path: "/salespoint"
+  },
+  {
+    title: "Cortes / Denominaciones",
+    subtitle: "Cortes de caja y efectivo con deniminacion méxicana",
+    description: "Permite realizar los cortes de caja, revisar los realizados anteriormente y editar los existentes.",
+    path: "/reconciliations"
+  },
+  {
+    title: "Cortes / Denominaciones 2",
+    subtitle: "Nuevo corte de caja",
+    description: "Permite realizar un nuevo corte de caja.",
+    path: "/reconciliations2"
   }
 ];
 
