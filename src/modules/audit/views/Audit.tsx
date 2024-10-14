@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol } from '@ionic/react';
+import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol, IonSelect, IonSelectOption } from '@ionic/react';
 import { documentOutline, close, checkmark } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import MainLayout from '../../../common/layouts/MainLayout';
 import '../../../theme/Audit.css';
 import useNavigationData from '../../../common/hooks/useNavigationData';
-import { obtenerAuditorias } from '../../../services/auditService';
+import { obtenerAuditorias, obtenerAuditoriasFiltradas, actualizarCX } from '../../../services/auditService';
 
 interface Auditoria {
   remision: string;
   fecha: string;
   cliente: string;
   tipo: string;
+  movimiento: string;
   total: number;
   cx: boolean;
   cort: boolean;
@@ -30,39 +31,71 @@ const Audit: React.FC = () => {
   const { changeTitle } = useNavigationData();
   const history = useHistory();
 
+  const movimientos = ["RE", "CR"]; // Opciones de Movimiento (ejemplo)
+  const tipos = ["EF", "CR"]; // Opciones de Tipo (ejemplo)
+
   const handleViewTicket = (remision: string) => {
     history.push(`/ticket/${remision}`);
   };
 
-  const handleBuscar = () => {
-    let result = tickets;
-
-    if (movimiento) {
-      result = result.filter(ticket => ticket.remision.includes(movimiento));
+  const handleToggleCX = async (remision: string, cxValue: boolean) => {
+    try {
+      await actualizarCX(remision, cxValue);
+      setTickets((prevTickets) =>
+        prevTickets.map((ticket) =>
+          ticket.remision === remision ? { ...ticket, cx: cxValue } : ticket
+        )
+      );
+      setFilteredTickets((prevFiltered) =>
+        prevFiltered.map((ticket) =>
+          ticket.remision === remision ? { ...ticket, cx: cxValue } : ticket
+        )
+      );
+    } catch (error) {
+      console.error('Error al actualizar CX:', error);
     }
-    if (desde) {
-      result = result.filter(ticket => new Date(ticket.fecha) >= new Date(desde));
-    }
-    if (hasta) {
-      result = result.filter(ticket => new Date(ticket.fecha) <= new Date(hasta));
-    }
-    if (tipo) {
-      result = result.filter(ticket => ticket.tipo.includes(tipo));
-    }
-    if (cliente) {
-      result = result.filter(ticket => ticket.cliente.includes(cliente));
-    }
-
-    setFilteredTickets(result);
   };
 
-  const handleLimpiar = () => {
+  const handleCancel = (remision: string) => {
+    handleToggleCX(remision, true);
+  };
+
+  const handleSuccess = (remision: string) => {
+    handleToggleCX(remision, false);
+  };
+
+  const handleBuscar = async () => {
+    const filtros = {
+      movimiento,
+      tipo,
+      desde,
+      hasta,
+      cliente,
+    };
+
+    try {
+      const data = await obtenerAuditoriasFiltradas(filtros);
+      setFilteredTickets(data);
+    } catch (error) {
+      console.error("Error al buscar auditorías:", error);
+    }
+  };
+
+
+  const handleLimpiar = async () => {
     setMovimiento('');
     setDesde('');
     setHasta('');
     setTipo('');
     setCliente('');
-    setFilteredTickets(tickets); // Restablece la lista original
+
+    try {
+      const data = await obtenerAuditorias();
+      setTickets(data);
+      setFilteredTickets(data);
+    } catch (error) {
+      console.error("Error al cargar todas las auditorías:", error);
+    }
   };
 
   useEffect(() => {
@@ -86,12 +119,17 @@ const Audit: React.FC = () => {
   return (
     <MainLayout>
       <div className="audit-container">
+        {/* Input Fields */}
         <IonRow>
           <IonCol size="9" className="px-4 py-2">
             <div className="inputs-container">
               <div className="input-group">
                 <label className="label">MOVIMIENTO:</label>
-                <IonInput value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value!)} className="input" />
+                <IonSelect value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value)} className="select">
+                  {movimientos.map((mov, index) => (
+                    <IonSelectOption key={index} value={mov}>{mov}</IonSelectOption>
+                  ))}
+                </IonSelect>
               </div>
               <div className="input-group">
                 <label className="label">DESDE:</label>
@@ -103,7 +141,11 @@ const Audit: React.FC = () => {
               </div>
               <div className="input-group">
                 <label className="label">TIPO:</label>
-                <IonInput value={tipo} onIonChange={(e) => setTipo(e.detail.value!)} className="input" />
+                <IonSelect value={tipo} onIonChange={(e) => setTipo(e.detail.value)} className="select">
+                  {tipos.map((tp, index) => (
+                    <IonSelectOption key={index} value={tp}>{tp}</IonSelectOption>
+                  ))}
+                </IonSelect>
               </div>
               <div className="input-group">
                 <label className="label">CLIENTE:</label>
@@ -121,6 +163,7 @@ const Audit: React.FC = () => {
           </IonCol>
         </IonRow>
 
+        {/* Table */}
         <div className="overflow-x-auto table_complete">
           <table className="capsule min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
             <thead className="bg-tableHeader text-white">
@@ -128,6 +171,7 @@ const Audit: React.FC = () => {
                 <th>REMISIÓN</th>
                 <th>FECHA</th>
                 <th>CLIENTE</th>
+                <th>MOVIMIENTO</th>
                 <th>TIPO</th>
                 <th>TOTAL</th>
                 <th>CX</th>
@@ -139,31 +183,35 @@ const Audit: React.FC = () => {
             <tbody>
               {filteredTickets.length > 0 ? (
                 filteredTickets.map((ticket, index) => (
-                  <tr key={index} className="text-center">
+                  <tr
+                    key={index}
+                    className={`text-center ${ticket.cx ? 'bg-red-100' : ''}`}
+                  >
                     <td>{ticket.remision}</td>
                     <td>{ticket.fecha.split('T')[0]}</td>
                     <td>{ticket.cliente}</td>
+                    <td>{ticket.movimiento}</td>
                     <td>{ticket.tipo}</td>
                     <td>${ticket.total}</td>
                     <td><IonCheckbox checked={ticket.cx} disabled /></td>
                     <td><IonCheckbox checked={ticket.cort} disabled /></td>
                     <td><IonCheckbox checked={!!ticket.com} disabled /></td>
                     <td>
-                      <IonButton className='ticket-button' onClick={() => handleViewTicket(ticket.remision)}>
-                        <IonIcon icon={documentOutline} className="h-6 items-center flex w-6" />
+                      <IonButton className="ticket-button" onClick={() => handleViewTicket(ticket.remision)}>
+                        <IonIcon icon={documentOutline} className="h-4 items-center flex w-4" />
                       </IonButton>
-                      <IonButton className="close-button">
-                        <IonIcon icon={close} className="h-6 items-center flex w-6" />
+                      <IonButton className="close-button" onClick={() => handleCancel(ticket.remision)}>
+                        <IonIcon icon={close} className="h-4 items-center flex w-4" />
                       </IonButton>
-                      <IonButton className="check-button">
-                        <IonIcon icon={checkmark} className="h-6 items-center flex w-6" />
+                      <IonButton className="check-button" onClick={() => handleSuccess(ticket.remision)}>
+                        <IonIcon icon={checkmark} className="h-4 items-center flex w-4" />
                       </IonButton>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="text-center">No se encontraron datos</td>
+                  <td colSpan={10} className="text-center">No se encontraron datos</td>
                 </tr>
               )}
             </tbody>

@@ -1,6 +1,6 @@
-import React from "react";
-import {add } from 'ionicons/icons';
 import { IonIcon } from "@ionic/react";
+import { add } from "ionicons/icons";
+import React from "react";
 interface ProductFormProps {
   clave: string;
   cantidad: number;
@@ -58,7 +58,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           onClick={handleAgregarArticulo}
           className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition text-[14pt]"
         >
-          <IonIcon aria-hidden="true" icon={add} slot="start" className="h-7 items-center flex w-7"></IonIcon>
+         <IonIcon aria-hidden="true" icon={add} slot="start" className="h-7 items-center flex w-7"></IonIcon>
         </button>
       </div>
     </div>

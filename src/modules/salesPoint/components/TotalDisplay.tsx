@@ -16,7 +16,7 @@ const TotalDisplay: React.FC<TotalDisplayProps> = ({
       <img
         src="https://www.coca-cola.com/content/dam/onexp/co/es/brands/coca-cola/coca-cola-original/ccso_600ml_750x750.png"
         alt="Producto"
-        className="w-4/5 h-64 object-contain rounded-md shadow-md"
+        className="w-4/5 h-64 object-contain rounded-md shadow-md bg-white"
       />
 
       <div className="flex justify-between items-center w-full mt-4 text-2xl text-gray-800 text-[18pt]">

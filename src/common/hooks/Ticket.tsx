@@ -15,7 +15,7 @@ interface Producto {
 
 interface Ticket {
     tienda: string;
-    direccion: string;
+    direccion_tienda: string;
     ttp: string;
     sucursal: string;
     direccion_sucursal: string;
@@ -35,6 +35,7 @@ interface Ticket {
     pago: number;
     cambio: number;
 }
+
 
 const Ticket: React.FC = () => {
     const { remision } = useParams<{ remision: string }>();
@@ -63,7 +64,7 @@ const Ticket: React.FC = () => {
                 <div className="receipt">
                     <div className="address center">
                         <strong>{ticket.tienda}</strong><br />
-                        {ticket.direccion}
+                        {ticket.direccion_tienda}
                     </div>
                     <div className="center">
                         <strong>{ticket.ttp}</strong>
@@ -100,18 +101,21 @@ const Ticket: React.FC = () => {
                                 </div>
                                 <div className='totals'>
                                     <div className="row-bottom">
-                                    <span className='encabezados'>PUNIT</span>
-                                    <span className='encabezados'>TOT</span>
+                                        <span className='encabezados'>PUNIT</span>
+                                        <span className='encabezados'>TOT</span>
+                                    </div>
+                                    <div className="row-bottom">
+                                        <span>${producto.precio_unitario.toFixed(2)}</span>
+                                        <span>${producto.total.toFixed(2)}</span>
+                                    </div>
                                 </div>
-                                <div className="row-bottom">
-                                    <span>${producto.precio_unitario.toFixed(2)}</span>
-                                    <span>${producto.total.toFixed(2)}</span>
-                                </div>
-                                </div>
-                                
+
                                 <div className="producto-separator"></div>
                             </div>
                         ))}
+                    </div>
+                    <div className="center bold">
+                        *******************************************************
                     </div>
 
                     <div className='content-total'>
@@ -151,6 +155,8 @@ const Ticket: React.FC = () => {
                         *******************************************************
                     </div>
                     <div className="center">GRACIAS POR SU COMPRA</div>
+                    <div className="center">NO HAY DEVOLUCIONES DE EFECTIVO</div>
+                    <div className="center">FACTURAS UNICAMENTE EL DIA DE SU COMPRA</div>
                 </div>
             </div>
         </MainLayout>

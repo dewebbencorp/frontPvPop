@@ -7,18 +7,14 @@ import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
 import TotalDisplay from "../components/TotalDisplay";
 import Login from "../../login/views/Login";
+import Toast from "../../../common/components/Toast";
+import useToast from "../../../common/hooks/useToast";
+import { useAuth } from "../../../common/hooks/AuthContext";
 
 const SalesPoint: React.FC = () => {
   const { changeTitle } = useNavigationData();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    changeTitle("Ventas");
-  }, []);
-
-  const [clave, setClave] = useState<string>("");
-  const [cantidad, setCantidad] = useState<number>(1);
-  const [descuento, setDescuento] = useState<number>(0);
+  const { toastMessage, showToast, hideToast } = useToast();
+  const { user, isAuthenticated, loading } = useAuth(); 
   const [articulos, setArticulos] = useState([
     {
       articulo: "SOL CERVEZA ENVASE 12/4",
@@ -35,8 +31,7 @@ const SalesPoint: React.FC = () => {
       total: 133,
     },
   ]);
-
-  const [total, setTotal] = useState<number>(0);
+  const [total, setTotal] = useState(0);
   const [showModalPago, setShowModalPago] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<IPaymentMethod>({
     total: 0,
@@ -44,80 +39,23 @@ const SalesPoint: React.FC = () => {
     amount: 0,
   });
 
+  const handleEliminarArticulo = (index: number) => {
+    const nuevosArticulos = articulos.filter((_, i) => i !== index);
+    setArticulos(nuevosArticulos);
+  };
+
   useEffect(() => {
+    changeTitle("Ventas");
+
     const updatedTotal = articulos.reduce((acc, item) => acc + item.total, 0);
     setTotal(updatedTotal);
     setPaymentMethod((prev) => ({ ...prev, total: updatedTotal }));
-  }, [articulos]);
+  }, [articulos, changeTitle]);
 
-  const handleAgregarArticulo = () => {
-    const nuevoArticulo = {
-      articulo: "COCA COLA 600ML",
-      cantidad,
-      precio: 20,
-      descuento,
-      total: cantidad * 20 - (cantidad * 20 * descuento) / 100,
-    };
-
-    const articuloExistente = articulos.find(
-      (item) => item.articulo === nuevoArticulo.articulo
-    );
-
-    if (articuloExistente) {
-      const articulosActualizados = articulos.map((item) =>
-        item.articulo === nuevoArticulo.articulo
-          ? {
-              ...item,
-              cantidad: item.cantidad + nuevoArticulo.cantidad,
-              total:
-                (item.cantidad + nuevoArticulo.cantidad) *
-                  nuevoArticulo.precio -
-                ((item.cantidad + nuevoArticulo.cantidad) *
-                  nuevoArticulo.precio *
-                  nuevoArticulo.descuento) /
-                  100,
-            }
-          : item
-      );
-      setArticulos(articulosActualizados);
-    } else {
-      setArticulos([...articulos, nuevoArticulo]);
-    }
-  };
-
-  const handleEliminarArticulo = (index: number) => {
-    const updatedArticulos = articulos.filter((_, i) => i !== index);
-    setArticulos(updatedArticulos);
-  };
-
-  const handleCantidadChange = (index: number, nuevaCantidad: number) => {
-    const updatedArticulos = articulos.map((item, i) =>
-      i === index
-        ? {
-            ...item,
-            cantidad: nuevaCantidad,
-            total:
-              nuevaCantidad * item.precio -
-              (nuevaCantidad * item.precio * item.descuento) / 100,
-          }
-        : item
-    );
-    setArticulos(updatedArticulos);
-  };
-
-  const handlePay = (method: IPaymentMethod) => {
-    setShowModalPago(false);
-  };
-
-  const updateMethod = (field: string, value: string | number) => {
-    setPaymentMethod((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
-
+  // Al iniciar sesión, guarda el nombre del usuario en localStorage
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
+    const username = localStorage.getItem("username") || user || "Usuario";
+    showToast("success", `Bienvenido ${username}`);
   };
 
   return (
@@ -125,17 +63,17 @@ const SalesPoint: React.FC = () => {
       <div className="grid grid-cols-12 gap-6 p-4">
         <div className="col-span-8">
           <ProductForm
-            clave={clave}
-            cantidad={cantidad}
-            descuento={descuento}
-            setClave={setClave}
-            setCantidad={setCantidad}
-            setDescuento={setDescuento}
-            handleAgregarArticulo={handleAgregarArticulo}
+            clave=""
+            cantidad={1}
+            descuento={0}
+            setClave={() => {}}
+            setCantidad={() => {}}
+            setDescuento={() => {}}
+            handleAgregarArticulo={() => {}}
           />
           <ProductTable
             articulos={articulos}
-            handleCantidadChange={handleCantidadChange}
+            handleCantidadChange={() => {}}
             handleEliminarArticulo={handleEliminarArticulo}
           />
         </div>
@@ -151,12 +89,24 @@ const SalesPoint: React.FC = () => {
           isOpen={showModalPago}
           onClose={() => setShowModalPago(false)}
           method={paymentMethod}
-          onPay={handlePay}
-          updateMethod={updateMethod}
+          onPay={() => {}}
+          updateMethod={() => {}}
         />
       )}
 
-      {!isLoggedIn && <Login onLoginSuccess={handleLoginSuccess} />}
+      {toastMessage && (
+        <Toast
+          type={toastMessage.type}
+          message={toastMessage.message}
+          onClose={hideToast}
+        />
+      )}
+
+      {!loading && !isAuthenticated && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <Login onLoginSuccess={handleLoginSuccess} />
+        </div>
+      )}
     </MainLayout>
   );
 };

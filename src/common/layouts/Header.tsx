@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton } from "@ionic/react";
 import { useLocation } from "react-router-dom";
-import useNavigationData from '../hooks/useNavigationData';
-import useSesionData from "../hooks/useSesionData";
+import useNavigationData from "../hooks/useNavigationData";
+import { useAuth } from "../hooks/AuthContext";  // Usar el hook correctamente
 
 const Header: React.FC = () => {
   const { title, changeTitle } = useNavigationData();
-  const { user, store, turn } = useSesionData();
+  const { user, store, turn } = useAuth();  // Usa el hook `useAuth` para acceder al contexto
   const location = useLocation();
 
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
   const backButtonHref = location.pathname.startsWith("/ticket") ? "/audit" : "/home";
 
   return (
-    <IonHeader>
+    <IonHeader className="z-0">
       <IonToolbar>
         <div className="flex w-full flex-row items-center justify-between gap-4">
           <div className="flex flex-row items-center min-w-80">
@@ -58,26 +58,25 @@ const Header: React.FC = () => {
                 <IonBackButton defaultHref={backButtonHref}></IonBackButton>
               </IonButtons>
             )}
-            <span className="font-bold text-[1.125rem] uppercase p-4"> { title } </span>
+            <span className="font-bold text-[1.125rem] uppercase p-4"> {title} </span>
           </div>
 
           <div className="w-full px-4 flex flex-row justify-between items-center">
             <div>
-              <span className="text-[1rem] font-bold uppercase"> { store } </span>
+              <span className="text-[1rem] font-bold uppercase"> {store} </span>
             </div>
 
             <div>
-              <span className="text-[1rem] font-bold uppercase"> { currentTime } </span>
+              <span className="text-[1rem] font-bold uppercase"> {currentTime} </span>
             </div>
 
             <div>
-              <span className="text-[1rem] font-bold uppercase">Turno: Lalo </span>
-              <span className="ml-1"> { turn } </span>
+              <span className="text-[1rem] font-bold uppercase">Turno: {turn} </span>
             </div>
 
             <div>
-              <span className="text-[1rem] font-bold uppercase">Usuario:</span>
-              <span className="ml-1"> { user } </span>
+              <span className="text-[1rem] font-bold uppercase">Usuario: </span>
+              <span className="ml-1"> {user} </span>  {/* Usuario dinámico desde el contexto */}
             </div>
           </div>
         </div>
