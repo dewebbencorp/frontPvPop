@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { PaymentMethod } from "../../../common/interfaces/IPaymentMethod";
+import { IPaymentMethod } from "../../../common/interfaces/IPaymentMethod";
 
 interface ModalPagoProps {
   isOpen: boolean;
   onClose: () => void;
-  method: PaymentMethod;
-  onPay: (method: PaymentMethod) => void;
+  method: IPaymentMethod;
+  onPay: (method: IPaymentMethod) => void;
   updateMethod: (field: string, value: string | number) => void;
 }
 
