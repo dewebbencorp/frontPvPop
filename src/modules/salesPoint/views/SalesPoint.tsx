@@ -9,13 +9,12 @@ import TotalDisplay from "../components/TotalDisplay";
 import Login from "../../login/views/Login";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../common/hooks/useToast";
-import { useAuth } from "../../../common/hooks/AuthContext"; 
+import { useAuth } from "../../../common/hooks/AuthContext";
 
 const SalesPoint: React.FC = () => {
   const { changeTitle } = useNavigationData();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { toastMessage, showToast, hideToast } = useToast();
-  const { user } = useAuth(); 
+  const { user, isAuthenticated, loading } = useAuth(); 
   const [articulos, setArticulos] = useState([
     {
       articulo: "SOL CERVEZA ENVASE 12/4",
@@ -32,7 +31,6 @@ const SalesPoint: React.FC = () => {
       total: 133,
     },
   ]);
-
   const [total, setTotal] = useState(0);
   const [showModalPago, setShowModalPago] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<IPaymentMethod>({
@@ -41,20 +39,22 @@ const SalesPoint: React.FC = () => {
     amount: 0,
   });
 
+  const handleEliminarArticulo = (index: number) => {
+    const nuevosArticulos = articulos.filter((_, i) => i !== index);
+    setArticulos(nuevosArticulos);
+  };
+
   useEffect(() => {
     changeTitle("Ventas");
-
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
 
     const updatedTotal = articulos.reduce((acc, item) => acc + item.total, 0);
     setTotal(updatedTotal);
     setPaymentMethod((prev) => ({ ...prev, total: updatedTotal }));
   }, [articulos, changeTitle]);
 
+  // Al iniciar sesión, guarda el nombre del usuario en localStorage
   const handleLoginSuccess = () => {
-    const username = localStorage.getItem("username") || "Usuario";
-    setIsLoggedIn(true);
+    const username = localStorage.getItem("username") || user || "Usuario";
     showToast("success", `Bienvenido ${username}`);
   };
 
@@ -74,7 +74,7 @@ const SalesPoint: React.FC = () => {
           <ProductTable
             articulos={articulos}
             handleCantidadChange={() => {}}
-            handleEliminarArticulo={() => {}}
+            handleEliminarArticulo={handleEliminarArticulo}
           />
         </div>
         <TotalDisplay
@@ -94,14 +94,18 @@ const SalesPoint: React.FC = () => {
         />
       )}
 
-      {!isLoggedIn && <Login onLoginSuccess={handleLoginSuccess} />}
-
       {toastMessage && (
         <Toast
           type={toastMessage.type}
           message={toastMessage.message}
           onClose={hideToast}
         />
+      )}
+
+      {!loading && !isAuthenticated && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <Login onLoginSuccess={handleLoginSuccess} />
+        </div>
       )}
     </MainLayout>
   );

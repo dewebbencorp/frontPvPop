@@ -2,7 +2,6 @@ import { IonIcon } from "@ionic/react";
 import { add } from "ionicons/icons";
 import React from "react";
 
-
 interface ProductFormProps {
   clave: string;
   cantidad: number;

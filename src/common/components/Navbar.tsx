@@ -7,6 +7,7 @@ import CloseIcon from "../icons/CloseIcon";
 import LogoutIcon from "../icons/LogoutIcon";
 import HamburgerIcon from "../icons/Hamburger";
 import { useAuth } from "../hooks/AuthContext";
+import axios from 'axios';
 
 const Navbar: React.FC = () => {
   const { modules } = useNavigationData();
@@ -23,12 +24,17 @@ const Navbar: React.FC = () => {
     { color: "#F3B24A", hoverColor: "#d29a41" },
   ];
 
-  // cerrar sesión
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    changeUser(' ');
-    history.push("/salespoint");
-    window.location.reload();
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
+        withCredentials: true
+      });
+      changeUser('');
+      history.push("/salespoint");
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   };
 
   return (
@@ -99,7 +105,6 @@ const Navbar: React.FC = () => {
         </div>
       )}
 
-      {/* Modal de confirmación para cerrar sesión */}
       <IonAlert
         isOpen={showLogoutAlert}
         onDidDismiss={() => setShowLogoutAlert(false)}

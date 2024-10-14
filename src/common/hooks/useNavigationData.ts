@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import INavbarModule from '../interfaces/INavbarModule';
+import { useHistory } from 'react-router-dom';
 
 const useNavigationData = () => {
-  const [modules, setModules] = useState<INavbarModule[]>([
+  const history = useHistory();
+
+  const [modules] = useState<INavbarModule[]>([
     { id: '1', title: 'Ventas', path: "/salespoint" },
     { id: '2', title: 'Devolución', path: "/returns" },
     { id: '3', title: 'Retiros', path: "/" },
@@ -17,15 +20,21 @@ const useNavigationData = () => {
     return localStorage.getItem('title') || 'Ventas';
   });
 
-  const changeTitle = (newTitle: string) => {
+  const changeTitle = useCallback((newTitle: string) => {
     setTitle(newTitle);
     localStorage.setItem('title', newTitle);
-  };
+  }, []);
 
-  const changeModule = (newModule: string) => {
-    setTitle(newModule);
-    localStorage.setItem('module', newModule);
-  };
+  const changeModule = useCallback((newModuleId: string) => {
+    const selectedModule = modules.find(mod => mod.id === newModuleId);
+    if (selectedModule) {
+      setModule(newModuleId);
+      setTitle(selectedModule.title);
+      localStorage.setItem('module', newModuleId);
+      localStorage.setItem('title', selectedModule.title);
+      history.push(selectedModule.path); 
+    }
+  }, [history, modules]);
 
   useEffect(() => {
     const savedTitle = localStorage.getItem('title');
@@ -35,7 +44,7 @@ const useNavigationData = () => {
 
     const savedModule = localStorage.getItem('module');
     if (savedModule) {
-      setModule(savedModule)
+      setModule(savedModule);
     }
   }, []);
 

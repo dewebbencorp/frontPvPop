@@ -17,22 +17,21 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
       setErrorMessage("Por favor, completa todos los campos.");
       return;
     }
-
+  
     try {
-      const response = await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/login`, {
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/login`, {
         Clav_Usr: username.toUpperCase(),
         contrasenia: password,
-      });
+      }, { withCredentials: true });  // Enviar cookies con las credenciales
 
-      if (response.data.token) {
-        const userUpperCase = username.toUpperCase();
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", userUpperCase);
+      const userUpperCase = username.toUpperCase();
+      changeUser(userUpperCase);
 
-        changeUser(userUpperCase);
-        onLoginSuccess();
-        showToast("success", `Bienvenido ${userUpperCase}`);
-      }
+      // Guardar el nombre de usuario en localStorage
+      localStorage.setItem("username", userUpperCase);
+
+      onLoginSuccess();
+      showToast("success", `Bienvenido ${userUpperCase}`);
     } catch (err) {
       setErrorMessage("Usuario o contraseña incorrectos");
     }

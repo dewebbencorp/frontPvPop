@@ -1,50 +1,53 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface AuthContextType {
+  isAuthenticated: boolean;
   user: string;
-  store: string;
-  turn: string;
+  loading: boolean;
   changeUser: (newUser: string) => void;
-  changeStore: (newStore: string) => void;
-  changeTurn: (newTurn: string) => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState(() => localStorage.getItem('user') || '');
-  const [store, setStore] = useState(() => localStorage.getItem('store') || 'POP HYATT');
-  const [turn, setTurn] = useState(() => localStorage.getItem('turn') || '1');
-
-  const changeUser = (newUser: string) => {
-    const userUpperCase = newUser.toUpperCase();
-    setUser(userUpperCase);
-    localStorage.setItem('user', userUpperCase);
-  };
-
-  const changeStore = (newStore: string) => {
-    setStore(newStore);
-    localStorage.setItem('store', newStore);
-  };
-
-  const changeTurn = (newTurn: string) => {
-    setTurn(newTurn);
-    localStorage.setItem('turn', newTurn);
-  };
+  const [user, setUser] = useState<string>('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);  // Loading mientras se verifica el token
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) setUser(savedUser);
+    const verifyToken = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/verify-token`, {
+          withCredentials: true, 
+        });
+        setUser(response.data.user.id || '');
+        setIsAuthenticated(true);  // Autentica al usuario si el token es válido
+      } catch (error) {
+        setIsAuthenticated(false); 
+      }
+      setLoading(false);
+    };
 
-    const savedStore = localStorage.getItem('store');
-    if (savedStore) setStore(savedStore);
-
-    const savedTurn = localStorage.getItem('turn');
-    if (savedTurn) setTurn(savedTurn);
+    verifyToken();
   }, []);
 
+  const changeUser = (newUser: string) => {
+    setUser(newUser.toUpperCase());
+    setIsAuthenticated(true);
+  };
+
+  const logout = () => {
+    setUser('');
+    setIsAuthenticated(false);
+    axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
+      withCredentials: true
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, store, turn, changeUser, changeStore, changeTurn }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, loading, changeUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

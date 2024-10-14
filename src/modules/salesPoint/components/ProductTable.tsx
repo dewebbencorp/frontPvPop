@@ -12,7 +12,7 @@ interface ProductTableProps {
   }>;
   handleCantidadChange: (index: number, nuevaCantidad: number) => void;
   handleEliminarArticulo: (index: number) => void;
-  isLoading: boolean; // Nueva propiedad para indicar si está cargando
+  isLoading?: boolean;
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({
@@ -44,11 +44,9 @@ const ProductTable: React.FC<ProductTableProps> = ({
       </div>
 
       <div className={`${articulos.length > 5 ? "overflow-y-auto max-h-72" : ""}`}>
-        {/* Mostrar "Cargando..." si isLoading es true */}
         {isLoading ? (
           <div className="p-4 text-center text-gray-500">Cargando...</div>
         ) : articulos.length === 0 ? (
-          // Mostrar "Sin artículos" si no hay datos
           <div className="p-4 text-center text-gray-500">Sin artículos</div>
         ) : (
           articulos.map((item, index) => (
