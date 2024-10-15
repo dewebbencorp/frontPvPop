@@ -124,14 +124,14 @@ const Audit: React.FC = () => {
         <IonRow>
           <IonCol size="9" className="px-4 py-2">
             <div className="inputs-container">
-              <div className="input-group">
+              {/* <div className="input-group">
                 <label className="label">MOVIMIENTO:</label>
-                <IonSelect value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value)} className="select">
+                <IonSelect mode='ios' value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value)} className="select">
                   {movimientos.map((mov, index) => (
                     <IonSelectOption key={index} value={mov}>{mov}</IonSelectOption>
                   ))}
                 </IonSelect>
-              </div>
+              </div> */}
               <div className="input-group">
                 <label className="label">DESDE:</label>
                 <IonInput value={desde} onIonChange={(e) => setDesde(e.detail.value!)} className="input" type="date" />
@@ -142,7 +142,7 @@ const Audit: React.FC = () => {
               </div>
               <div className="input-group">
                 <label className="label">TIPO:</label>
-                <IonSelect value={tipo} onIonChange={(e) => setTipo(e.detail.value)} className="select">
+                <IonSelect mode='ios' value={tipo} onIonChange={(e) => setTipo(e.detail.value)} className="select">
                   {tipos.map((tp, index) => (
                     <IonSelectOption key={index} value={tp}>{tp}</IonSelectOption>
                   ))}
@@ -150,7 +150,7 @@ const Audit: React.FC = () => {
               </div>
               <div className="input-group">
                 <label className="label">CLIENTE:</label>
-                <IonInput value={cliente} onIonChange={(e) => setCliente(e.detail.value!)} className="input" />
+                <IonInput  value={cliente} onIonChange={(e) => setCliente(e.detail.value!)} className="input" />
               </div>
             </div>
           </IonCol>
@@ -172,7 +172,7 @@ const Audit: React.FC = () => {
                 <th>REMISIÓN</th>
                 <th>FECHA</th>
                 <th>CLIENTE</th>
-                <th>MOVIMIENTO</th>
+                {/* <th>MOV.</th> */}
                 <th>TIPO</th>
                 <th>TOTAL</th>
                 <th>CX</th>
@@ -191,14 +191,14 @@ const Audit: React.FC = () => {
                     <td>{ticket.remision}</td>
                     <td>{ticket.fecha.split('T')[0]}</td>
                     <td>{ticket.cliente}</td>
-                    <td>{ticket.movimiento}</td>
+                    {/* <td>{ticket.movimiento}</td> */}
                     <td>{ticket.tipo}</td>
                     <td>${ticket.total}</td>
                     <td><IonCheckbox checked={ticket.cx} disabled /></td>
                     <td><IonCheckbox checked={ticket.cort} disabled /></td>
                     <td><IonCheckbox checked={!!ticket.com} disabled /></td>
                     <td>
-                      <IonButton className="ticket-button" onClick={() => handleViewTicket(ticket.remision)}>
+                      <IonButton  className="ticket-button" onClick={() => handleViewTicket(ticket.remision)}>
                         <IonIcon icon={documentOutline} className="h-4 items-center flex w-4" />
                       </IonButton>
                       <IonButton className="close-button" onClick={() => handleCancel(ticket.remision)}>
