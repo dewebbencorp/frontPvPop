@@ -1,69 +1,58 @@
-// AuthContext.tsx
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
-// Define la estructura del contexto
 interface AuthContextType {
+  isAuthenticated: boolean;
   user: string;
-  store: string;
-  turn: string;
+  loading: boolean;
   changeUser: (newUser: string) => void;
-  changeStore: (newStore: string) => void;
-  changeTurn: (newTurn: string) => void;
+  logout: () => void;
 }
 
-// Crea el contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<string>(() => {
-    return localStorage.getItem('user') || '';
-  });
-  const [store, setStore] = useState<string>(() => {
-    return localStorage.getItem('store') || 'POP HYATT';
-  });
-  const [turn, setTurn] = useState<string>(() => {
-    return localStorage.getItem('turn') || '1';
-  });
-
-  const changeUser = (newUser: string) => {
-    setUser(newUser);
-    localStorage.setItem('user', newUser);
-  };
-
-  const changeStore = (newStore: string) => {
-    setStore(newStore);
-    localStorage.setItem('store', newStore);
-  };
-
-  const changeTurn = (newTurn: string) => {
-    setTurn(newTurn);
-    localStorage.setItem('turn', newTurn);
-  };
+  const [user, setUser] = useState<string>('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);  // Loading mientras se verifica el token
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(savedUser);
-    }
-    const savedTurn = localStorage.getItem('turn');
-    if (savedTurn) {
-      setTurn(savedTurn);
-    }
-    const savedStore = localStorage.getItem('store');
-    if (savedStore) {
-      setStore(savedStore);
-    }
+    const verifyToken = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/verify-token`, {
+          withCredentials: true, 
+        });
+        setUser(response.data.user.id || '');
+        setIsAuthenticated(true);  // Autentica al usuario si el token es válido
+      } catch (error) {
+        setIsAuthenticated(false); 
+      }
+      setLoading(false);
+    };
+
+    verifyToken();
   }, []);
 
+  const changeUser = (newUser: string) => {
+    setUser(newUser.toUpperCase());
+    setIsAuthenticated(true);
+  };
+
+  const logout = () => {
+    setUser('');
+    setIsAuthenticated(false);
+    axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
+      withCredentials: true
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, store, turn, changeUser, changeStore, changeTurn }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, loading, changeUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook para acceder al contexto
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

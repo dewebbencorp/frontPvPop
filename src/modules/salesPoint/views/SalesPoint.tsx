@@ -9,11 +9,12 @@ import TotalDisplay from "../components/TotalDisplay";
 import Login from "../../login/views/Login";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../common/hooks/useToast";
+import { useAuth } from "../../../common/hooks/AuthContext";
 
 const SalesPoint: React.FC = () => {
   const { changeTitle } = useNavigationData();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { toastMessage, showToast, hideToast } = useToast();
+  const { user, isAuthenticated, loading } = useAuth(); 
   const [articulos, setArticulos] = useState([
     {
       articulo: "SOL CERVEZA ENVASE 12/4",
@@ -30,8 +31,7 @@ const SalesPoint: React.FC = () => {
       total: 133,
     },
   ]);
-
-  const [total, setTotal] = useState<number>(0);
+  const [total, setTotal] = useState(0);
   const [showModalPago, setShowModalPago] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<IPaymentMethod>({
     total: 0,
@@ -39,78 +39,23 @@ const SalesPoint: React.FC = () => {
     amount: 0,
   });
 
+  const handleEliminarArticulo = (index: number) => {
+    const nuevosArticulos = articulos.filter((_, i) => i !== index);
+    setArticulos(nuevosArticulos);
+  };
+
   useEffect(() => {
     changeTitle("Ventas");
+
     const updatedTotal = articulos.reduce((acc, item) => acc + item.total, 0);
     setTotal(updatedTotal);
     setPaymentMethod((prev) => ({ ...prev, total: updatedTotal }));
-  }, [articulos]);
+  }, [articulos, changeTitle]);
 
-  const handleAgregarArticulo = () => {
-    const nuevoArticulo = {
-      articulo: "COCA COLA 600ML",
-      cantidad,
-      precio: 20,
-      descuento: 0,
-      total: 20,
-    };
-
-    const articuloExistente = articulos.find(
-      (item) => item.articulo === nuevoArticulo.articulo
-    );
-
-    if (articuloExistente) {
-      setArticulos((prev) =>
-        prev.map((item) =>
-          item.articulo === nuevoArticulo.articulo
-            ? {
-                ...item,
-                cantidad: item.cantidad + nuevoArticulo.cantidad,
-                total:
-                  (item.cantidad + nuevoArticulo.cantidad) * nuevoArticulo.precio,
-              }
-            : item
-        )
-      );
-    } else {
-      setArticulos([...articulos, nuevoArticulo]);
-    }
-  };
-
-  const handleEliminarArticulo = (index: number) => {
-    setArticulos((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleCantidadChange = (index: number, nuevaCantidad: number) => {
-    setArticulos((prev) =>
-      prev.map((item, i) =>
-        i === index
-          ? {
-              ...item,
-              cantidad: nuevaCantidad,
-              total:
-                nuevaCantidad * item.precio -
-                (nuevaCantidad * item.precio * item.descuento) / 100,
-            }
-          : item
-      )
-    );
-  };
-
-  const handlePay = (method: IPaymentMethod) => {
-    setShowModalPago(false);
-  };
-
-  const updateMethod = (field: string, value: string | number) => {
-    setPaymentMethod((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
-
+  // Al iniciar sesión, guarda el nombre del usuario en localStorage
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-    showToast("success", "Inicio de sesión exitoso");
+    const username = localStorage.getItem("username") || user || "Usuario";
+    showToast("success", `Bienvenido ${username}`);
   };
 
   return (
@@ -124,11 +69,11 @@ const SalesPoint: React.FC = () => {
             setClave={() => {}}
             setCantidad={() => {}}
             setDescuento={() => {}}
-            handleAgregarArticulo={handleAgregarArticulo}
+            handleAgregarArticulo={() => {}}
           />
           <ProductTable
             articulos={articulos}
-            handleCantidadChange={handleCantidadChange}
+            handleCantidadChange={() => {}}
             handleEliminarArticulo={handleEliminarArticulo}
           />
         </div>
@@ -144,12 +89,10 @@ const SalesPoint: React.FC = () => {
           isOpen={showModalPago}
           onClose={() => setShowModalPago(false)}
           method={paymentMethod}
-          onPay={handlePay}
-          updateMethod={updateMethod}
+          onPay={() => {}}
+          updateMethod={() => {}}
         />
       )}
-
-      {!isLoggedIn && <Login onLoginSuccess={handleLoginSuccess} />}
 
       {toastMessage && (
         <Toast
@@ -157,6 +100,12 @@ const SalesPoint: React.FC = () => {
           message={toastMessage.message}
           onClose={hideToast}
         />
+      )}
+
+      {!loading && !isAuthenticated && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <Login onLoginSuccess={handleLoginSuccess} />
+        </div>
       )}
     </MainLayout>
   );

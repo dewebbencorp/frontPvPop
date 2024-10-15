@@ -2,34 +2,38 @@ import React, { useState } from "react";
 import axios from "axios";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../common/hooks/useToast";
-import { useAuth } from "../../../common/hooks/AuthContext"; // Usa el contexto
+import { useAuth } from "../../../common/hooks/AuthContext"; 
 
-interface LoginProps {
-  onLoginSuccess: () => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { toastMessage, showToast, hideToast } = useToast();
-  const { changeUser } = useAuth(); // Utiliza el contexto de autenticación
+  const { changeUser } = useAuth();
 
   const handleLogin = async () => {
+    setErrorMessage("");
+    if (!username || !password) {
+      setErrorMessage("Por favor, completa todos los campos.");
+      return;
+    }
+  
     try {
-      const response = await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/login`, {
-        Clav_Usr: username,
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/login`, {
+        Clav_Usr: username.toUpperCase(),
         contrasenia: password,
-      });
+      }, { withCredentials: true });  // Enviar cookies con las credenciales
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        changeUser(username); // Actualiza el usuario en el contexto
+      const userUpperCase = username.toUpperCase();
+      changeUser(userUpperCase);
 
-        onLoginSuccess();
-        showToast("success", "Inicio de sesión exitoso");
-      }
+      // Guardar el nombre de usuario en localStorage
+      localStorage.setItem("username", userUpperCase);
+
+      onLoginSuccess();
+      showToast("success", `Bienvenido ${userUpperCase}`);
     } catch (err) {
-      showToast("error", "Usuario o contraseña incorrectos");
+      setErrorMessage("Usuario o contraseña incorrectos");
     }
   };
 
@@ -57,6 +61,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-teal-500"
             />
           </div>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         </div>
 
         <div className="mt-6 flex justify-end">
