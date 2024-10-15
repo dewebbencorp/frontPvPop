@@ -124,14 +124,14 @@ const Audit: React.FC = () => {
         <IonRow>
           <IonCol size="9" className="px-4 py-2">
             <div className="inputs-container">
-              <div className="input-group">
+              {/* <div className="input-group">
                 <label className="label">MOVIMIENTO:</label>
                 <IonSelect value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value)} className="select">
                   {movimientos.map((mov, index) => (
                     <IonSelectOption key={index} value={mov}>{mov}</IonSelectOption>
                   ))}
                 </IonSelect>
-              </div>
+              </div> */}
               <div className="input-group">
                 <label className="label">DESDE:</label>
                 <IonInput value={desde} onIonChange={(e) => setDesde(e.detail.value!)} className="input" type="date" />
@@ -172,7 +172,7 @@ const Audit: React.FC = () => {
                 <th>REMISIÓN</th>
                 <th>FECHA</th>
                 <th>CLIENTE</th>
-                <th>MOVIMIENTO</th>
+                {/* <th>MOVIMIENTO</th> */}
                 <th>TIPO</th>
                 <th>TOTAL</th>
                 <th>CX</th>
@@ -191,7 +191,7 @@ const Audit: React.FC = () => {
                     <td>{ticket.remision}</td>
                     <td>{ticket.fecha.split('T')[0]}</td>
                     <td>{ticket.cliente}</td>
-                    <td>{ticket.movimiento}</td>
+                    {/* <td>{ticket.movimiento}</td> */}
                     <td>{ticket.tipo}</td>
                     <td>${ticket.total}</td>
                     <td><IonCheckbox checked={ticket.cx} disabled /></td>

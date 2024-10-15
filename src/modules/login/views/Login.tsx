@@ -19,7 +19,7 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
     }
   
     try {
-      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/login`, {
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND}/api/auth/login`, {
         Clav_Usr: username.toUpperCase(),
         contrasenia: password,
       }, { withCredentials: true });  // Enviar cookies con las credenciales
