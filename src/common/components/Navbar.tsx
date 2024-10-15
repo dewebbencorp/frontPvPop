@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import "./Navbar.css";
-import {  IonLabel, IonFooter } from "@ionic/react";
+import { IonLabel, IonFooter, IonButton, IonAlert } from "@ionic/react";
 import useNavigationData from "../hooks/useNavigationData";
 import CloseIcon from "../icons/CloseIcon";
 import LogoutIcon from "../icons/LogoutIcon";
-import HamburgerIcon from "../icons/Hamburger"
+import HamburgerIcon from "../icons/Hamburger";
+import { useAuth } from "../hooks/AuthContext";
+import axios from 'axios';
 
 const Navbar: React.FC = () => {
   const { modules } = useNavigationData();
+  const { changeUser } = useAuth();
   const [showNavbar, setShowNavbar] = useState(true);
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
   const history = useHistory();
 
   const moduleColors = [
@@ -20,11 +24,23 @@ const Navbar: React.FC = () => {
     { color: "#F3B24A", hoverColor: "#d29a41" },
   ];
 
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
+        withCredentials: true
+      });
+      changeUser('');
+      history.push("/salespoint");
+      window.location.reload();
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
+
   return (
     <>
-      <IonFooter className="h-10">
-        {showNavbar ? (
-        <div className="flex flex-row w-full h-full">
+      {showNavbar ? (
+        <div className="flex flex-row w-full h-10">
           {modules.map((module, index) => (
             <button
               key={module.id}
@@ -38,13 +54,16 @@ const Navbar: React.FC = () => {
                   moduleColors[index].hoverColor)
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = moduleColors[index].color)
+                (e.currentTarget.style.backgroundColor =
+                  moduleColors[index].color)
               }
               onClick={() => {
-                history.push(module.path)
+                history.push(module.path);
               }}
             >
-              <IonLabel className="font-semibold text-white">{module.title}</IonLabel>
+              <IonLabel className="font-semibold text-white">
+                {module.title}
+              </IonLabel>
             </button>
           ))}
           <button
@@ -58,11 +77,9 @@ const Navbar: React.FC = () => {
             onMouseLeave={(e) =>
               (e.currentTarget.style.backgroundColor = "#d11439")
             }
-            onClick={() => {
-              history.push('/')
-            }}
+            onClick={() => setShowLogoutAlert(true)} 
           >
-            <LogoutIcon/>
+            <LogoutIcon />
           </button>
           <button
             className="transition-all grow max-w-16 justify-center flex items-center"
@@ -80,14 +97,38 @@ const Navbar: React.FC = () => {
             <CloseIcon />
           </button>
         </div>
-        ) : (
-          <div className="flex w-full items-center justify-end px-4 bg-background">
-            <button className="w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center" onClick={() => setShowNavbar(true)}> 
-              <HamburgerIcon/>
-            </button>
-          </div>
-        )}
-      </IonFooter>
+      ) : (
+        <div className="flex h-10 ">
+          <button
+            className="fixed bottom-4 right-4 w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center"
+            onClick={() => setShowNavbar(true)}
+          >
+            <HamburgerIcon />
+          </button>
+        </div>
+      )}
+
+      <IonAlert
+        isOpen={showLogoutAlert}
+        onDidDismiss={() => setShowLogoutAlert(false)}
+        header={"Confirmar Cerrar Sesión"}
+        message={"¿Estás seguro de que deseas cerrar sesión?"}
+        buttons={[
+          {
+            text: "Cancelar",
+            role: "cancel",
+            handler: () => {
+              setShowLogoutAlert(false);
+            },
+          },
+          {
+            text: "Cerrar Sesión",
+            handler: () => {
+              handleLogout();
+            },
+          },
+        ]}
+      />
     </>
   );
 };

@@ -25,7 +25,7 @@
 
 .center {
   text-align: center;
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .table-header,
@@ -36,34 +36,118 @@
 
 .table-descripcion {
   margin-top: 15px;
-  /* border-top: 1px dashed #000;
-  border-bottom: 1px dashed #000; */
+  /*border-top: 1px dashed #000;*/
+  /*border-bottom: 1px dashed #000;*/
   padding-top: 10px;
   padding-bottom: 10px;
   margin-left: -1.5rem;
 }
 
-.table-header span,
 .table-row span {
   font-family: Open Sans;
-  text-align: center !important;
   font-size: 11px;
-  white-space: nowrap;
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+  padding: 0 8px; 
+  text-align: left;
 }
 
-.table-row span:nth-child(1) {
-  width: 20%;
+.table-row {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
 }
 
-.table-row span:nth-child(2) {
-  width: 55%;
+.row-top {
+  font-weight: bold;
+  font-size: 10px;
+  color: #555;
+  margin-bottom: 3px;
+}
+.descrip {
+  margin-left: 0.5rem;
+  padding: 0 0px 12px 0;
+}
+.totals {
+  margin-left: 0.5rem;
+  padding: 0 0px 12px 0;
+}
+.encabezados {
+  font-weight: bold;
+    font-size: 13px;
+}
+.row-bottom {
+  font-size: 11px;
 }
 
-.table-row span:nth-child(3),
-.table-row span:nth-child(4) {
-  width: 17.5%;
+.row-top span, .row-bottom span {
+  flex: 1;
+  text-align: left;
+  padding: 0 8px;
+}
+
+.row-top span:nth-child(1),
+.row-bottom span:nth-child(1) { 
+  width: 18% !important;
+  text-align: center;
+}
+
+.row-top span:nth-child(2),
+.row-bottom span:nth-child(2) { /* DESCR */
+  width: 100%  !important; 
+  text-align: left;
+  margin-left: 2rem !important;
+}
+
+
+.row-top span:nth-child(3),
+.row-bottom span:nth-child(3) { /* PUNIT */
+  width: 20%  !important;
+  text-align: right;
+}
+
+.row-top span:nth-child(4),
+.row-bottom span:nth-child(4) { /* TOT */
+  width: 20%  !important;
+  text-align: right;
+}
+
+.producto-separator {
+  width: 100%;
+  border-top: 1px dashed #ddd;
+  margin: 8px 0;
+}
+
+
+.table-header {
+  font-weight: bold;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #000;
+}
+
+.table-producto {
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.header-left, .producto-left {
+  flex: 2;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-right, .producto-right {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.producto-separator {
+  width: 100%;
+  border-top: 1px dashed #ddd;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .paymentDetails,
@@ -102,10 +186,10 @@
 
 .content-total {
   margin-block-start: -17px;
-    font-size: 13px;
-    margin-block-end: 9px;
-    font-family: Open Sans;
-    padding: 13px;
+  font-size: 13px;
+  margin-block-end: 9px;
+  font-family: Open Sans;
+  padding: 13px;
 }
 
 .receipt .address {
@@ -141,12 +225,13 @@
 span {
   padding: 5px;
 }
+
 strong {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .transactio {
-  font-size: 11px;
+  font-size: 10px;
   font-family: Open Sans;
 }
 
