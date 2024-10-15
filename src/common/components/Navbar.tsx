@@ -83,12 +83,14 @@ const Navbar: React.FC = () => {
           </button>
         </div>
       ) : (
-        <button
-          className="fixed bottom-4 right-4 w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center"
-          onClick={() => setShowNavbar(true)}
-        >
-          <HamburgerIcon />
-        </button>
+        <div className="flex h-10 ">
+          <button
+            className="fixed bottom-4 right-4 w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center"
+            onClick={() => setShowNavbar(true)}
+          >
+            <HamburgerIcon />
+          </button>
+        </div>
       )}
     </>
   );

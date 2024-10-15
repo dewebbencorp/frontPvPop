@@ -68,38 +68,33 @@ const Header: React.FC = () => {
                   <IonBackButton defaultHref={backButtonHref}></IonBackButton>
                 </IonButtons>
               )}
-              <span className="font-bold text-[1.125rem] uppercase p-4">
-                {" "}
-                {title}{" "}
+              <span className="font-bold text-[1.125rem] uppercase">
+                {title}
               </span>
             </div>
 
             <div className="w-full px-4 flex flex-row justify-between items-center">
               <div>
+                <span className="text-[1rem] font-bold uppercase">{store}</span>
+              </div>
+
+              <div>
                 <span className="text-[1rem] font-bold uppercase">
-                  {" "}
-                  {store}{" "}
+                  {currentTime}
                 </span>
               </div>
 
               <div>
                 <span className="text-[1rem] font-bold uppercase">
-                  {" "}
-                  {currentTime}{" "}
+                  Turno: {turn}
                 </span>
               </div>
 
               <div>
                 <span className="text-[1rem] font-bold uppercase">
-                  Turno: {turn}{" "}
+                  Usuario:
                 </span>
-              </div>
-
-              <div>
-                <span className="text-[1rem] font-bold uppercase">
-                  Usuario:{" "}
-                </span>
-                <span className="ml-1"> {user} </span>{" "}
+                <span className="ml-1"> {user} </span>
                 {/* Usuario dinámico desde el contexto */}
               </div>
             </div>

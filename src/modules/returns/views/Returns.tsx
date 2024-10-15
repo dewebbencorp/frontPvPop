@@ -148,7 +148,7 @@ const Returns2: React.FC = () => {
                     $ {itemCollection[0]?.summary.total}
                   </span>
                 </div>
-                <button className="bg-button-success uppercase rounded-lg text-white text-[1rem] font-semibold w-36 p-2" id="alert-nc"> Guardar </button>
+                <button className="bg-button-success uppercase rounded-lg text-white text-[1rem] font-semibold w-36 p-2 mt-1" id="alert-nc"> Guardar </button>
               </div>
             </div>
 

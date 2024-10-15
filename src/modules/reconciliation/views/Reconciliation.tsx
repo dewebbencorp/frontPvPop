@@ -22,7 +22,7 @@ const Reconciliation: React.FC = () => {
   return (
     <>
       <MainLayout>
-        <main className="bg-background max-w-full flex flex-col justify-center items-start p-4 gap-6">
+        <main className="bg-background max-w-full flex flex-col justify-center items-start p-4 gap-4">
           <section className="flex flex-row justify-between w-full">
             <article className="flex flex-row gap-4 items-end">
               <div className="flex flex-col gap-2">
