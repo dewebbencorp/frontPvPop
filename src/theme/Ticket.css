@@ -29,8 +29,8 @@
 }
 
 .table-header,
-.table-producto {
-  display: flex;
+.table-row {
+  display: flex !important;
   justify-content: space-between;
 }
 
