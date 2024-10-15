@@ -41,7 +41,7 @@ const Returns2: React.FC = () => {
                 <input
                   type="text"
                   placeholder="San Benito 123"
-                  className="p-2 rounded-lg bg-white text-black grow"
+                  className="p-2 rounded-lg bg-white text-black grow input"
                 />
               </div>
 
@@ -51,12 +51,12 @@ const Returns2: React.FC = () => {
                   <input
                     type="text"
                     placeholder="29/10/2024"
-                    className="p-2 rounded-lg bg-white text-black w-44"
+                    className="p-2 rounded-lg bg-white text-black w-44 input"
                   />
                   <input
                     type="text"
                     placeholder="10:51 A.M."
-                    className="p-2 rounded-lg bg-white text-black w-28"
+                    className="p-2 rounded-lg bg-white text-black w-28 input"
                   />
                 </div>
               </div>
@@ -65,17 +65,17 @@ const Returns2: React.FC = () => {
                 <span className="uppercase text-[1rem] w-28"> Cancelado: </span>
                 <div className="flex gap-4">
                   <div className="flex gap-4 w-44">
-                    <input type="checkbox" className="min-w-10" />
+                    <input type="checkbox" className="min-w-10 input" />
                     <input
                       type="text"
                       placeholder="29/10/2024"
-                      className="p-2 rounded-lg bg-white text-black w-[7.5rem]"
+                      className="p-2 rounded-lg bg-white text-black w-[7.5rem] input"
                     />
                   </div>
                   <input
                     type="text"
                     placeholder="5:21 P.M."
-                    className="p-2 rounded-lg bg-white text-black w-28 max-w-36"
+                    className="p-2 rounded-lg bg-white text-black w-28 max-w-36 input"
                   />
                 </div>
               </div>
@@ -91,7 +91,7 @@ const Returns2: React.FC = () => {
                   placeholder="10:51 A.M."
                   value={ticketId}
                   onChange={(e) => setTicketId(e.target.value)}
-                  className="p-2 rounded-lg bg-white text-black grow"
+                  className="p-2 rounded-lg bg-white text-black grow input"
                 />
                 <button
                   onClick={handleSearch}
@@ -108,7 +108,7 @@ const Returns2: React.FC = () => {
                 <input
                   type="text"
                   placeholder="10:51 A.M."
-                  className="p-2 rounded-lg bg-white text-black grow"
+                  className="p-2 rounded-lg bg-white text-black grow input"
                 />
                 <button className="flex w-10 h-10 bg-button-primary rounded-lg justify-center items-center">
                   <SearchIcon />
@@ -123,12 +123,12 @@ const Returns2: React.FC = () => {
                   <input
                     type="text"
                     placeholder="29/10/2024"
-                    className="p-2 rounded-lg bg-white text-black w-[122px]"
+                    className="p-2 rounded-lg bg-white text-black w-[122px] input"
                   />
                   <input
                     type="text"
                     placeholder="10:51 A.M."
-                    className="p-2 rounded-lg bg-white text-black w-[122px]"
+                    className="p-2 rounded-lg bg-white text-black w-[122px] input"
                   />
                 </div>
               </div>
