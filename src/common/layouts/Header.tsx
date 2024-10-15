@@ -6,7 +6,7 @@ import { useAuth } from "../hooks/AuthContext"; // Usar el hook correctamente
 
 const Header: React.FC = () => {
   const { title, changeTitle } = useNavigationData();
-  const { user, store, turn } = useAuth(); // Usa el hook `useAuth` para acceder al contexto
+  const { user } = useAuth(); // Usa el hook `useAuth` para acceder al contexto
   const location = useLocation();
 
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
 
             <div className="w-full px-4 flex flex-row justify-between items-center">
               <div>
-                <span className="text-[1rem] font-bold uppercase">{store}</span>
+                <span className="text-[1rem] font-bold uppercase"> hyatt pop </span>
               </div>
 
               <div>
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
 
               <div>
                 <span className="text-[1rem] font-bold uppercase">
-                  Turno: {turn}
+                  Turno: 1
                 </span>
               </div>
 
