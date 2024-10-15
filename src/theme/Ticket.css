@@ -30,7 +30,7 @@
 
 .table-header,
 .table-row {
-  display: flex;
+  display: flex !important;
   justify-content: space-between;
 }
 
