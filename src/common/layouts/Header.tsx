@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton } from "@ionic/react";
 import { useLocation } from "react-router-dom";
 import useNavigationData from "../hooks/useNavigationData";
-import { useAuth } from "../hooks/AuthContext";  // Usar el hook correctamente
+import { useAuth } from "../hooks/AuthContext";
 
 const Header: React.FC = () => {
   const { title, changeTitle } = useNavigationData();
-  const { user, store, turn } = useAuth();  // Usa el hook `useAuth` para acceder al contexto
+  const { user } = useAuth();
   const location = useLocation();
 
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
 
           <div className="w-full px-4 flex flex-row justify-between items-center">
             <div>
-              <span className="text-[1rem] font-bold uppercase"> {store} </span>
+              <span className="text-[1rem] font-bold uppercase"> hyatt pop </span>
             </div>
 
             <div>
@@ -71,12 +71,12 @@ const Header: React.FC = () => {
             </div>
 
             <div>
-              <span className="text-[1rem] font-bold uppercase">Turno: {turn} </span>
+              <span className="text-[1rem] font-bold uppercase">Turno: 1 </span>
             </div>
 
             <div>
               <span className="text-[1rem] font-bold uppercase">Usuario: </span>
-              <span className="ml-1"> {user} </span>  {/* Usuario dinámico desde el contexto */}
+              <span className="ml-1"> {user} </span>
             </div>
           </div>
         </div>

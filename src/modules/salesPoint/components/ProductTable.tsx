@@ -19,9 +19,9 @@ const ProductTable: React.FC<ProductTableProps> = ({
   articulos,
   handleCantidadChange,
   handleEliminarArticulo,
-  isLoading, // Recibe la nueva propiedad
+  isLoading,
 }) => {
-  const lastItemRef = useRef<HTMLDivElement | null>(null);
+  const lastItemRef = useRef<HTMLTableRowElement | null>(null);
 
   useEffect(() => {
     if (lastItemRef.current) {
@@ -31,63 +31,94 @@ const ProductTable: React.FC<ProductTableProps> = ({
   }, [articulos]);
 
   return (
-    <div className="shadow-md border border-gray-200 rounded-lg bg-white">
-      <div className="bg-myFriend-700 text-white py-2 px-4 rounded-t-lg font-semibold text-center sticky top-0 z-10">
-        <div className="grid grid-cols-12">
-          <div className="col-span-4">ARTÍCULO</div>
-          <div className="col-span-1 text-center">CANT</div>
-          <div className="col-span-2 text-center">PRECIO</div>
-          <div className="col-span-2 text-center">% DESC</div>
-          <div className="col-span-2 text-center">TOTAL</div>
-          <div className="col-span-1"></div>
-        </div>
-      </div>
-
-      <div className={`${articulos.length > 5 ? "overflow-y-auto max-h-72" : ""}`}>
-        {isLoading ? (
-          <div className="p-4 text-center text-gray-500">Cargando...</div>
-        ) : articulos.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">Sin artículos</div>
-        ) : (
-          articulos.map((item, index) => (
-            <div
-              key={index}
-              className="border-b border-gray-200 p-3 grid grid-cols-12 items-center"
-              ref={index === articulos.length - 1 ? lastItemRef : null}
-            >
-              <div className="col-span-4 text-gray-700 text-[10pt]">
-                {item.articulo}
-              </div>
-              <div className="col-span-1 text-right">
-                <input
-                  type="number"
-                  value={item.cantidad}
-                  onChange={(e) =>
-                    handleCantidadChange(index, parseInt(e.target.value, 10))
-                  }
-                  className="text-center border border-gray-300 rounded-md p-1 w-full shadow-sm focus:ring-2 focus:ring-teal-500 transition"
-                />
-              </div>
-              <div className="col-span-2 text-center text-gray-700 text-[11pt]">
-                {item.precio.toFixed(2)}
-              </div>
-              <div className="col-span-2 text-center text-gray-700 text-[11pt]">
-                {item.descuento}%
-              </div>
-              <div className="col-span-2 text-center text-gray-700 text-[11pt]">
-                {item.total.toFixed(2)}
-              </div>
-              <div className="col-span-1 text-center">
-                <button
-                  onClick={() => handleEliminarArticulo(index)}
-                  className="bg-red-500 hover:bg-red-600 rounded-md text-white  px-2 transition text-[14pt]"
+    <div className="overflow-x-auto rounded-lg shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]">
+      <div className="max-h-96 overflow-y-auto">
+        {/* Contenedor para scroll vertical */}
+        <table className="min-w-full bg-white rounded-lg shadow-lg border-collapse">
+          <thead className="sticky top-0 bg-myFriend-600 text-white z-10">
+            {/* Sticky header */}
+            <tr>
+              <th className="font-semibold text-sm text-white p-3 first:rounded-tl-lg last:rounded-tr-lg whitespace-nowrap">
+                ARTÍCULO
+              </th>
+              <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                CANTIDAD
+              </th>
+              <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                PRECIO
+              </th>
+              <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                % DESC
+              </th>
+              <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                TOTAL
+              </th>
+              <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={6} className="text-center p-4 text-gray-500">
+                  Cargando...
+                </td>
+              </tr>
+            ) : articulos.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center p-4 text-gray-500">
+                  Sin artículos
+                </td>
+              </tr>
+            ) : (
+              articulos.map((item, index) => (
+                <tr
+                  key={index}
+                  className={`text-center ${
+                    index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  } ${item.cantidad === 0 ? "bg-red-100" : ""}`}
+                  ref={index === articulos.length - 1 ? lastItemRef : null}
                 >
-                  <IonIcon aria-hidden="true" icon={close} slot="start" className="h-7 items-center flex w-7"></IonIcon>
-                </button>
-              </div>
-            </div>
-          ))
-        )}
+                  <td className="text-gray-700 text-[12px] px-3 h-10 w-1/2 text-start">
+                    {item.articulo}
+                  </td>
+                  <td className="px-3 h-10">
+                    <input
+                      type="number"
+                      value={item.cantidad}
+                      onChange={(e) =>
+                        handleCantidadChange(index, parseInt(e.target.value, 10))
+                      }
+                      className="text-center border rounded-md p-1 w-16 shadow-sm focus:ring-2 focus:ring-teal-500 transition"
+                    />
+                  </td>
+                  <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
+                    {item.precio.toFixed(2)}
+                  </td>
+                  <td className="text-gray-700 text-[14px] px-3 h-10 w-32 text-center">
+                    {item.descuento}%
+                  </td>
+                  <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
+                    {item.total.toFixed(2)}
+                  </td>
+                  <td className="px-3 h-10 text-center">
+                    <div className="flex justify-center items-center h-full">
+                      <button
+                        onClick={() => handleEliminarArticulo(index)}
+                        className="bg-red-500 hover:bg-red-600 rounded-md text-white px-2 transition"
+                      >
+                        <IonIcon
+                          aria-hidden="true"
+                          icon={close}
+                          className="h-6 items-center flex w-4"
+                        />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

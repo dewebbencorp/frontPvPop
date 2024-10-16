@@ -30,6 +30,47 @@ const SalesPoint: React.FC = () => {
       descuento: 5,
       total: 133,
     },
+    {
+      articulo: "SOL CERVEZA ENVASE 12/4",
+      cantidad: 1,
+      precio: 16.5,
+      descuento: 0,
+      total: 16.5,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },{
+      articulo: "SOL CERVEZA ENVASE 12/4",
+      cantidad: 1,
+      precio: 16.5,
+      descuento: 0,
+      total: 16.5,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },
+    {
+      articulo: "SOL CERVEZA ENVASE 12/4",
+      cantidad: 1,
+      precio: 16.5,
+      descuento: 0,
+      total: 16.5,
+    },
+    {
+      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
+      cantidad: 1,
+      precio: 140,
+      descuento: 5,
+      total: 133,
+    },
   ]);
   const [total, setTotal] = useState(0);
   const [showModalPago, setShowModalPago] = useState(false);

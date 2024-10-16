@@ -32,6 +32,9 @@ export default {
           warning: "#F3B24A",
           info: "#4699DD",
         },  
+      },
+      boxShadow: {
+        'general': '0px 4px 4px -2px rgba(0, 0, 0, 0.35)',
       }
     },
   },
