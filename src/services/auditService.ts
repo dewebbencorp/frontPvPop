@@ -1,7 +1,16 @@
 import { connectionTest } from "../api/connectionTest";
 
-// Función para  todas las auditorías
-export const obtenerAuditorias = async () => {
+interface FiltrosAuditoria {
+    movimiento?: string | null;
+    tipo?: string | null;
+    desde?: string | null;
+    hasta?: string | null;
+    cliente?: string | null;
+  }
+  
+
+// Función para obtener todas las auditorías
+export const obtenerAuditorias = async (): Promise<any> => {
     try {
         const response = await connectionTest.get("/api/audit", {
             withCredentials: true  // Enviar cookies con la solicitud
@@ -15,7 +24,7 @@ export const obtenerAuditorias = async () => {
 };
 
 // Función para obtener auditorías filtradas
-export const obtenerAuditoriasFiltradas = async (filtros) => {
+export const obtenerAuditoriasFiltradas = async (filtros: FiltrosAuditoria): Promise<any> => {
     try {
         const response = await connectionTest.get("/api/audit/filtro", {
             params: filtros,
@@ -30,7 +39,7 @@ export const obtenerAuditoriasFiltradas = async (filtros) => {
 };
 
 // Función para actualizar el campo CX de una auditoría específica
-export const actualizarCX = async (remision, cx) => {
+export const actualizarCX = async (remision: string, cx: boolean): Promise<any> => {
     try {
         const response = await connectionTest.patch(`/api/audit/${remision}/cx`, { cx }, {
             withCredentials: true  // Enviar cookies con la solicitud

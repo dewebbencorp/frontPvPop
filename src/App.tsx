@@ -11,8 +11,8 @@ const Home = React.lazy(() => import('./modules/home/Home'));
 const Returns = React.lazy(() => import('./modules/returns/views/Returns'));
 const Returns2 = React.lazy(() => import('./modules/returns/views/Returns2'));
 const Audit = React.lazy(() => import('./modules/audit/views/Audit'));
-const Ticket = React.lazy(() => import('./common/hooks/Ticket'));
-const SalesPoint = React.lazy(() => import('./modules/salesPoint/views/SalesPoint'))
+const Ticket = React.lazy(() => import('./modules/audit/components/Ticket'));  // Cambia aquí
+const SalesPoint = React.lazy(() => import('./modules/salesPoint/views/SalesPoint'));
 
 // Import Ionic CSS
 import '@ionic/react/css/core.css';
@@ -34,7 +34,6 @@ import './theme/App.css';
 setupIonicReact();
 
 const App: React.FC = () => (
- 
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>

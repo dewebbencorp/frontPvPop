@@ -29,48 +29,7 @@ const SalesPoint: React.FC = () => {
       precio: 140,
       descuento: 5,
       total: 133,
-    },
-    {
-      articulo: "SOL CERVEZA ENVASE 12/4",
-      cantidad: 1,
-      precio: 16.5,
-      descuento: 0,
-      total: 16.5,
-    },
-    {
-      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
-      cantidad: 1,
-      precio: 140,
-      descuento: 5,
-      total: 133,
-    },{
-      articulo: "SOL CERVEZA ENVASE 12/4",
-      cantidad: 1,
-      precio: 16.5,
-      descuento: 0,
-      total: 16.5,
-    },
-    {
-      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
-      cantidad: 1,
-      precio: 140,
-      descuento: 5,
-      total: 133,
-    },
-    {
-      articulo: "SOL CERVEZA ENVASE 12/4",
-      cantidad: 1,
-      precio: 16.5,
-      descuento: 0,
-      total: 16.5,
-    },
-    {
-      articulo: "OCEAN POTION EXTREME COCONUT OIL SPF 4 255ML",
-      cantidad: 1,
-      precio: 140,
-      descuento: 5,
-      total: 133,
-    },
+    }
   ]);
   const [total, setTotal] = useState(0);
   const [showModalPago, setShowModalPago] = useState(false);
@@ -93,11 +52,16 @@ const SalesPoint: React.FC = () => {
     setPaymentMethod((prev) => ({ ...prev, total: updatedTotal }));
   }, [articulos, changeTitle]);
 
-  // Al iniciar sesión, guarda el nombre del usuario en localStorage
-  const handleLoginSuccess = () => {
-    const username = localStorage.getItem("username") || user || "Usuario";
-    showToast("success", `Bienvenido ${username}`);
-  };
+  const handlePay = () => {
+    setShowModalPago(false);
+    setArticulos([]); // Limpiar la lista de artículos
+    showToast("success", "Venta realizada correctamente"); 
+};
+
+    const handleLoginSuccess = () => {
+      const username = localStorage.getItem("username") || user || "Usuario";
+      showToast("success", `Bienvenido ${username}`);
+    };
 
   return (
     <MainLayout>
@@ -130,7 +94,7 @@ const SalesPoint: React.FC = () => {
           isOpen={showModalPago}
           onClose={() => setShowModalPago(false)}
           method={paymentMethod}
-          onPay={() => {}}
+          onPay={handlePay}
           updateMethod={() => {}}
         />
       )}

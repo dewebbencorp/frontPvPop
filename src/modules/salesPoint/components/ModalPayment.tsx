@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import ModalHeader from "./Modal/ModalHeader";
 import PaymentMethodButtons from "./Modal/PaymentMethodButtons";
 import PaymentMethodFields from "./Modal/PaymentMethodFields";
+import ConfirmAuthModal from "../../../common/components/ConfirmAuthModal";
 import { IPaymentMethod } from "../../../common/interfaces/IPaymentMethod";
 
 interface ModalPagoProps {
   isOpen: boolean;
   onClose: () => void;
   method: IPaymentMethod;
-  onPay: (method: IPaymentMethod) => void;
+  onPay: (method: IPaymentMethod) => void; // Esta función se ejecuta al confirmar la venta
   updateMethod: (field: string, value: string | number) => void;
 }
 
@@ -20,6 +21,7 @@ const ModalPago: React.FC<ModalPagoProps> = ({
   updateMethod,
 }) => {
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [mxnAmount, setMxnAmount] = useState<number>(0);
   const [usdAmount, setUsdAmount] = useState<number>(0);
   const [cardAmount, setCardAmount] = useState<number>(0);
@@ -69,65 +71,87 @@ const ModalPago: React.FC<ModalPagoProps> = ({
     }
   };
 
+  // Mostrar el modal de confirmación de autorización cuando se da clic en pagar
+  const handlePayClick = () => {
+    setShowConfirmationModal(true);
+  };
+
+  // Función para confirmar la venta
+  const handleConfirmVenta = (username: string, password: string) => {
+    setShowConfirmationModal(false);
+    onPay(method);  // Realizar la venta tras la confirmación
+    onClose();  // Cerrar el modal de pago
+  };
+
   return (
-    <div
-      className={`fixed inset-0 z-50 bg-gray-800 bg-opacity-50 ${
-        isOpen ? "block" : "hidden"
-      }`}
-    >
-      <div className="relative mx-auto my-16 bg-white rounded-lg shadow-lg max-w-lg p-6">
-        <ModalHeader title="Elegir Método de Pago" onClose={onClose} />
-        <hr className="my-4 border-t border-gray-300" />
+    <>
+      <div
+        className={`fixed inset-0 z-50 bg-gray-800 bg-opacity-50 ${
+          isOpen ? "block" : "hidden"
+        }`}
+      >
+        <div className="relative mx-auto my-16 bg-white rounded-lg shadow-lg max-w-lg p-6">
+          <ModalHeader title="Elegir Método de Pago" onClose={onClose} />
+          <hr className="my-4 border-t border-gray-300" />
 
-        {!selectedMethod && (
-          <PaymentMethodButtons
-            selectedMethod={selectedMethod}
-            onSelectMethod={setSelectedMethod}
-          />
-        )}
-
-        {selectedMethod && (
-          <PaymentMethodFields
-            selectedMethod={selectedMethod}
-            mxnAmount={mxnAmount}
-            usdAmount={usdAmount}
-            cardAmount={cardAmount}
-            roomAmount={roomAmount}
-            change={change}
-            totalUsd={totalUsd}
-            handleAmountChange={handleAmountChange}
-            method={method}
-            updateMethod={updateMethod}
-          />
-        )}
-
-        <div className="flex justify-end space-x-4 mt-6">
-          {selectedMethod ? (
-            <>
-              <button
-                onClick={() => onPay(method)}
-                className="px-4 py-2 bg-[#1C878F] text-white rounded-md shadow-md hover:bg-teal-600"
-              >
-                PAGAR
-              </button>
-              <button
-                onClick={() => setSelectedMethod(null)}
-                className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md text-white"
-              >
-                CANCELAR
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={onClose}
-              className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-            >
-              CERRAR
-            </button>
+          {!selectedMethod && (
+            <PaymentMethodButtons
+              selectedMethod={selectedMethod}
+              onSelectMethod={setSelectedMethod}
+            />
           )}
+
+          {selectedMethod && (
+            <PaymentMethodFields
+              selectedMethod={selectedMethod}
+              mxnAmount={mxnAmount}
+              usdAmount={usdAmount}
+              cardAmount={cardAmount}
+              roomAmount={roomAmount}
+              change={change}
+              totalUsd={totalUsd}
+              handleAmountChange={handleAmountChange}
+              method={method}
+              updateMethod={updateMethod}
+            />
+          )}
+
+          <div className="flex justify-end space-x-4 mt-6">
+            {selectedMethod ? (
+              <>
+                <button
+                  onClick={handlePayClick}
+                  className="px-4 py-2 bg-[#1C878F] text-white rounded-md shadow-md hover:bg-teal-600"
+                >
+                  PAGAR
+                </button>
+                <button
+                  onClick={() => setSelectedMethod(null)}
+                  className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md text-white"
+                >
+                  CANCELAR
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={onClose}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+              >
+                CERRAR
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Modal de confirmación de autorización */}
+      <ConfirmAuthModal
+        isOpen={showConfirmationModal}
+        onClose={() => setShowConfirmationModal(false)}
+        onConfirm={handleConfirmVenta}
+        actionDescription="la venta"
+      />
+    </>
   );
 };
 
