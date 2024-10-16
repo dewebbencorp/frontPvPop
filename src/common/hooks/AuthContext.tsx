@@ -19,7 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/verify-token`, {
+        const response = await axios.get(`${import.meta.env.VITE_APP_PATH_BACKEND}/api/auth/verify-token`, {
           withCredentials: true, 
         });
         setUser(response.data.user.id || '');
@@ -41,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser('');
     setIsAuthenticated(false);
-    axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
+    axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND}/api/auth/logout`, {}, {
       withCredentials: true
     });
   };
