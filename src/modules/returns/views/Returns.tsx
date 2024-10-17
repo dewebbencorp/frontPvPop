@@ -69,8 +69,7 @@ const Returns2: React.FC = () => {
             <div className="w-[372px] flex flex-col gap-2 bg-button-danger p-2 rounded-lg">
               <div className="flex flex-row gap-2 items-center h-10 w-full">
                 <span className="text-white font-bold uppercase text-[1rem] w-24">
-                  {" "}
-                  Cargar Ticket:{" "}
+                  Cargar Ticket:
                 </span>
                 <input
                   type="text"
@@ -84,8 +83,7 @@ const Returns2: React.FC = () => {
 
               <div className="flex flex-row gap-2 items-center h-10 w-full">
                 <span className="text-white font-bold uppercase text-[1rem] w-24">
-                  {" "}
-                  buscar nc:{" "}
+                  buscar nc:
                 </span>
                 <input
                   type="text"
@@ -100,14 +98,11 @@ const Returns2: React.FC = () => {
           </div>
 
           <div className="flex grow justify-between gap-2">
-            {/* Tabla */}
-            <div className="w-[48rem] grow max-h-[280px] overflow-y-scroll shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)] rounded-lg">
+            <div className="w-[48rem] grow max-h-[280px] bg-blue-500 overflow-y-scroll shadow-general rounded-lg">
               <TableReturns />
             </div>
-            {/* Tabla */}
-            {/* Resumen */}
             <div className="flex flex-col items-center gap-4 w-[200px] max-w-[200px]">
-              <div className="w-full flex flex-col p-2 rounded-lg gap-1 h-min bg-white items-center shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]">
+              <div className="w-full flex flex-col p-2 rounded-lg gap-1 h-min bg-white items-center shadow-general">
                 <div className="flex w-full justify-start gap-4 items-center">
                   <span className="text-[1rem] uppercase max-w-20 w-20">
                     Suma:
@@ -148,11 +143,14 @@ const Returns2: React.FC = () => {
                     $ {itemCollection[0]?.summary.total}
                   </span>
                 </div>
-                <button className="bg-button-success uppercase rounded-lg text-white text-[1rem] font-semibold w-36 p-2 mt-1" id="alert-nc"> Guardar </button>
+                <button
+                  className="bg-button-success uppercase rounded-lg text-white text-[1rem] font-semibold w-36 p-2 mt-1"
+                  id="alert-nc"
+                >
+                  Guardar
+                </button>
               </div>
             </div>
-
-            {/* Resumen */}
           </div>
         </div>
       </MainLayout>

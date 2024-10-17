@@ -80,6 +80,8 @@ export const reconciliationStore = create<ReconciliationState>((set, get) => ({
     } else if (field === "monto") {
       docto.monto = value;
       docto.importe = docto.monto * docto.tipoCambio;
+    } else if (field === "referencia"){
+      docto.referencia = value;
     }
   
     set({ dataCollection: updatedData });

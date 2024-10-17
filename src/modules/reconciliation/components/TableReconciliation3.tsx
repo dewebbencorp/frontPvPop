@@ -1,4 +1,3 @@
-import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import useReconciliation from "../hooks/useReconciliation";
 
 const TableReconciliation3: React.FC = () => {
@@ -12,62 +11,93 @@ const TableReconciliation3: React.FC = () => {
   } = useReconciliation();
 
   return (
-    <IonGrid className="w-full p-0 m-0">
-      <IonRow className="bg-myFriend-600 text-white font-bold h-10 items-center rounded-t-lg">
-        <IonCol className="text-center font-semibold text-[1rem]">Docto</IonCol>
-        <IonCol className="text-center font-semibold text-[1rem]">Monto</IonCol>
-        <IonCol className="text-center font-semibold text-[1rem]">Referencia</IonCol>
-        <IonCol className="text-center font-semibold text-[1rem]">Tipo C.</IonCol>
-        <IonCol className="text-center font-semibold text-[1rem]">Importe</IonCol>
-      </IonRow>
-      <div className="max-h-[200px] overflow-y-scroll">
-        {dataCollection.map((item, index) => (
-          <IonRow key={index} className="bg-white h-10">
-            <IonCol className="text-center !py-0">
-              <select
-                className="h-full !shadow-none w-3/4 text-center"
-                onChange={(e) => handleDoctoChange(index, e.target.value)}
-                value={item.docto}
-              >
-                <option value="" className="text-black">Seleccionar docto</option>
-                {availableDoctos.map((docto, idx) => (
-                  <option key={idx} value={docto.nombre}>
-                    {docto.nombre}
+    <>
+      <table className="w-full bg-white rounded-lg shadow-lg border-collapse overflow-scroll">
+        <thead className="sticky top-0 bg-myFriend-600 text-white z-10">
+          <tr className="font-bold h-10 items-center">
+            <th className="w-44 text-center font-semibold text-[1rem] px-2 first:rounded-tl-lg last:rounded-tr-lg whitespace-nowrap truncate">
+              Docto
+            </th>
+            <th className="text-center w-[15%] font-semibold text-[1rem] px-2 whitespace-nowrap">
+              Monto
+            </th>
+            <th className="text-center font-semibold text-[1rem] px-2">
+              Referencia
+            </th>
+            <th className="text-center font-semibold text-[1rem] px-2">
+              Tipo C.
+            </th>
+            <th className="text-center font-semibold text-[1rem] px-2">
+              Importe
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {dataCollection.map((item: any, index: any) => (
+            <tr
+              key={index}
+              className={`text-center ${
+                index % 2 === 0 ? "bg-gray-100" : "bg-white"
+              } ${item.cantDev === 0 ? "bg-red-100" : ""}`}
+            >
+              <td className="text-gray-700 text-[14px] px-1 h-10 min-w-32">
+                <select
+                  className="h-full !shadow-none w-full text-center bg-transparent"
+                  onChange={(e) => handleDoctoChange(index, e.target.value)}
+                  value={item.docto}
+                >
+                  <option value="" className="text-black">
+                    Seleccionar Docto
                   </option>
-                ))}
-              </select>
-            </IonCol>
-            <IonCol className="text-center max-h-10 overflow-hidden">
-              <input
-                className="h-full !shadow-none w-3/4 text-center"
-                type="number"
-                value={item.monto}
-                onChange={(e) => handleCantidadChange(index, Number(e.target.value))}
-              />
-            </IonCol>
-            <IonCol className="text-center max-h-10 overflow-hidden">
-              <input
-                className="h-full !shadow-none w-3/4 text-center"
-                type="text"
-                placeholder="Notas"
-                value={item.referencia}
-                onChange={(e) => handleReferenciaChange(index, e.target.value)}
-              />
-            </IonCol>
-            <IonCol className="text-center">{item.tipoCambio}</IonCol>
-            <IonCol className="text-center">{item.importe.toFixed(2)}</IonCol>
-          </IonRow>
-        ))}
+                  {availableDoctos.map((docto, idx) => (
+                    <option key={idx} value={docto.nombre}>
+                      {docto.nombre}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td className="px-3 overflow-hidden text-ellipsis whitespace-nowrap w-[15%]">
+                <input
+                  className="h-full !shadow-none w-3/4 text-center !bg-transparent"
+                  type="number"
+                  value={item.monto}
+                  onChange={(e) =>
+                    handleCantidadChange(index, Number(e.target.value))
+                  }
+                />
+              </td>
+              <td className="text-gray-700 px-3 h-10">
+                <input
+                    className="h-full text-[14px] !shadow-none w-3/4 text-center !bg-transparent"
+                    type="text"
+                    placeholder="Notas"
+                    value={item.referencia}
+                    onChange={(e) =>
+                      handleReferenciaChange(index, e.target.value)
+                    }
+                />
+              </td>
+              <td className="text-gray-700 text-[14px] px-2 h-10">
+                {item.tipoCambio}
+              </td>
+              <td className="text-gray-700 text-[14px] px-3 h-10">
+                {item.importe.toFixed(2)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className="text-center px-4 flex bg-myFriend-700 rounded-b-lg w-full sticky bottom-0 h-10">
+          <span
+            className="uppercase font-bold text-white text-[14px] px-2 py-1 tracking-[1vw] w-full h-full flex items-center justify-center"
+            onClick={addNewRow}
+          >
+            Agregar Docto
+          </span>
       </div>
-      <IonCol className="text-center px-4 flex bg-myFriend-700 rounded-b-lg">
-        <span
-          className="uppercase font-bold text-white text-[0.75rem] px-2 py-1 tracking-[1vw] w-full"
-          onClick={addNewRow}
-        >
-          Agregar Docto
-        </span>
-      </IonCol>
-    </IonGrid>
+    </>
   );
 };
 
