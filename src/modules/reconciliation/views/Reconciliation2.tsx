@@ -23,13 +23,13 @@ const Reconciliation2: React.FC = () => {
             <label className="font-semibold text-[1rem] uppercase min-w-16">
               Fecha:
             </label>
-            <span className="font-semibold text-[1rem] bg-[#E5E5E5] border border-[#999] text-text rounded-lg px-4 min-w-32 h-10 justify-start items-center flex">              
+            <span className="font-semibold text-[1rem] bg-[#E5E5E5] border border-[#999] text-text rounded-lg px-4 min-w-32 h-10 justify-start items-center flex shadow-general">              
               10/10/2024
             </span>
             <label className="font-semibold text-[1rem] uppercase min-w-16">
               Turno:
             </label>
-            <span className="font-semibold text-[1rem] bg-[#E5E5E5] border border-[#999] text-text rounded-lg px-4 min-w-32 h-10 justify-start items-center flex">              
+            <span className="font-semibold text-[1rem] bg-[#E5E5E5] border border-[#999] text-text rounded-lg px-4 min-w-32 h-10 justify-start items-center flex shadow-general">              
               3
             </span>
           </section>
@@ -47,7 +47,7 @@ const Reconciliation2: React.FC = () => {
                 <span className="w-28 z text-[1rem] leading-none flex items-center font-semibold uppercase">
                   Total Efectivo:
                 </span>
-                <span className="bg-button-primary rounded-lg w-48 px-4 py-2 text-white items-center justify-start flex">
+                <span className="bg-button-primary rounded-lg w-48 shadow-general px-4 py-2 text-white items-center justify-start flex">
                   $ {totalCash.toFixed(2)}
                 </span>
               </div>
@@ -55,7 +55,7 @@ const Reconciliation2: React.FC = () => {
                 <span className="w-28 z text-[1rem] leading-none flex items-center font-semibold uppercase">
                   Total Docto:
                 </span>
-                <span className="bg-button-primary rounded-lg w-48 px-4 py-2 text-white items-center justify-start flex">
+                <span className="bg-button-primary rounded-lg w-48 shadow-general px-4 py-2 text-white items-center justify-start flex">
                   $ {totalDoctos.toFixed(2)}
                 </span>
               </div>
@@ -66,7 +66,7 @@ const Reconciliation2: React.FC = () => {
                 <span className="w-28 z text-[1rem] leading-none flex items-center font-semibold uppercase">
                   Total Diferencia:
                 </span>
-                <span className="bg-button-primary rounded-lg w-48 px-4 py-2 text-white items-center justify-start flex">
+                <span className="bg-button-primary rounded-lg w-48 shadow-general px-4 py-2 text-white items-center justify-start flex">
                   $ {totalDifference.toFixed(2)}
                 </span>
               </div>
@@ -74,7 +74,7 @@ const Reconciliation2: React.FC = () => {
                 <span className="w-28 z text-[1rem] leading-none flex items-center font-semibold uppercase">
                   Total Checkout:
                 </span>
-                <span className="bg-button-primary rounded-lg w-48 px-4 py-2 text-white items-center justify-start flex">
+                <span className="bg-button-primary rounded-lg w-48 shadow-general px-4 py-2 text-white items-center justify-start flex">
                   $ {totalCheckout.toFixed(2)}
                 </span>
               </div>
@@ -85,12 +85,12 @@ const Reconciliation2: React.FC = () => {
                 <span className="w-28 z text-[1rem] leading-none flex items-center font-semibold uppercase">
                   Total Diferencia:
                 </span>
-                <span className="bg-button-primary rounded-lg w-48 px-4 py-2 text-white items-center justify-start flex">
+                <span className="bg-button-primary rounded-lg w-48 shadow-general px-4 py-2 text-white items-center justify-start flex">
                   $ {totalDifference.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <button className="bg-button-success py-2 px-4 rounded-lg w-full uppercase text-white font-bold">
+                <button className="bg-button-success shadow-general py-2 px-4 rounded-lg w-full uppercase text-white font-bold">
                   Totalizar y guardar
                 </button>
               </div>

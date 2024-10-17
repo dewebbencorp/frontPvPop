@@ -66,7 +66,7 @@ const Returns2: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-[372px] flex flex-col gap-2 bg-button-danger p-2 rounded-lg">
+            <div className="w-[372px] flex flex-col gap-2 bg-button-danger p-2 rounded-lg shadow-general">
               <div className="flex flex-row gap-2 items-center h-10 w-full">
                 <span className="text-white font-bold uppercase text-[1rem] w-24">
                   Cargar Ticket:
