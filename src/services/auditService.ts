@@ -13,7 +13,7 @@ interface FiltrosAuditoria {
 export const obtenerAuditorias = async (): Promise<any> => {
     try {
         const response = await connectionTest.get("/api/audit", {
-            withCredentials: true  // Enviar cookies con la solicitud
+            // withCredentials: true  // Enviar cookies con la solicitud
         });
         console.log("Datos de auditorías:", response.data);
         return response.data;
@@ -28,7 +28,7 @@ export const obtenerAuditoriasFiltradas = async (filtros: FiltrosAuditoria): Pro
     try {
         const response = await connectionTest.get("/api/audit/filtro", {
             params: filtros,
-            withCredentials: true
+            // withCredentials: true
         });
         console.log("Datos de auditorías filtradas:", response.data);
         return response.data;
@@ -42,7 +42,7 @@ export const obtenerAuditoriasFiltradas = async (filtros: FiltrosAuditoria): Pro
 export const actualizarCX = async (remision: string, cx: boolean): Promise<any> => {
     try {
         const response = await connectionTest.patch(`/api/audit/${remision}/cx`, { cx }, {
-            withCredentials: true  // Enviar cookies con la solicitud
+            // withCredentials: true  // Enviar cookies con la solicitud
         });
         console.log("CX actualizado:", response.data);
         return response.data;
