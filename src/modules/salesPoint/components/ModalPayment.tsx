@@ -75,9 +75,13 @@ const ModalPago: React.FC<ModalPagoProps> = ({
     }
   };
 
-  // Mostrar el modal de confirmación de autorización cuando se da clic en pagar
-  const handlePayClick = () => {
-    setShowConfirmationModal(true);
+  // Mostrar el modal de confirmación de autorización al cancelar
+  const handleCancelClick = () => {
+    if (selectedMethod) {
+      setShowConfirmationModal(true); // Mostrar el modal de confirmación si se seleccionó un método
+    } else {
+      onClose(); // Cerrar directamente si no se ha seleccionado un método de pago
+    }
   };
 
   const handleConfirmVenta = async (Clav_Usr: string, contrasenia: string) => {
@@ -85,10 +89,9 @@ const ModalPago: React.FC<ModalPagoProps> = ({
       const response = await confirmAuth(Clav_Usr, contrasenia);
   
       if (response && response.message === 'Autorización exitosa') {
-        // Autorización exitosa
-        showToast("success", "Venta realizada correctamente");
-        onPay(method);  // Realizar la venta tras la confirmación
-        onClose();  // Cerrar el modal de pago
+        showToast("success", "Cancelación confirmada");
+        setSelectedMethod(null);  // Limpiar el método de pago seleccionado
+        setShowConfirmationModal(false); // Cerrar el modal de confirmación de autorización
       } else {
         showToast("error", "Autorización fallida");
       }
@@ -135,14 +138,15 @@ const ModalPago: React.FC<ModalPagoProps> = ({
           <div className="flex justify-end space-x-4 mt-6">
             {selectedMethod ? (
               <>
+<button
+  onClick={() => onPay(method)} // Aquí llamas a la función para procesar el pago
+  className="px-4 py-2 bg-[#1C878F] text-white rounded-md shadow-md hover:bg-teal-600"
+>
+  PAGAR
+</button>
+
                 <button
-                  onClick={handlePayClick} // Abre el modal de confirmación de autorización
-                  className="px-4 py-2 bg-[#1C878F] text-white rounded-md shadow-md hover:bg-teal-600"
-                >
-                  PAGAR
-                </button>
-                <button
-                  onClick={() => setSelectedMethod(null)}
+                  onClick={handleCancelClick} // Mostrar el modal de confirmación si se seleccionó un método
                   className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md text-white"
                 >
                   CANCELAR
@@ -165,7 +169,7 @@ const ModalPago: React.FC<ModalPagoProps> = ({
         isOpen={showConfirmationModal}
         onClose={() => setShowConfirmationModal(false)}
         onConfirm={handleConfirmVenta} // Envía la confirmación al backend
-        actionDescription="la venta"
+        actionDescription="cancelar la operación"
       />
 
       {/* Toast de confirmación */}

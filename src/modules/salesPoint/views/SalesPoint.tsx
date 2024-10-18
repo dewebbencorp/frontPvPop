@@ -89,9 +89,9 @@ const SalesPoint: React.FC = () => {
   }, [articulos, changeTitle]);
 
   const handlePay = () => {
-    setShowModalPago(false);
-    setArticulos([]);
+    setArticulos([]); // Eliminar todos los artículos de la lista
     showToast("success", "Venta realizada correctamente");
+    setShowModalPago(false); // Cerrar el modal de pago
   };
 
   const handleLoginSuccess = () => {
@@ -130,7 +130,7 @@ const SalesPoint: React.FC = () => {
           isOpen={showModalPago}
           onClose={() => setShowModalPago(false)}
           method={paymentMethod}
-          onPay={handlePay}
+          onPay={handlePay} // Ejecuta la lógica de pago
           updateMethod={() => {}}
         />
       )}
