@@ -1,11 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { IonInput, IonButton, IonIcon, IonCheckbox, IonRow, IonCol, IonSelect, IonSelectOption } from '@ionic/react';
-import { documentOutline, close, checkmark } from 'ionicons/icons';
-import { useHistory } from 'react-router-dom';
-import MainLayout from '../../../common/layouts/MainLayout';
-import '../../../theme/Audit.css';
-import useNavigationData from '../../../common/hooks/useNavigationData';
-import { obtenerAuditorias, obtenerAuditoriasFiltradas, actualizarCX } from '../../../services/auditService';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  IonInput,
+  IonButton,
+  IonIcon,
+  IonCheckbox,
+  IonRow,
+  IonCol,
+  IonSelect,
+  IonSelectOption,
+} from "@ionic/react";
+import { documentOutline, close, checkmark } from "ionicons/icons";
+import { useHistory } from "react-router-dom";
+import MainLayout from "../../../common/layouts/MainLayout";
+import useNavigationData from "../../../common/hooks/useNavigationData";
+import {
+  obtenerAuditorias,
+  obtenerAuditoriasFiltradas,
+  actualizarCX,
+} from "../../../services/auditService";
 
 interface Auditoria {
   remision: string;
@@ -23,16 +35,17 @@ interface Auditoria {
 const Audit: React.FC = () => {
   const [tickets, setTickets] = useState<Auditoria[]>([]);
   const [filteredTickets, setFilteredTickets] = useState<Auditoria[]>([]);
-  const [movimiento, setMovimiento] = useState('');
-  const [desde, setDesde] = useState('');
-  const [hasta, setHasta] = useState('');
-  const [tipo, setTipo] = useState('');
-  const [cliente, setCliente] = useState('');
+  const [movimiento, setMovimiento] = useState("");
+  const [desde, setDesde] = useState("");
+  const [hasta, setHasta] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [cliente, setCliente] = useState("");
   const { changeTitle } = useNavigationData();
   const history = useHistory();
+  const lastItemRef = useRef<HTMLTableRowElement | null>(null);
 
-  const movimientos = ["RE", "CR"]; // Opciones de Movimiento (ejemplo)
-  const tipos = ["EF", "CR"]; // Opciones de Tipo (ejemplo)
+  // const movimientos = ["RE", "CR"];
+  const tipos = ["EF", "CR"];
 
   const handleViewTicket = (remision: string) => {
     history.push(`/ticket/${remision}`);
@@ -52,7 +65,7 @@ const Audit: React.FC = () => {
         )
       );
     } catch (error) {
-      console.error('Error al actualizar CX:', error);
+      console.error("Error al actualizar CX:", error);
     }
   };
 
@@ -72,7 +85,7 @@ const Audit: React.FC = () => {
       hasta: hasta || null,
       cliente: cliente || null,
     };
-  
+
     try {
       const data = await obtenerAuditoriasFiltradas(filtros);
       setFilteredTickets(data);
@@ -80,15 +93,13 @@ const Audit: React.FC = () => {
       console.error("Error al buscar auditorías:", error);
     }
   };
-  
-
 
   const handleLimpiar = async () => {
-    setMovimiento('');
-    setDesde('');
-    setHasta('');
-    setTipo('');
-    setCliente('');
+    setMovimiento("");
+    setDesde("");
+    setHasta("");
+    setTipo("");
+    setCliente("");
 
     try {
       const data = await obtenerAuditorias();
@@ -119,104 +130,211 @@ const Audit: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="audit-container">
+      <div className="bg-blue-50 p-5 rounded-lg">
         {/* Input Fields */}
-        <IonRow>
-          <IonCol size="9" className="px-4 py-2">
-            <div className="inputs-container">
-              <div className="input-group">
-                <label className="label">MOVIMIENTO:</label>
-                <IonSelect value={movimiento} onIonChange={(e) => setMovimiento(e.detail.value)} className="select">
-                  {movimientos.map((mov, index) => (
-                    <IonSelectOption key={index} value={mov}>{mov}</IonSelectOption>
-                  ))}
-                </IonSelect>
-              </div>
-              <div className="input-group">
-                <label className="label">DESDE:</label>
-                <IonInput value={desde} onIonChange={(e) => setDesde(e.detail.value!)} className="input" type="date" />
-              </div>
-              <div className="input-group">
-                <label className="label">HASTA:</label>
-                <IonInput value={hasta} onIonChange={(e) => setHasta(e.detail.value!)} className="input" type="date" />
-              </div>
-              <div className="input-group">
-                <label className="label">TIPO:</label>
-                <IonSelect value={tipo} onIonChange={(e) => setTipo(e.detail.value)} className="select">
-                  {tipos.map((tp, index) => (
-                    <IonSelectOption key={index} value={tp}>{tp}</IonSelectOption>
-                  ))}
-                </IonSelect>
-              </div>
-              <div className="input-group">
-                <label className="label">CLIENTE:</label>
-                <IonInput value={cliente} onIonChange={(e) => setCliente(e.detail.value!)} className="input" />
-              </div>
-            </div>
-          </IonCol>
-          <IonCol size="2" className="px-4 py-2">
-            <div className="inputs-container">
-              <div className="buttons-container">
-                <IonButton onClick={handleBuscar} className="buscar-button">Buscar</IonButton>
-                <IonButton onClick={handleLimpiar} className="limpiar-button">Limpiar</IonButton>
-              </div>
-            </div>
-          </IonCol>
-        </IonRow>
+        <div className="grid grid-cols-12 gap-4 mb-6">
+          {/* <div className="col-span-4">
+    <label className="block text-gray-700 mb-1 font-bold text-sm">Movimiento</label>
+    <select
+      value={movimiento}
+      onChange={(e) => setMovimiento(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 w-full shadow-sm bg-white"
+    >
+      {movimientos.map((mov, index) => (
+        <option key={index} value={mov}>
+          {mov}
+        </option>
+      ))}
+    </select>
+  </div> */}
+
+<div className="col-span-2">
+    <label className="block text-gray-700 mb-1 font-bold text-sm">
+      Desde
+    </label>
+    <input
+      type="date"
+      value={desde}
+      onChange={(e) => setDesde(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
+    />
+  </div>
+
+  <div className="col-span-2">
+    <label className="block text-gray-700 mb-1 font-bold text-sm">
+      Hasta
+    </label>
+    <input
+      type="date"
+      value={hasta}
+      onChange={(e) => setHasta(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
+    />
+  </div>
+
+  <div className="col-span-2">
+    <label className="block text-gray-700 mb-1 font-bold text-sm">
+      Tipo
+    </label>
+    <select
+      value={tipo}
+      onChange={(e) => setTipo(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 w-full shadow-sm bg-white"
+    >
+      {tipos.map((tp, index) => (
+        <option key={index} value={tp}>
+          {tp}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className="col-span-3">
+    <label className="block text-gray-700 mb-1 font-bold text-sm">
+      Cliente
+    </label>
+    <input
+      type="text"
+      value={cliente}
+      onChange={(e) => setCliente(e.target.value)}
+      className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
+    />
+  </div>
+
+  <div className="col-span-3 flex justify-center items-end">
+    <button
+      onClick={handleBuscar}
+      className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition text-[14pt]"
+    >
+      Buscar
+    </button>
+    <button
+      onClick={handleLimpiar}
+      className="ml-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-md transition text-[14pt]"
+    >
+      Limpiar
+    </button>
+  </div>
+</div>
 
         {/* Table */}
-        <div className="overflow-x-auto table_complete">
-          <table className="capsule min-w-full table-auto border-collapse bg-white rounded-lg shadow-md">
-            <thead className="bg-tableHeader text-white">
-              <tr>
-                <th>REMISIÓN</th>
-                <th>FECHA</th>
-                <th>CLIENTE</th>
-                <th>MOVIMIENTO</th>
-                <th>TIPO</th>
-                <th>TOTAL</th>
-                <th>CX</th>
-                <th>CORT</th>
-                <th>COM</th>
-                <th>ACCIONES</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTickets.length > 0 ? (
-                filteredTickets.map((ticket, index) => (
-                  <tr
-                    key={index}
-                    className={`text-center ${ticket.cx ? 'bg-red-100' : ''}`}
-                  >
-                    <td>{ticket.remision}</td>
-                    <td>{ticket.fecha.split('T')[0]}</td>
-                    <td>{ticket.cliente}</td>
-                    <td>{ticket.movimiento}</td>
-                    <td>{ticket.tipo}</td>
-                    <td>${ticket.total}</td>
-                    <td><IonCheckbox checked={ticket.cx} disabled /></td>
-                    <td><IonCheckbox checked={ticket.cort} disabled /></td>
-                    <td><IonCheckbox checked={!!ticket.com} disabled /></td>
-                    <td>
-                      <IonButton className="ticket-button" onClick={() => handleViewTicket(ticket.remision)}>
-                        <IonIcon icon={documentOutline} className="h-4 items-center flex w-4" />
-                      </IonButton>
-                      <IonButton className="close-button" onClick={() => handleCancel(ticket.remision)}>
-                        <IonIcon icon={close} className="h-4 items-center flex w-4" />
-                      </IonButton>
-                      <IonButton className="check-button" onClick={() => handleSuccess(ticket.remision)}>
-                        <IonIcon icon={checkmark} className="h-4 items-center flex w-4" />
-                      </IonButton>
+        <div className="overflow-x-auto rounded-lg shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]">
+          <div className="max-h-96 overflow-y-auto">
+            <table className="min-w-full bg-white rounded-lg shadow-lg border-collapse">
+              <thead className="sticky top-0 bg-myFriend-600 text-white z-10">
+                {/* Sticky header */}
+                <tr>
+                  <th className="font-semibold text-sm text-white p-3 first:rounded-tl-lg last:rounded-tr-lg whitespace-nowrap">
+                    REMISIÓN
+                  </th>
+                  <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                    FECHA
+                  </th>
+                  <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                    CLIENTE
+                  </th>
+                  {/* <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                    MOVIMIENTO
+                  </th> */}
+                  <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                    TIPO
+                  </th>
+                  <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                    TOTAL
+                  </th>
+                  <th className="p-3 font-semibold text-sm text-white">CX</th>
+                  <th className="p-3 font-semibold text-sm text-white">CORT</th>
+                  <th className="p-3 font-semibold text-sm text-white">COM</th>
+                  <th className="font-semibold text-sm text-white p-3 text-center whitespace-nowrap">
+                    ACCIONES
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTickets.length > 0 ? (
+                  filteredTickets.map((ticket, index) => (
+                    <tr
+                      key={index}
+                      className={`text-center ${
+                        index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                      } ${ticket.cx ? "bg-red-100" : ""}`}
+                      ref={
+                        index === filteredTickets.length - 1
+                          ? lastItemRef
+                          : null
+                      }
+                    >
+                      <td className="text-gray-700 text-[12px] px-3 h-10 text-start">
+                        {ticket.remision}
+                      </td>
+                      <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
+                        {ticket.fecha.split("T")[0]}
+                      </td>
+                      <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
+                        {ticket.cliente}
+                      </td>
+                      {/* <td className="text-gray-700 text-[14px] px-3 h-10 text-center">{ticket.movimiento}</td> */}
+                      <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
+                        {ticket.tipo}
+                      </td>
+                      <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
+                        ${ticket.total}
+                      </td>
+                      <td className="p-3 text-center">
+                        <IonCheckbox checked={ticket.cx} disabled />
+                      </td>
+                      <td className="p-3 text-center">
+                        <IonCheckbox checked={ticket.cort} disabled />
+                      </td>
+                      <td className="p-3 text-center">
+                        <IonCheckbox checked={!!ticket.com} disabled />
+                      </td>
+                      <td className="px-3 h-10 text-center">
+                        <div className="flex justify-center items-center h-full gap-4">
+                          <button
+                            onClick={() => handleViewTicket(ticket.remision)}
+                            className="bg-blue-500 hover:bg-blue-600 rounded-md text-white px-2 transition"
+                          >
+                            <IonIcon
+                              aria-hidden="true"
+                              icon={documentOutline}
+                              className="h-6 items-center flex w-4"
+                            />
+                          </button>
+                          <button
+                            onClick={() => handleCancel(ticket.remision)}
+                            className="bg-red-500 hover:bg-red-600 rounded-md text-white px-2 transition"
+                          >
+                            <IonIcon
+                              aria-hidden="true"
+                              icon={close}
+                              className="h-6 items-center flex w-4"
+                            />
+                          </button>
+                          <button
+                            onClick={() => handleSuccess(ticket.remision)}
+                            className="bg-green-500 hover:bg-green-600 rounded-md text-white px-2 transition"
+                          >
+                            <IonIcon
+                              aria-hidden="true"
+                              icon={checkmark}
+                              className="h-6 items-center flex w-4"
+                            />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={10} className="text-center p-4 text-gray-500">
+                      No se encontraron datos
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={10} className="text-center">No se encontraron datos</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </MainLayout>

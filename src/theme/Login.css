@@ -1,0 +1,100 @@
+
+.login {
+    font-family: "Averia Sans Libre", sans-serif;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #0e9495;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #030303;
+    background: #F0F8FF;
+    max-width: 550px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+
+    h2 {
+        margin: 35px 0;
+        font-weight: bold;
+        font-size: 20px;
+        color: #b5122d;;
+    }
+
+    .footer {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        width: 100%;
+        height: 100px;
+        background-color: #b5122ded;;
+        clip-path: polygon(63% 68%, 100% 25%, 100% 100%, 0 100%, 0 0);
+    }
+}
+
+.login-logo {
+    display: block;
+    margin: 0 auto 20px;
+    width: 100px;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    padding: 0 35px;
+
+    .label {
+        position: absolute;
+        transition: all 0.5s ease;
+        pointer-events: none;
+    }
+
+    .input {
+        width: 350px;
+        background-color: transparent;
+        border: none;
+        border-bottom: solid 2px #b5122d;
+        outline: none;
+        color: #b5122d;;
+
+        &:focus ~ .label,
+        &:valid ~ .label {
+            margin-top: -25px;
+            transition: all 0.5s ease;
+        }
+
+        &:hover {
+            background-color: transparent;
+
+            &:focus ~ .label,
+            &:valid ~ .label {
+                color: #b5122d;;
+                transition: all 0.5s ease;
+            }
+        }
+    }
+}
+
+.btns {
+    color: #000000;
+    background-color: transparent;
+    outline: none;
+    padding: 3px;
+    padding-bottom: 0;
+    margin: 35px 0;
+    border: none;
+    border-bottom: solid 1px rgb(0, 0, 0);
+    transition: all 1s linear;
+
+    &:hover {
+        color: #000000;
+        border-bottom: solid 1px #000000;
+        transition: all 1s linear;
+    }
+}

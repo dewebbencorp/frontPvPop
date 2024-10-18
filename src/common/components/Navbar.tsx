@@ -26,16 +26,20 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
-        withCredentials: true
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND}/api/auth/logout`, {}, {
+        withCredentials: true,
       });
-      changeUser('');
-      history.push("/salespoint");
-      window.location.reload();
+  
+      localStorage.removeItem("token");
+
+      changeUser('');  
+      history.push("/"); 
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
   };
+  
+
 
   return (
     <>

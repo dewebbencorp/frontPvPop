@@ -14,20 +14,30 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<string>('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);  // Loading mientras se verifica el token
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyToken = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+      
       try {
-        const response = await axios.get(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/verify-token`, {
-          withCredentials: true, 
+        const response = await axios.get(`${import.meta.env.VITE_APP_PATH_BACKEND}/api/auth/verify-token`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
         });
         setUser(response.data.user.id || '');
-        setIsAuthenticated(true);  // Autentica al usuario si el token es válido
+        setIsAuthenticated(true);
       } catch (error) {
-        setIsAuthenticated(false); 
+        setIsAuthenticated(false);
+        localStorage.removeItem('token');
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     verifyToken();
@@ -38,12 +48,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthenticated(true);
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser('');
     setIsAuthenticated(false);
-    axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/logout`, {}, {
-      withCredentials: true
-    });
+    localStorage.removeItem('token');
+    
+    try {
+      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND}/api/auth/logout`, {}, {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   };
 
   return (
