@@ -44,7 +44,7 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
       <Suspense fallback={<LoadingSpinner />}>
-          <Route exact path="/home">
+      <Route exact path="/home">
             <Home />
           </Route>
           <Route exact path="/">

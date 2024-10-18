@@ -58,34 +58,49 @@ const Header: React.FC = () => {
     : "/home";
 
   return (
-    <IonHeader className="z-0">
-      <IonToolbar>
-        <div className="flex w-full flex-row items-center justify-between gap-4">
-          <div className="flex flex-row items-center min-w-80">
-            {location.pathname !== "/home" && (
-              <IonButtons slot="start">
-                <IonBackButton defaultHref={backButtonHref}></IonBackButton>
-              </IonButtons>
-            )}
-            <span className="font-bold text-[1.125rem] uppercase p-4"> {title} </span>
-          </div>
-
-          <div className="w-full px-4 flex flex-row justify-between items-center">
-            <div>
-              <span className="text-[1rem] font-bold uppercase"> hyatt pop </span>
+    <>
+      <IonHeader className="z-0">
+        <IonToolbar>
+          <div className="flex w-full flex-row items-center justify-between gap-4">
+            <div className="flex flex-row items-center min-w-80">
+              {location.pathname !== "/home" && (
+                <IonButtons slot="start">
+                  <IonBackButton defaultHref={backButtonHref}></IonBackButton>
+                </IonButtons>
+              )}
+              <span className="font-bold text-[1.125rem] uppercase p-4">
+                
+                {title}
+              </span>
             </div>
 
-            <div>
-              <span className="text-[1rem] font-bold uppercase"> {currentTime} </span>
-            </div>
+            <div className="w-full px-4 flex flex-row justify-between items-center">
+              <div>
+                <span className="text-[1rem] font-bold uppercase">
+                  
+                  hyatt pop
+                </span>
+              </div>
 
-            <div>
-              <span className="text-[1rem] font-bold uppercase">Turno: 1 </span>
-            </div>
+              <div>
+                <span className="text-[1rem] font-bold uppercase">
+                  
+                  {currentTime}
+                </span>
+              </div>
 
-            <div>
-              <span className="text-[1rem] font-bold uppercase">Usuario: </span>
-              <span className="ml-1"> {user} </span>
+              <div>
+                <span className="text-[1rem] font-bold uppercase">
+                  Turno: 1
+                </span>
+              </div>
+
+              <div>
+                <span className="text-[1rem] font-bold uppercase">
+                  Usuario:
+                </span>
+                <span className="ml-1"> {user} </span>
+              </div>
             </div>
           </div>
         </IonToolbar>

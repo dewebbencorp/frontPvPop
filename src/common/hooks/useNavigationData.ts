@@ -8,9 +8,9 @@ const useNavigationData = () => {
   const [modules] = useState<INavbarModule[]>([
     { id: '1', title: 'Ventas', path: "/salespoint" },
     { id: '2', title: 'Devolución', path: "/returns" },
-    { id: '3', title: 'Retiros', path: "/" },
+    { id: '3', title: 'Retiros', path: "/withdrawals" },
     { id: '4', title: 'Auditorias', path: "/audit" },
-    { id: '5', title: 'Cortes', path: "/" },
+    { id: '5', title: 'Cortes', path: "/reconciliations2" },
   ]);
 
   const [module, setModule] = useState<string>(() => {
