@@ -92,14 +92,14 @@ const ProductTable: React.FC<ProductTableProps> = ({
                     />
                   </td>
                   <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
-                    {item.precio.toFixed(2)}
-                  </td>
+  {item.precio !== undefined ? item.precio.toFixed(2) : "N/A"}
+</td>
                   <td className="text-gray-700 text-[14px] px-3 h-10 w-32 text-center">
                     {item.descuento}%
                   </td>
                   <td className="text-gray-700 text-[14px] px-3 h-10 text-center">
-                    {item.total.toFixed(2)}
-                  </td>
+  {item.total !== undefined ? item.total.toFixed(2) : "N/A"}
+</td>
                   <td className="px-3 h-10 text-center">
                     <div className="flex justify-center items-center h-full">
                       <button

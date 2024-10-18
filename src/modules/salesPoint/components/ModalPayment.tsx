@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import ModalHeader from "./Modal/ModalHeader";
 import PaymentMethodButtons from "./Modal/PaymentMethodButtons";
 import PaymentMethodFields from "./Modal/PaymentMethodFields";
-import ConfirmAuthModal from "../../../common/components/ConfirmAuthModal";
+import ConfirmAuthModal from "./ConfirmAuthModal";  // Importar el modal de confirmación de autorización
+import Toast from "../../../common/components/Toast";
 import { IPaymentMethod } from "../../../common/interfaces/IPaymentMethod";
+import useToast from "../../../common/hooks/useToast";
+import { confirmAuth } from "../../../services/authService";  // Importar el servicio de autorización
 
 interface ModalPagoProps {
   isOpen: boolean;
   onClose: () => void;
   method: IPaymentMethod;
-  onPay: (method: IPaymentMethod) => void; // Esta función se ejecuta al confirmar la venta
+  onPay: (method: IPaymentMethod) => void;
   updateMethod: (field: string, value: string | number) => void;
 }
 
@@ -28,6 +31,7 @@ const ModalPago: React.FC<ModalPagoProps> = ({
   const [roomAmount, setRoomAmount] = useState<number>(0);
   const [change, setChange] = useState<number>(0);
   const [totalUsd, setTotalUsd] = useState<number>(0);
+  const { toastMessage, showToast, hideToast } = useToast();
 
   const usdExchangeRate = 20;
 
@@ -76,11 +80,23 @@ const ModalPago: React.FC<ModalPagoProps> = ({
     setShowConfirmationModal(true);
   };
 
-  // Función para confirmar la venta
-  const handleConfirmVenta = (username: string, password: string) => {
-    setShowConfirmationModal(false);
-    onPay(method);  // Realizar la venta tras la confirmación
-    onClose();  // Cerrar el modal de pago
+  const handleConfirmVenta = async (Clav_Usr: string, contrasenia: string) => {
+    try {
+      const response = await confirmAuth(Clav_Usr, contrasenia);
+  
+      if (response && response.message === 'Autorización exitosa') {
+        // Autorización exitosa
+        showToast("success", "Venta realizada correctamente");
+        onPay(method);  // Realizar la venta tras la confirmación
+        onClose();  // Cerrar el modal de pago
+      } else {
+        showToast("error", "Autorización fallida");
+      }
+    } catch (error) {
+      showToast("error", "Error en la autorización. Verifique sus credenciales.");
+    }
+  
+    setShowConfirmationModal(false);  // Cerrar el modal de confirmación de autorización
   };
 
   return (
@@ -120,7 +136,7 @@ const ModalPago: React.FC<ModalPagoProps> = ({
             {selectedMethod ? (
               <>
                 <button
-                  onClick={handlePayClick}
+                  onClick={handlePayClick} // Abre el modal de confirmación de autorización
                   className="px-4 py-2 bg-[#1C878F] text-white rounded-md shadow-md hover:bg-teal-600"
                 >
                   PAGAR
@@ -148,9 +164,18 @@ const ModalPago: React.FC<ModalPagoProps> = ({
       <ConfirmAuthModal
         isOpen={showConfirmationModal}
         onClose={() => setShowConfirmationModal(false)}
-        onConfirm={handleConfirmVenta}
+        onConfirm={handleConfirmVenta} // Envía la confirmación al backend
         actionDescription="la venta"
       />
+
+      {/* Toast de confirmación */}
+      {toastMessage && (
+        <Toast
+          type={toastMessage.type}
+          message={toastMessage.message}
+          onClose={hideToast}
+        />
+      )}
     </>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../common/hooks/useToast";
 import { useAuth } from "../../../common/hooks/AuthContext"; 
+import { login } from "../../../services/authService";
 
 const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
@@ -19,10 +19,8 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
     }
   
     try {
-      await axios.post(`${import.meta.env.VITE_APP_PATH_BACKEND_TEST}/api/auth/login`, {
-        Clav_Usr: username.toUpperCase(),
-        contrasenia: password,
-      }, { withCredentials: true });  // Enviar cookies con las credenciales
+      // Llamar al servicio de login
+      await login(username, password);
 
       const userUpperCase = username.toUpperCase();
       changeUser(userUpperCase);
@@ -34,6 +32,7 @@ const Login: React.FC<{ onLoginSuccess: () => void }> = ({ onLoginSuccess }) => 
       showToast("success", `Bienvenido ${userUpperCase}`);
     } catch (err) {
       setErrorMessage("Usuario o contraseña incorrectos");
+      showToast("error", "Usuario o contraseña incorrectos");
     }
   };
 

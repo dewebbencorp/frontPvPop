@@ -1,6 +1,8 @@
 import { IonIcon } from "@ionic/react";
 import { add } from "ionicons/icons";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Importar axios
+
 interface ProductFormProps {
   clave: string;
   cantidad: number;
@@ -20,6 +22,25 @@ const ProductForm: React.FC<ProductFormProps> = ({
   setDescuento,
   handleAgregarArticulo,
 }) => {
+  const [articulo, setArticulo] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Buscar artículo cuando cambia la clave
+  useEffect(() => {
+    if (clave) {
+      axios
+        .get(`/api/sales/articulo/${clave}`)
+        .then((response) => {
+          setArticulo(response.data);
+          setErrorMessage(""); // Limpiar error si se encuentra el artículo
+        })
+        .catch((error) => {
+          setArticulo(null);
+          setErrorMessage("Artículo no encontrado"); // Mostrar error si no se encuentra
+        });
+    }
+  }, [clave]);
+
   return (
     <div className="grid grid-cols-12 gap-4 mb-6">
       <div className="col-span-4">
@@ -31,6 +52,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           onChange={(e) => setClave(e.target.value)}
           className="border border-gray-300 rounded-md p-2 w-full shadow-sm"
         />
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       </div>
 
       <div className="col-span-2">
@@ -58,7 +80,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           onClick={handleAgregarArticulo}
           className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md shadow-md transition text-[14pt]"
         >
-         <IonIcon aria-hidden="true" icon={add} slot="start" className="h-7 items-center flex w-7"></IonIcon>
+          <IonIcon aria-hidden="true" icon={add} slot="start" className="h-7 items-center flex w-7"></IonIcon>
         </button>
       </div>
     </div>

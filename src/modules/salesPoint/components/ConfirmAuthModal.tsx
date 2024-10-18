@@ -4,7 +4,7 @@ interface ConfirmAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: (username: string, password: string) => void;
-  actionDescription: string;  // Descripción de la acción que requiere autorización
+  actionDescription: string;
 }
 
 const ConfirmAuthModal: React.FC<ConfirmAuthModalProps> = ({ isOpen, onClose, onConfirm, actionDescription }) => {
