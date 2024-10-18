@@ -44,7 +44,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       {showNavbar ? (
-        <div className="flex flex-row w-full h-full">
+        <div className="flex flex-row w-full h-10">
           {modules.map((module, index) => (
             <button
               key={module.id}
@@ -58,13 +58,16 @@ const Navbar: React.FC = () => {
                   moduleColors[index].hoverColor)
               }
               onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = moduleColors[index].color)
+                (e.currentTarget.style.backgroundColor =
+                  moduleColors[index].color)
               }
               onClick={() => {
                 history.push(module.path);
               }}
             >
-              <IonLabel className="font-semibold text-white">{module.title}</IonLabel>
+              <IonLabel className="font-semibold text-white">
+                {module.title}
+              </IonLabel>
             </button>
           ))}
           <button
@@ -99,9 +102,9 @@ const Navbar: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="flex w-full items-center justify-end px-4 bg-background">
+        <div className="flex h-10 ">
           <button
-            className="w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center"
+            className="fixed bottom-4 right-4 w-10 h-10 rounded-[0.5rem] bg-button-primary flex items-center justify-center"
             onClick={() => setShowNavbar(true)}
           >
             <HamburgerIcon />

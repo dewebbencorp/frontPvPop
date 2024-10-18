@@ -22,18 +22,25 @@ const Header: React.FC = () => {
       let hours = now.getHours();
       let minutes = now.getMinutes();
 
-      const ampm = hours >= 12 ? 'P.M' : 'A.M';
+      const ampm = hours >= 12 ? "P.M" : "A.M";
       hours = hours % 12;
       hours = hours ? hours : 12;
-      const minutesStr = minutes < 10 ? '0' + minutes.toString() : minutes.toString();
+      const minutesStr =
+        minutes < 10 ? "0" + minutes.toString() : minutes.toString();
 
-      const dayStr = day < 10 ? '0' + day.toString() : day.toString();
-      const monthStr = month < 10 ? '0' + month.toString() : month.toString();
+      const dayStr = day < 10 ? "0" + day.toString() : day.toString();
+      const monthStr = month < 10 ? "0" + month.toString() : month.toString();
 
       return `${dayStr}/${monthStr}/${year} ${hours}:${minutesStr} ${ampm}`;
     };
 
     setCurrentTime(formatDate());
+
+    const intervalId = setInterval(() => {
+      setCurrentTime(formatDate());
+    }, 60000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -46,7 +53,9 @@ const Header: React.FC = () => {
     }
   }, [location, changeTitle]);
 
-  const backButtonHref = location.pathname.startsWith("/ticket") ? "/audit" : "/home";
+  const backButtonHref = location.pathname.startsWith("/ticket")
+    ? "/audit"
+    : "/home";
 
   return (
     <IonHeader className="z-0">
@@ -79,9 +88,9 @@ const Header: React.FC = () => {
               <span className="ml-1"> {user} </span>
             </div>
           </div>
-        </div>
-      </IonToolbar>
-    </IonHeader>
+        </IonToolbar>
+      </IonHeader>
+    </>
   );
 };
 

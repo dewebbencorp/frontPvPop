@@ -31,12 +31,10 @@ const ProductTable: React.FC<ProductTableProps> = ({
   }, [articulos]);
 
   return (
-    <div className="overflow-x-auto rounded-lg shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]">
+    <div className="overflow-x-auto rounded-lg shadow-general">
       <div className="max-h-96 overflow-y-auto">
-        {/* Contenedor para scroll vertical */}
         <table className="min-w-full bg-white rounded-lg shadow-lg border-collapse">
           <thead className="sticky top-0 bg-myFriend-600 text-white z-10">
-            {/* Sticky header */}
             <tr>
               <th className="font-semibold text-sm text-white p-3 first:rounded-tl-lg last:rounded-tr-lg whitespace-nowrap">
                 ARTÍCULO
@@ -78,7 +76,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
                   } ${item.cantidad === 0 ? "bg-red-100" : ""}`}
                   ref={index === articulos.length - 1 ? lastItemRef : null}
                 >
-                  <td className="text-gray-700 text-[12px] px-3 h-10 w-1/2 text-start">
+                  <td className="text-gray-700 text-[14px] px-3 h-10 w-1/2 text-start">
                     {item.articulo}
                   </td>
                   <td className="px-3 h-10">

@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 const Footer: React.FC = () => {
   return (
     <>
-      <IonFooter className="h-10 -z-10">
+      <IonFooter className="min-h-10 h-14 -z-10 flex items-end">
         <Navbar/>
       </IonFooter>
     </>

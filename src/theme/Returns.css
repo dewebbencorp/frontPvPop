@@ -1,8 +1,8 @@
-input, select{
-    /*box-shadow: 0.15rem 0.25rem 0.5rem rgba(0, 0, 0, 0.35);*/
+.input{
     background-color: white;
     height: 2.5rem;
     padding: 0.5rem;
+    @apply shadow-[0rem_0.5rem_0.5rem_rgba(0,0,0,0.35)]
 }
 
 
@@ -34,4 +34,8 @@ content: '✓';
 font-size: 2rem;
 line-height: 2rem;
 font-weight: bold;
+}
+
+button{
+    @apply shadow-[0rem_0.25rem_0.5rem_rgba(0,0,0,0.35)]
 }
