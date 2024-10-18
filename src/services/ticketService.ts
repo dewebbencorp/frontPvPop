@@ -4,7 +4,7 @@ import { connectionTest } from "../api/connectionTest";
 export const obtenerTicketPorNumero = async (numero: string): Promise<Ticket> => {
     try {
         const response = await connectionTest.get(`/api/ticket/${numero}`, {
-            withCredentials: true  
+            // withCredentials: true  
         });
         return response.data;
     } catch (error) {

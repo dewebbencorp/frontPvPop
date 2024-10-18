@@ -18,7 +18,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/salespoint" />
+        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

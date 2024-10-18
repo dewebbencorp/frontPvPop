@@ -1,3 +1,4 @@
+// src/modules/salesPoint/views/SalesPoint.tsx
 import React, { useEffect, useState } from "react";
 import useNavigationData from "../../../common/hooks/useNavigationData";
 import ModalPago from "../components/ModalPayment";
@@ -6,7 +7,6 @@ import MainLayout from "../../../common/layouts/MainLayout";
 import ProductForm from "../components/ProductForm";
 import ProductTable from "../components/ProductTable";
 import TotalDisplay from "../components/TotalDisplay";
-import Login from "../../login/views/Login";
 import Toast from "../../../common/components/Toast";
 import useToast from "../../../common/hooks/useToast";
 import { useAuth } from "../../../common/hooks/AuthContext";
@@ -141,12 +141,6 @@ const SalesPoint: React.FC = () => {
           message={toastMessage.message}
           onClose={hideToast}
         />
-      )}
-
-      {!loading && !isAuthenticated && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <Login onLoginSuccess={handleLoginSuccess} />
-        </div>
       )}
     </MainLayout>
   );
